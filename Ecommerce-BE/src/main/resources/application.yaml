@@ -1,0 +1,25 @@
+spring:
+  #  application:
+  #    name: SpringSecurityJWT
+  datasource:
+    url: jdbc:postgresql://localhost:19043/jwtauth2
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format-sql: true
+      show-sql: true
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  level:
+    org.springframework.security: error
+
+security:
+  jwt:
+    access-token-secret-key: ${JWT_ACCESS_SECRET}
+    refresh-token-secret-key: ${JWT_REFRESH_SECRET}

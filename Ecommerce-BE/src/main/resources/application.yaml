@@ -14,10 +14,15 @@ spring:
         format-sql: true
       show-sql: true
       database: postgresql
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
 logging:
   level:
-    org.springframework.security: error
+    org:
+    #      postgresql: warn
+    #      hibernate: error
+#    org.springframework.security: warn
+#    root: warn
+#    web: warn
+
 
 security:
   jwt:

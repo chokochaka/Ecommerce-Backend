@@ -44,6 +44,9 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user")
     private RefreshToken refreshToken;
 
+    @OneToOne(mappedBy = "user")
+    private ForgotPassword forgotPassword;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.roles != null) {

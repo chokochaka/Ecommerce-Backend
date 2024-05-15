@@ -1,6 +1,6 @@
 spring:
-  #  application:
-  #    name: SpringSecurityJWT
+  application:
+    name: EcommerceBackendNashTech
   datasource:
     url: jdbc:postgresql://localhost:19043/jwtauth2
     username: postgres
@@ -14,6 +14,17 @@ spring:
         format-sql: true
       show-sql: true
       database: postgresql
+  mail:
+    host: smtp.gmail.com
+    port: 927
+    username: "nozakiboy.kun@gmail.com"
+    password: "qrdh xgpb uolb spqk"
+    properties:
+      mail:
+        smtp:
+        auth: true
+        starttls:
+          enable: true
 logging:
   level:
     org:

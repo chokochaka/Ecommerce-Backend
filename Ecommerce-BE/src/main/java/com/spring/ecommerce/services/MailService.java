@@ -24,6 +24,7 @@ public class MailService {
     public void sendMail(MailBody mailBody) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mailBody.recipient());
+        message.setFrom(Constant.MY_EMAIL);
         message.setSubject(mailBody.subject());
         message.setText(mailBody.text());
         javaMailSender.send(message);
@@ -54,6 +55,7 @@ public class MailService {
             forgotPasswordRepository.deleteById(forgotPassword.getId());
             return "OTP expired";
         }
+        return "OTP verified successfully";
     }
 
     private Integer otpGenerator() {

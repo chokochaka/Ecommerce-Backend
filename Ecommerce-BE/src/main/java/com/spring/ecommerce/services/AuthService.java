@@ -76,5 +76,11 @@ public class AuthService {
                 .refreshToken(newRefreshToken.getRefreshToken())
                 .build();
     }
+
+    public String changePassword(String password, String email) {
+        String encodedPassword = passwordEncoder.encode(password);
+        userRepository.updatePassword(encodedPassword, email);
+        return "Password changed successfully";
+    }
 }
 

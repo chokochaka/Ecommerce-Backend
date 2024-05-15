@@ -15,16 +15,8 @@ spring:
       show-sql: true
       database: postgresql
   mail:
-    host: smtp.gmail.com
-    port: 927
-    username: "nozakiboy.kun@gmail.com"
-    password: "qrdh xgpb uolb spqk"
-    properties:
-      mail:
-        smtp:
-        auth: true
-        starttls:
-          enable: true
+    username: ${MAIL_USER}
+    password: ${MAIL_PASSWORD}
 logging:
   level:
     org:

@@ -1,5 +1,6 @@
 package com.spring.ecommerce.controllers;
 
+import com.spring.ecommerce.dto.ChangePassword;
 import com.spring.ecommerce.dto.auth.RefreshTokenDto;
 import com.spring.ecommerce.dto.auth.SignInDto;
 import com.spring.ecommerce.dto.auth.SignUpDto;
@@ -8,11 +9,11 @@ import com.spring.ecommerce.models.RefreshToken;
 import com.spring.ecommerce.services.AuthService;
 import com.spring.ecommerce.services.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -41,6 +42,17 @@ public class AuthController {
             @RequestBody RefreshTokenDto request
     ) {
         return ResponseEntity.ok(authService.refreshToken(request));
+    }
+
+    @PostMapping("/change-password/{email}")
+    public ResponseEntity<String> changePassword(
+            @RequestBody ChangePassword changePassword,
+            @PathVariable String email
+    ) {
+        if (!Objects.equals(changePassword.password(), changePassword.repeatPassword())) {
+            return new ResponseEntity<>("Password and Repeat Password must be same", HttpStatus.EXPECTATION_FAILED);
+        }
+        return ResponseEntity.ok(authService.changePassword(changePassword.password(), email));
     }
 
 }

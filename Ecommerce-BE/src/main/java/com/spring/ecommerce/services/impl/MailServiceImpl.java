@@ -1,11 +1,11 @@
-package com.spring.ecommerce.services;
+package com.spring.ecommerce.services.impl;
 
 import com.spring.ecommerce.config.Constant;
 import com.spring.ecommerce.dto.MailBody;
 import com.spring.ecommerce.models.ForgotPassword;
 import com.spring.ecommerce.models.User;
-import com.spring.ecommerce.repository.ForgotPasswordRepository;
-import com.spring.ecommerce.repository.UserRepository;
+import com.spring.ecommerce.repositories.ForgotPasswordRepository;
+import com.spring.ecommerce.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,7 +16,7 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class MailService {
+public class MailServiceImpl {
     private final JavaMailSender javaMailSender;
     private final UserRepository userRepository;
     private final ForgotPasswordRepository forgotPasswordRepository;

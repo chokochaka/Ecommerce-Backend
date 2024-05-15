@@ -1,6 +1,6 @@
 package com.spring.ecommerce.security;
 
-import com.spring.ecommerce.repository.UserRepository;
+import com.spring.ecommerce.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

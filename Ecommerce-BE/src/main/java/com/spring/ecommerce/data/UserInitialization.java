@@ -1,10 +1,10 @@
-package com.spring.ecommerce.config;
+package com.spring.ecommerce.data;
 
 import com.spring.ecommerce.enums.RoleEnum;
 import com.spring.ecommerce.models.Role;
 import com.spring.ecommerce.models.User;
-import com.spring.ecommerce.repository.RoleRepository;
-import com.spring.ecommerce.repository.UserRepository;
+import com.spring.ecommerce.repositories.RoleRepository;
+import com.spring.ecommerce.repositories.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class DataInitialization {
+public class UserInitialization {
 
     private static final String USER_ROLE = RoleEnum.ROLE_USER.getRoleName();
     private static final String INVENTORY_MANAGER_ROLE = RoleEnum.ROLE_INVENTORY_MANAGER.getRoleName();

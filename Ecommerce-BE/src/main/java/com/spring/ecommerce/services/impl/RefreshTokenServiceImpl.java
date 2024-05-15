@@ -1,19 +1,19 @@
-package com.spring.ecommerce.services;
+package com.spring.ecommerce.services.impl;
 
+import com.spring.ecommerce.config.Constant;
 import com.spring.ecommerce.models.RefreshToken;
 import com.spring.ecommerce.models.User;
-import com.spring.ecommerce.repository.RefreshTokenRepository;
-import com.spring.ecommerce.repository.UserRepository;
+import com.spring.ecommerce.repositories.RefreshTokenRepository;
+import com.spring.ecommerce.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class RefreshTokenService {
+public class RefreshTokenServiceImpl {
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
@@ -26,7 +26,7 @@ public class RefreshTokenService {
             refreshToken = RefreshToken.builder()
                     .refreshToken(UUID.randomUUID().toString())
                     .issuedAt(Instant.now())
-                    .expiresAt(Instant.now().plusMillis(7L * 24 * 60 * 60 * 1000 * 10000))
+                    .expiresAt(Instant.now().plusMillis(Constant.TIME.FOURTEEN_DAYS))
                     .user(userGetByEmail)
                     .build();
             refreshTokenRepository.save(refreshToken);

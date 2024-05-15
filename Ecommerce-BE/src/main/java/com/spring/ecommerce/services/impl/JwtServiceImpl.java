@@ -1,4 +1,4 @@
-package com.spring.ecommerce.services;
+package com.spring.ecommerce.services.impl;
 
 import com.spring.ecommerce.config.Constant;
 import io.jsonwebtoken.Claims;
@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -19,14 +20,16 @@ import java.util.function.Function;
 
 
 @Service
-public class JwtService {
+@RequiredArgsConstructor
+public class JwtServiceImpl {
 
     public String generateToken(UserDetails user) {
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .claim("authorities", populateAuthorities(user.getAuthorities()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
+//                .setExpiration(new Date(System.currentTimeMillis() + Constant.TIME.TWO_HOURS)) // Production
+                .setExpiration(new Date(System.currentTimeMillis() + Constant.TIME.FOURTEEN_DAYS)) // Development
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

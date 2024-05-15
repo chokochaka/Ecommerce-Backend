@@ -24,7 +24,6 @@ import java.util.Set;
 @Builder
 public class User implements UserDetails {
 
-
     @ManyToMany(fetch = FetchType.EAGER)
     @ToString.Exclude
     @JoinTable(

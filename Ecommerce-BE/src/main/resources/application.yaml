@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: EcommerceBackendNashTech
   datasource:
     url: jdbc:postgresql://localhost:19043/jwtauth2
     username: postgres
@@ -17,6 +15,9 @@ spring:
   mail:
     username: ${MAIL_USER}
     password: ${MAIL_PASSWORD}
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+
 logging:
   level:
     org:
@@ -30,4 +31,3 @@ logging:
 security:
   jwt:
     access-token-secret-key: ${JWT_ACCESS_SECRET}
-    refresh-token-secret-key: ${JWT_REFRESH_SECRET}

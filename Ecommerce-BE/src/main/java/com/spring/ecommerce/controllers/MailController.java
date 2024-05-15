@@ -1,8 +1,6 @@
 package com.spring.ecommerce.controllers;
 
-import com.spring.ecommerce.repository.UserRepository;
-import com.spring.ecommerce.services.AuthService;
-import com.spring.ecommerce.services.MailService;
+import com.spring.ecommerce.services.impl.MailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/mail")
 @RequiredArgsConstructor
 public class MailController {
-    private final AuthService authService;
-    private final UserRepository userRepository;
-    private final MailService mailService;
+    private final MailServiceImpl mailService;
 
     @PostMapping("/verify-email/{recipientEmail}")
     public ResponseEntity<String> verifyEmail(@PathVariable String recipientEmail) {

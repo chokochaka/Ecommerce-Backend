@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.Instant;
 
 @Entity
+@Table(name = "forgot_password")
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString

@@ -6,6 +6,7 @@ import com.spring.ecommerce.models.ForgotPassword;
 import com.spring.ecommerce.models.User;
 import com.spring.ecommerce.repositories.ForgotPasswordRepository;
 import com.spring.ecommerce.repositories.UserRepository;
+import com.spring.ecommerce.services.MailService;
 import com.spring.ecommerce.utils.RandomString;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -17,7 +18,7 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class MailServiceImpl {
+public class MailServiceImpl implements MailService {
     private final JavaMailSender javaMailSender;
     private final UserRepository userRepository;
     private final ForgotPasswordRepository forgotPasswordRepository;

@@ -26,22 +26,46 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+//        requestHandler.setCsrfRequestAttributeName("_csrf");
         return http
+//                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+//                    @Override
+//                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+//                        CorsConfiguration config = new CorsConfiguration();
+//                        config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+//                        config.setAllowedMethods(Collections.singletonList("*"));
+//                        config.setAllowCredentials(true);
+//                        config.setAllowedHeaders(Collections.singletonList("*"));
+//                        config.setExposedHeaders(List.of("Authorization"));
+//                        config.setMaxAge(3600L);
+//                        return config;
+//                    }
+//                }))
+//                .csrf(
+//                        (csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
+//                                .ignoringRequestMatchers("/contact", "/register")
+//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                        )
+//                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+//                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+//                .addFilterAt(new AuthoritiesLoggingAtFilter(),BasicAuthenticationFilter.class)
+//                .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authorizeHttpRequests(req ->
                         req
                                 // for testing only
-                                .requestMatchers("/api/v1/admin/user")
-                                .hasRole(RoleEnum.ROLE_USER.getRoleName())
-                                .requestMatchers("/api/v1/admin/iv")
-                                .hasRole(RoleEnum.ROLE_INVENTORY_MANAGER.getRoleName())
-                                .requestMatchers("/api/v1/admin/admin")
-                                .hasRole(RoleEnum.ROLE_ADMIN.getRoleName())
-                                .requestMatchers("/api/v1/admin/all")
-                                .permitAll()
-
-                                .requestMatchers("/api/v1/auth/change-password/*").authenticated()
+//                                .requestMatchers("/api/v1/admin/user")
+//                                .hasRole(RoleEnum.ROLE_USER.getRoleName())
+//                                .requestMatchers("/api/v1/admin/iv")
+//                                .hasRole(RoleEnum.ROLE_INVENTORY_MANAGER.getRoleName())
+//                                .requestMatchers("/api/v1/admin/admin")
+//                                .hasRole(RoleEnum.ROLE_ADMIN.getRoleName())
+//                                .requestMatchers("/api/v1/admin/all")
+//                                .permitAll()
+//
+//                                .requestMatchers("/api/v1/auth/change-password/*").authenticated()
                                 .anyRequest().permitAll())
 //                                .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider)

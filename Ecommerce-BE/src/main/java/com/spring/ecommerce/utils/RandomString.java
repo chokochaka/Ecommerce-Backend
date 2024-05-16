@@ -1,8 +1,6 @@
 package com.spring.ecommerce.utils;
 
 import java.security.SecureRandom;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class RandomString {
     public static String GenerateRandomString(int length) {

@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -65,11 +64,12 @@ public class AuthServiceImpl implements AuthService {
                         signInDto.getPassword()
                 )
         );
+
         var user = userRepository.findByEmail(signInDto.getEmail())
                 .orElseThrow();
 
         String accessToken = jwtServiceImpl.generateToken(user);
-        RefreshToken refreshToken = replaceRefreshToken(signInDto.getEmail());
+        RefreshToken refreshToken = replaceRefreshToken(user);
 
         return TokenDto.builder()
                 .accessToken(accessToken)
@@ -136,16 +136,14 @@ public class AuthServiceImpl implements AuthService {
         return refreshToken;
     }
 
-    private RefreshToken replaceRefreshToken(String email) {
-        User userGetByEmail = userRepository.findByEmail(email)
-                .orElseThrow();
+    private RefreshToken replaceRefreshToken(User user) {
 
-        refreshTokenRepository.deleteByUser(userGetByEmail);
+        refreshTokenRepository.deleteByUser(user);
         RefreshToken refreshToken = RefreshToken.builder()
                 .refreshToken(UUID.randomUUID().toString())
                 .issuedAt(Instant.now())
                 .expiresAt(Instant.now().plusMillis(Constant.TIME.FOURTEEN_DAYS))
-                .user(userGetByEmail)
+                .user(user)
                 .build();
         refreshTokenRepository.save(refreshToken);
         return refreshToken;

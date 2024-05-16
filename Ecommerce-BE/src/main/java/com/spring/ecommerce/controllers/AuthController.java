@@ -1,12 +1,23 @@
 package com.spring.ecommerce.controllers;
 
-import com.spring.ecommerce.dto.auth.*;
+import com.spring.ecommerce.dto.auth.ActiveAccountDto;
+import com.spring.ecommerce.dto.auth.ChangePasswordDto;
+import com.spring.ecommerce.dto.auth.ForgotPasswordDto;
+import com.spring.ecommerce.dto.auth.RefreshTokenDto;
+import com.spring.ecommerce.dto.auth.SignInDto;
+import com.spring.ecommerce.dto.auth.SignUpDto;
+import com.spring.ecommerce.dto.auth.TokenDto;
 import com.spring.ecommerce.services.AuthService;
 import com.spring.ecommerce.services.impl.MailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
 
@@ -28,9 +39,9 @@ public class AuthController {
 
     @PostMapping(value = {"/login", "signin"})
     public ResponseEntity<TokenDto> login(
-            @RequestBody SignInDto request
+            @RequestBody SignInDto loginRequest
     ) {
-        return ResponseEntity.ok(authService.login(request));
+        return ResponseEntity.ok(authService.login(loginRequest));
     }
 
     @PostMapping("/logout/{email}")

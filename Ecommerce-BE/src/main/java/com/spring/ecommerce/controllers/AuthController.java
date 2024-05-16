@@ -1,11 +1,6 @@
 package com.spring.ecommerce.controllers;
 
-import com.spring.ecommerce.dto.ChangePasswordDto;
-import com.spring.ecommerce.dto.ForgotPasswordDto;
-import com.spring.ecommerce.dto.auth.RefreshTokenDto;
-import com.spring.ecommerce.dto.auth.SignInDto;
-import com.spring.ecommerce.dto.auth.SignUpDto;
-import com.spring.ecommerce.dto.auth.TokenDto;
+import com.spring.ecommerce.dto.auth.*;
 import com.spring.ecommerce.services.AuthService;
 import com.spring.ecommerce.services.impl.MailServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +38,13 @@ public class AuthController {
             @PathVariable String email
     ) {
         return ResponseEntity.ok(authService.logout(email));
+    }
+
+    @PostMapping("/active")
+    public ResponseEntity<String> active(
+            @RequestBody ActiveAccountDto activeAccountDto
+    ) {
+        return ResponseEntity.ok(authService.active(activeAccountDto.email(), activeAccountDto.verificationCode()));
     }
 
     @PostMapping("/refresh-token")

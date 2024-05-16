@@ -15,4 +15,6 @@ public interface AuthService {
     String changePassword(String password, String email, String authHeader, boolean isForgotPassword);
 
     String logout(String email);
+
+    String active(String email, String s);
 }

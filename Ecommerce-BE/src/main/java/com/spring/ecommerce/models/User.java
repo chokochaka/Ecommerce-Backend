@@ -34,6 +34,11 @@ public class User extends BaseEntity<Long> implements UserDetails {
 
     private String lastName;
 
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
+    private boolean enabled;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @ToString.Exclude
     @JoinTable(
@@ -77,6 +82,11 @@ public class User extends BaseEntity<Long> implements UserDetails {
     }
 
     @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
         return true;
     }
@@ -91,8 +101,5 @@ public class User extends BaseEntity<Long> implements UserDetails {
         return true;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+
 }

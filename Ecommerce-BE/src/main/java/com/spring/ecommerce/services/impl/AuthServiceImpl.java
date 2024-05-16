@@ -13,6 +13,7 @@ import com.spring.ecommerce.repositories.RefreshTokenRepository;
 import com.spring.ecommerce.repositories.RoleRepository;
 import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.AuthService;
+import com.spring.ecommerce.utils.RandomString;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,6 +45,8 @@ public class AuthServiceImpl implements AuthService {
         User savedUser = userRepository.save(User.builder()
                 .email(signUpDto.getEmail())
                 .password(passwordEncoder.encode(signUpDto.getPassword()))
+                .verificationCode(RandomString.GenerateRandomString(64))
+                .enabled(false)
                 .roles(Set.of(userRole))
                 .build());
         String accessToken = jwtServiceImpl.generateToken(savedUser);
@@ -74,12 +77,23 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
     }
-    
+
     public String logout(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow();
         refreshTokenRepository.deleteByUser(user);
         return "Logout successfully";
+    }
+
+    public String active(String email, String verificationCode) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow();
+        if (!Objects.equals(user.getVerificationCode(), verificationCode)) {
+            throw new RuntimeException("Invalid verification code");
+        }
+        user.setEnabled(true);
+        userRepository.save(user);
+        return "Account activated successfully";
     }
 
     public TokenDto refreshToken(RefreshTokenDto refreshTokenDto) {

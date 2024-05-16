@@ -6,6 +6,7 @@ import com.spring.ecommerce.models.ForgotPassword;
 import com.spring.ecommerce.models.User;
 import com.spring.ecommerce.repositories.ForgotPasswordRepository;
 import com.spring.ecommerce.repositories.UserRepository;
+import com.spring.ecommerce.utils.RandomString;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,6 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class MailServiceImpl {
-    private static final Logger log = LoggerFactory.getLogger(MailServiceImpl.class);
     private final JavaMailSender javaMailSender;
     private final UserRepository userRepository;
     private final ForgotPasswordRepository forgotPasswordRepository;
@@ -54,6 +54,18 @@ public class MailServiceImpl {
         forgotPasswordRepository.save(forgotPasswordSaved);
 
         return "OTP sent successfully";
+    }
+
+    public String sendVerifyAccount(String recipientEmail) {
+        String verificationCode = RandomString.GenerateRandomString(64);
+        userRepository.updateVerificationCode(recipientEmail, verificationCode);
+        MailBodyDto mailBodyDto = MailBodyDto.builder()
+                .recipient(recipientEmail)
+                .subject("Account Verification code")
+                .text("Your OTP is: " + verificationCode)
+                .build();
+        sendMail(mailBodyDto);
+        return "Verification Code sent successfully";
     }
 
     public boolean verifyForgotPasswordOtp(Integer otp, String recipientEmail) {

@@ -18,4 +18,9 @@ public class MailController {
     public ResponseEntity<String> sendOtpForgotPassword(@PathVariable String recipientEmail) {
         return ResponseEntity.ok(mailService.sendOtpForgotPassword(recipientEmail));
     }
+
+    @PostMapping("/send-verify-account/{recipientEmail}") // step 1
+    public ResponseEntity<String> sendVerifyAccount(@PathVariable String recipientEmail) {
+        return ResponseEntity.ok(mailService.sendVerifyAccount(recipientEmail));
+    }
 }

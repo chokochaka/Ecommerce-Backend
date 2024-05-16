@@ -57,6 +57,7 @@ public class UserInitialization {
         return User.builder()
                 .email(email)
                 .password(passwordEncoder.encode("123"))
+                .enabled(true)
                 .roles(userRoles)
                 .build();
     }

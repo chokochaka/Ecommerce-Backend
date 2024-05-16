@@ -2,6 +2,7 @@ package com.spring.ecommerce.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
 
@@ -19,6 +20,11 @@ public class ForgotPassword {
     private Long id;
 
     private Integer otp;
+
+    @Column(updatable = false, nullable = false)
+    private Instant issuedAt;
+
+    @Column(updatable = false, nullable = false)
     private Instant expiresAt;
 
     @OneToOne

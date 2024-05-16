@@ -14,16 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class MailController {
     private final MailServiceImpl mailService;
 
-    @PostMapping("/verify-email/{recipientEmail}")
+    @PostMapping("/verify-email/{recipientEmail}") // step 1
     public ResponseEntity<String> verifyEmail(@PathVariable String recipientEmail) {
-        return ResponseEntity.ok(mailService.verifyEmail(recipientEmail));
+        return ResponseEntity.ok(mailService.sendOtpForgotPassword(recipientEmail));
     }
 
-    @PostMapping("/verify-otp/{otp}/{recipientEmail}") // fe need to track client mail
-    public ResponseEntity<String> verifyOtp(
-            @PathVariable("otp") Integer otp,
-            @PathVariable("recipientEmail") String recipientEmail
-    ) {
-        return ResponseEntity.ok(mailService.verifyOtp(otp, recipientEmail));
-    }
+    // step 2
+    // fe need to track client mail
+//    @PostMapping("/verify-otp/{otp}/{recipientEmail}")
+//    public ResponseEntity<String> verifyOtp(
+//            @PathVariable("otp") Integer otp,
+//            @PathVariable("recipientEmail") String recipientEmail
+//    ) {
+//        return ResponseEntity.ok(mailService.verifyForgotPasswordOtp(otp, recipientEmail));
+//    }
 }

@@ -1,11 +1,13 @@
 package com.spring.ecommerce.controllers;
 
-import com.spring.ecommerce.dto.ChangePassword;
+import com.spring.ecommerce.dto.ChangePasswordDto;
+import com.spring.ecommerce.dto.ForgotPasswordDto;
 import com.spring.ecommerce.dto.auth.RefreshTokenDto;
 import com.spring.ecommerce.dto.auth.SignInDto;
 import com.spring.ecommerce.dto.auth.SignUpDto;
 import com.spring.ecommerce.dto.auth.TokenDto;
 import com.spring.ecommerce.services.AuthService;
+import com.spring.ecommerce.services.impl.MailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,39 +20,56 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authServiceImpl;
+    private final AuthService authService;
+    private final MailServiceImpl mailService;
 
-    @PostMapping("/register")
+    @PostMapping(value = {"/register", "signup"})
     public ResponseEntity<TokenDto> register(
             @RequestBody SignUpDto registerRequest
     ) {
-        TokenDto authResponse = authServiceImpl.register(registerRequest);
+        TokenDto authResponse = authService.register(registerRequest);
         return ResponseEntity.ok(authResponse);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<TokenDto> authenticate(
+    @PostMapping(value = {"/login", "signin"})
+    public ResponseEntity<TokenDto> login(
             @RequestBody SignInDto request
     ) {
-        return ResponseEntity.ok(authServiceImpl.login(request));
+        return ResponseEntity.ok(authService.login(request));
     }
 
     @PostMapping("/refresh-token")
     public ResponseEntity<TokenDto> refreshToken(
-            @RequestBody RefreshTokenDto request
+            @RequestBody RefreshTokenDto refreshTokenDto
     ) {
-        return ResponseEntity.ok(authServiceImpl.refreshToken(request));
+        return ResponseEntity.ok(authService.refreshToken(refreshTokenDto));
     }
 
     @PostMapping("/change-password/{email}")
     public ResponseEntity<String> changePassword(
-            @RequestBody ChangePassword changePassword,
+            @RequestHeader("Authorization") String authHeader,
+            @RequestBody ChangePasswordDto changePasswordDto,
             @PathVariable String email
     ) {
-        if (!Objects.equals(changePassword.password(), changePassword.repeatPassword())) {
+        if (!Objects.equals(changePasswordDto.password(), changePasswordDto.repeatPassword())) {
             return new ResponseEntity<>("Password and Repeat Password must be same", HttpStatus.EXPECTATION_FAILED);
         }
-        return ResponseEntity.ok(authServiceImpl.changePassword(changePassword.password(), email));
+        return ResponseEntity.ok(authService.changePassword(changePasswordDto.password(), email, authHeader, false));
+    }
+
+    @PostMapping("/forgot-password/{email}")
+    public ResponseEntity<String> forgotPassword(
+            @RequestBody ForgotPasswordDto forgotPasswordDto,
+            @PathVariable String email
+    ) {
+        if (!Objects.equals(forgotPasswordDto.password(), forgotPasswordDto.repeatPassword())) {
+            return new ResponseEntity<>("Password and Repeat Password must be same", HttpStatus.EXPECTATION_FAILED);
+        }
+        if (!mailService.verifyForgotPasswordOtp(forgotPasswordDto.otp(), email)) {
+            return ResponseEntity.badRequest().body("Invalid OTP");
+        }
+        authService.changePassword(forgotPasswordDto.password(), email, "", true);
+        return ResponseEntity.ok(authService.changePassword(forgotPasswordDto.password(), email, "", true));
     }
 
 }

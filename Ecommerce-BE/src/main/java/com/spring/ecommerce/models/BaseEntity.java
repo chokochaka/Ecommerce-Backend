@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.Persistable;
@@ -17,18 +18,19 @@ import java.time.Instant;
 @NoArgsConstructor
 @Getter
 @ToString
-public abstract class BaseEntity<Long extends Serializable> implements Persistable<Long> {
+public abstract class BaseEntity<T extends Serializable> implements Persistable<T> {
 
     @Id
-    private Long id;
+    @GeneratedValue
+    private T id;
 
     @Column(updatable = false, nullable = false)
     @CreatedDate
-    private Instant dateCreated;
+    private Instant CreatedOn;
 
     @Column(nullable = false)
     @LastModifiedDate
-    private Instant dateModified;
+    private Instant LastUpdatedOn;
 
     @Transient
     @Override

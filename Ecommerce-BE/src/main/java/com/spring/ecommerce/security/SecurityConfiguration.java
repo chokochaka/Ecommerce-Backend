@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/api/v1/admin/all")
                                 .permitAll()
 
+                                .requestMatchers("/api/v1/auth/change-password/*").authenticated()
                                 .anyRequest().permitAll())
 //                                .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider)

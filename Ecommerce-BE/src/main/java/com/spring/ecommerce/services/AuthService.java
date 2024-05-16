@@ -12,5 +12,5 @@ public interface AuthService {
 
     TokenDto refreshToken(RefreshTokenDto oldRefreshToken);
 
-    String changePassword(String password, String email);
+    String changePassword(String password, String email, String authHeader, boolean isForgotPassword);
 }

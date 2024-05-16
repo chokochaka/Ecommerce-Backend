@@ -2,6 +2,7 @@ package com.spring.ecommerce.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
 
@@ -20,7 +21,11 @@ public class RefreshToken {
 
     private String refreshToken;
 
+    @Column(updatable = false, nullable = false)
+    @CreatedDate
     private Instant issuedAt;
+
+    @Column(updatable = false, nullable = false)
     private Instant expiresAt;
 
     @OneToOne

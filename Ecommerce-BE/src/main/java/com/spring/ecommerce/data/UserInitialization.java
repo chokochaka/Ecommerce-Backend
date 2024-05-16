@@ -18,9 +18,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserInitialization {
 
-    private static final String USER_ROLE = RoleEnum.ROLE_USER.getRoleName();
-    private static final String INVENTORY_MANAGER_ROLE = RoleEnum.ROLE_INVENTORY_MANAGER.getRoleName();
-    private static final String ADMIN_ROLE = RoleEnum.ROLE_ADMIN.getRoleName();
+    private final String USER_ROLE = RoleEnum.ROLE_USER.getRoleName();
+    private final String INVENTORY_MANAGER_ROLE = RoleEnum.ROLE_INVENTORY_MANAGER.getRoleName();
+    private final String ADMIN_ROLE = RoleEnum.ROLE_ADMIN.getRoleName();
+
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -33,9 +34,9 @@ public class UserInitialization {
 
     private void createRoles() {
         List<Role> roles = List.of(
-                Role.builder().roleName(USER_ROLE).build(),
-                Role.builder().roleName(INVENTORY_MANAGER_ROLE).build(),
-                Role.builder().roleName(ADMIN_ROLE).build()
+                Role.builder().roleName(USER_ROLE).description("Customer").build(),
+                Role.builder().roleName(INVENTORY_MANAGER_ROLE).description("Manage products").build(),
+                Role.builder().roleName(ADMIN_ROLE).description("Manage all").build()
         );
         roleRepository.saveAll(roles);
     }

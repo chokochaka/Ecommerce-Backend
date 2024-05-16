@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -22,7 +23,16 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-public class User implements UserDetails {
+public class User extends BaseEntity<Long> implements UserDetails {
+
+    @Email(message = "Email should be valid")
+    private String email;
+
+    private String password;
+
+    private String firstName;
+
+    private String lastName;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @ToString.Exclude
@@ -32,19 +42,21 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles;
 
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    @Email(message = "Email should be valid")
-    private String email;
-    private String password;
-
     @OneToOne(mappedBy = "user")
     private RefreshToken refreshToken;
 
     @OneToOne(mappedBy = "user")
     private ForgotPassword forgotPassword;
+
+    @PrePersist
+    protected void onCreate() {
+        if (firstName == null) {
+            firstName = "Test";
+        }
+        if (lastName == null) {
+            lastName = "Test";
+        }
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -38,6 +38,13 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request));
     }
 
+    @PostMapping("/logout/{email}")
+    public ResponseEntity<String> logout(
+            @PathVariable String email
+    ) {
+        return ResponseEntity.ok(authService.logout(email));
+    }
+
     @PostMapping("/refresh-token")
     public ResponseEntity<TokenDto> refreshToken(
             @RequestBody RefreshTokenDto refreshTokenDto
@@ -68,7 +75,6 @@ public class AuthController {
         if (!mailService.verifyForgotPasswordOtp(forgotPasswordDto.otp(), email)) {
             return ResponseEntity.badRequest().body("Invalid OTP");
         }
-        authService.changePassword(forgotPasswordDto.password(), email, "", true);
         return ResponseEntity.ok(authService.changePassword(forgotPasswordDto.password(), email, "", true));
     }
 

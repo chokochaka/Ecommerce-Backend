@@ -74,6 +74,13 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
     }
+    
+    public String logout(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow();
+        refreshTokenRepository.deleteByUser(user);
+        return "Logout successfully";
+    }
 
     public TokenDto refreshToken(RefreshTokenDto refreshTokenDto) {
         RefreshToken newRefreshToken = verifyRefreshToken(refreshTokenDto.getRefreshToken());

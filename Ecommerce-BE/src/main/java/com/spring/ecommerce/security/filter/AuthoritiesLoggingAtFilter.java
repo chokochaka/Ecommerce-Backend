@@ -9,6 +9,7 @@ import jakarta.servlet.ServletResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+// TODO: remove later - test only
 public class AuthoritiesLoggingAtFilter implements Filter {
 
     private final Logger LOG =

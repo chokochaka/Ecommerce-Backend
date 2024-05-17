@@ -21,5 +21,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Modifying
     @Query("update User u set u.verificationCode = ?2 where u.email = ?1")
-    void updateVerificationCode(String email, String password);
+    void updateVerificationCode(String email, String verificationCode);
 }

@@ -30,11 +30,11 @@ public abstract class BaseEntity<T extends Serializable> implements Persistable<
 
     @Column(updatable = false, nullable = false)
     @CreatedDate
-    private Instant CreatedOn;
+    private Instant createdOn;
 
     @Column(nullable = false)
     @LastModifiedDate
-    private Instant LastUpdatedOn;
+    private Instant lastUpdatedOn;
 
     @Transient
     @Override

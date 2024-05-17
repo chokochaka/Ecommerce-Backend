@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ import java.util.function.Function;
 @Service
 @RequiredArgsConstructor
 public class JwtServiceImpl implements JWTService {
+
+    @Value("${security.jwt.access-token-secret-key}")
+    private String jwtAccessSecret;
 
     public String generateToken(UserDetails user) {
         return Jwts.builder()
@@ -51,7 +55,7 @@ public class JwtServiceImpl implements JWTService {
 
 
     private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(Constant.JWT_ACCESS_SECRET);
+        byte[] keyBytes = Decoders.BASE64.decode(jwtAccessSecret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

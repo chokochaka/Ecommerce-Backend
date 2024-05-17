@@ -1,6 +1,8 @@
 package com.spring.ecommerce.services.impl;
 
 import com.spring.ecommerce.config.Constant;
+import com.spring.ecommerce.dto.auth.ForgotPasswordDto;
+import com.spring.ecommerce.dto.auth.PasswordDto;
 import com.spring.ecommerce.dto.auth.RefreshTokenDto;
 import com.spring.ecommerce.dto.auth.SignInDto;
 import com.spring.ecommerce.dto.auth.SignUpDto;
@@ -13,6 +15,8 @@ import com.spring.ecommerce.repositories.RefreshTokenRepository;
 import com.spring.ecommerce.repositories.RoleRepository;
 import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.AuthService;
+import com.spring.ecommerce.services.JWTService;
+import com.spring.ecommerce.services.MailService;
 import com.spring.ecommerce.utils.RandomString;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,7 +37,8 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    private final JwtServiceImpl jwtServiceImpl;
+    private final JWTService jwtServiceImpl;
+    private final MailService mailService;
     private final RefreshTokenRepository refreshTokenRepository;
 
     public TokenDto register(SignUpDto signUpDto) {
@@ -107,14 +112,24 @@ public class AuthServiceImpl implements AuthService {
     }
 
 
-    public String changePassword(String password, String email, String authHeader, boolean isForgotPassword) {
+    public String changePassword(PasswordDto passwordDto, String email, String authHeader, boolean isForgotPassword) {
+        if (!Objects.equals(passwordDto.password(), passwordDto.repeatPassword())) {
+            throw new RuntimeException("Password and Repeat Password must be same");
+        }
         if (!isForgotPassword) { // change password actively by user
             String emailFromJwt = jwtServiceImpl.extractUsername(authHeader.substring(7));
             if (!Objects.equals(emailFromJwt, email)) {
                 throw new RuntimeException("Bad Authentication");
             }
         }
-        userRepository.updatePassword(email, passwordEncoder.encode(password));
+        if (passwordDto instanceof ForgotPasswordDto forgotPasswordDto) {
+            // Validate the OTP
+            if (mailService.verifyForgotPasswordOtp(forgotPasswordDto.otp(), email)) {
+                throw new RuntimeException("Invalid OTP");
+            }
+        }
+
+        userRepository.updatePassword(email, passwordEncoder.encode(passwordDto.password()));
         return "Password changed successfully";
     }
 

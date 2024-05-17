@@ -1,5 +1,6 @@
 package com.spring.ecommerce.security.filter;
 
+import com.spring.ecommerce.services.JWTService;
 import com.spring.ecommerce.services.impl.JwtServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,7 +21,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
-    private final JwtServiceImpl jwtServiceImpl;
+    private final JWTService jwtServiceImpl;
     private final UserDetailsService userDetailsService;
 
     @Override

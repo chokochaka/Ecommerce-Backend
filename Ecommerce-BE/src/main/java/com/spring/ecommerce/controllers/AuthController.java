@@ -8,7 +8,7 @@ import com.spring.ecommerce.dto.auth.SignInDto;
 import com.spring.ecommerce.dto.auth.SignUpDto;
 import com.spring.ecommerce.dto.auth.TokenDto;
 import com.spring.ecommerce.services.AuthService;
-import com.spring.ecommerce.services.impl.MailServiceImpl;
+import com.spring.ecommerce.services.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ import java.util.Objects;
 public class AuthController {
 
     private final AuthService authService;
-    private final MailServiceImpl mailService;
+    private final MailService mailService;
 
     @PostMapping(value = {"/register", "signup"})
     public ResponseEntity<TokenDto> register(
@@ -74,7 +74,7 @@ public class AuthController {
         if (!Objects.equals(changePasswordDto.password(), changePasswordDto.repeatPassword())) {
             return new ResponseEntity<>("Password and Repeat Password must be same", HttpStatus.EXPECTATION_FAILED);
         }
-        return ResponseEntity.ok(authService.changePassword(changePasswordDto.password(), email, authHeader, false));
+        return ResponseEntity.ok(authService.changePassword(changePasswordDto, email, authHeader, false));
     }
 
     @PostMapping("/forgot-password/{email}")
@@ -85,10 +85,10 @@ public class AuthController {
         if (!Objects.equals(forgotPasswordDto.password(), forgotPasswordDto.repeatPassword())) {
             return new ResponseEntity<>("Password and Repeat Password must be same", HttpStatus.EXPECTATION_FAILED);
         }
-        if (!mailService.verifyForgotPasswordOtp(forgotPasswordDto.otp(), email)) {
+        if (mailService.verifyForgotPasswordOtp(forgotPasswordDto.otp(), email)) {
             return ResponseEntity.badRequest().body("Invalid OTP");
         }
-        return ResponseEntity.ok(authService.changePassword(forgotPasswordDto.password(), email, "", true));
+        return ResponseEntity.ok(authService.changePassword(forgotPasswordDto, email, "", true));
     }
 
 }

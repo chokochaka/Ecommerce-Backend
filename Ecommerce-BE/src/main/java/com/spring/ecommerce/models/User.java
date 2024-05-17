@@ -61,7 +61,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    Set<Role> roles;
+    private Set<Role> roles;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private RefreshToken refreshToken;
@@ -70,6 +70,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
     private ForgotPassword forgotPassword;
 
     @PrePersist
+    // TODO: remove later
     protected void onCreate() {
         if (firstName == null) {
             firstName = "Test";
@@ -88,6 +89,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
         return Collections.emptyList();
     }
 
+    // TODO: remove later
     @Override
     public String getPassword() {
         return this.password;
@@ -98,6 +100,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
         return this.email;
     }
 
+    // TODO: remove later
     @Override
     public boolean isEnabled() {
         return enabled;

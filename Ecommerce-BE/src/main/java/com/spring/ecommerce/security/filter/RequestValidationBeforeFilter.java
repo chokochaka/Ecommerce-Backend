@@ -42,6 +42,7 @@ public class RequestValidationBeforeFilter implements Filter {
                         throw new BadCredentialsException("Invalid basic authentication token");
                     }
                     String email = token.substring(0, delim);
+                    // TODO: fix later
                     if (email.toLowerCase().contains("test")) {
                         res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                         return;

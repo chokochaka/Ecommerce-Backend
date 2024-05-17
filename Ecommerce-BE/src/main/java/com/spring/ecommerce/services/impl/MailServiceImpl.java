@@ -9,6 +9,7 @@ import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.MailService;
 import com.spring.ecommerce.utils.RandomString;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,10 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
+
+    @Value("${spring.mail.username}")
+    private String myEmail;
+
     private final JavaMailSender javaMailSender;
     private final UserRepository userRepository;
     private final ForgotPasswordRepository forgotPasswordRepository;
@@ -26,7 +31,7 @@ public class MailServiceImpl implements MailService {
     public void sendMail(MailBodyDto mailBodyDto) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mailBodyDto.recipient());
-        message.setFrom(Constant.MY_EMAIL);
+        message.setFrom(myEmail);
         message.setSubject(mailBodyDto.subject());
         message.setText(mailBodyDto.text());
         javaMailSender.send(message);
@@ -72,7 +77,7 @@ public class MailServiceImpl implements MailService {
         ForgotPassword forgotPassword = forgotPasswordRepository.findByOtpAndUser(otp, user).orElseThrow();
         forgotPasswordRepository.deleteById(forgotPassword.getId());
 
-        return !forgotPassword.getExpiresAt().isBefore(Instant.now());
+        return forgotPassword.getExpiresAt().isBefore(Instant.now());
     }
 
     private Integer otpGenerator() {

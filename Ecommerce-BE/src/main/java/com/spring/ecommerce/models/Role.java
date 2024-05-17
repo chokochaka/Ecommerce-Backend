@@ -33,14 +33,14 @@ import java.util.Set;
 public class Role {
     @Id
     @Column(name = "role_name")
-    String roleName;
+    private String roleName;
 
-    String description;
+    private String description;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    Set<User> users;
+    private Set<User> users;
 
     @Column(updatable = false, nullable = false)
     @CreatedDate

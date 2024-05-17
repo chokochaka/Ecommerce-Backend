@@ -1,5 +1,7 @@
 package com.spring.ecommerce.services;
 
+import com.spring.ecommerce.dto.auth.ChangePasswordDto;
+import com.spring.ecommerce.dto.auth.PasswordDto;
 import com.spring.ecommerce.dto.auth.RefreshTokenDto;
 import com.spring.ecommerce.dto.auth.SignInDto;
 import com.spring.ecommerce.dto.auth.SignUpDto;
@@ -12,7 +14,7 @@ public interface AuthService {
 
     TokenDto refreshToken(RefreshTokenDto oldRefreshToken);
 
-    String changePassword(String password, String email, String authHeader, boolean isForgotPassword);
+    String changePassword(PasswordDto changePasswordDto, String email, String authHeader, boolean isForgotPassword);
 
     String logout(String email);
 

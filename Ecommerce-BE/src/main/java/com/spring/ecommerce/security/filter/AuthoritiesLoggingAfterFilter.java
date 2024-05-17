@@ -20,6 +20,7 @@ public class AuthoritiesLoggingAfterFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
+        // TODO: remove later - test only
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (null != authentication) {
             LOG.info("User " + authentication.getName() + " is successfully authenticated and "

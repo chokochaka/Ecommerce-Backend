@@ -1,10 +1,10 @@
 package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.search.RequestDto;
-import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.models.ProductItem;
+import com.spring.ecommerce.models.User;
 import com.spring.ecommerce.repositories.ProductItemRepository;
-import com.spring.ecommerce.repositories.ProductRepository;
+import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,23 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
-public class ProductController {
-
-    private final ProductRepository productRepository;
-    private final FilterSpecificationService<Product> productItemFilterSpecificationService;
+public class UserController {
+    private final UserRepository userRepository;
+    private final FilterSpecificationService<User> userFilterSpecificationService;
 
     @PostMapping("/specification")
-    public List<Product> getProductsBySpecification(
+    public List<User> getProductsBySpecification(
             @RequestBody RequestDto requestDto
     ) {
-        Specification<Product> productItemSearchSpecification = productItemFilterSpecificationService
+        Specification<User> userSearchSpecification = userFilterSpecificationService
                 .getSearchSpecification(
                         requestDto.getListSearchRequestDto()
                         , requestDto.getGlobalOperator()
                 );
-        return productRepository.findAll(productItemSearchSpecification);
+        return userRepository.findAll(userSearchSpecification);
     }
-
 }

@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    private final JWTService jwtServiceImpl;
+    private final JWTService jwtService;
     private final MailService mailService;
     private final RefreshTokenRepository refreshTokenRepository;
 
@@ -53,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
                 .enabled(false)
                 .roles(Set.of(userRole))
                 .build());
-        String accessToken = jwtServiceImpl.generateToken(savedUser);
+        String accessToken = jwtService.generateToken(savedUser);
         RefreshToken refreshToken = generateRefreshToken(savedUser.getEmail());
 
         return TokenDto.builder()
@@ -73,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
         var user = userRepository.findByEmail(signInDto.getEmail())
                 .orElseThrow();
 
-        String accessToken = jwtServiceImpl.generateToken(user);
+        String accessToken = jwtService.generateToken(user);
         RefreshToken refreshToken = replaceRefreshToken(user);
 
         return TokenDto.builder()
@@ -104,7 +104,7 @@ public class AuthServiceImpl implements AuthService {
     public TokenDto refreshToken(RefreshTokenDto refreshTokenDto) {
         RefreshToken newRefreshToken = verifyRefreshToken(refreshTokenDto.getRefreshToken());
         User user = newRefreshToken.getUser();
-        String accessToken = jwtServiceImpl.generateToken(user);
+        String accessToken = jwtService.generateToken(user);
         return TokenDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(newRefreshToken.getRefreshToken())
@@ -117,7 +117,7 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Password and Repeat Password must be same");
         }
         if (!isForgotPassword) { // change password actively by user
-            String emailFromJwt = jwtServiceImpl.extractUsername(authHeader.substring(7));
+            String emailFromJwt = jwtService.extractUsername(authHeader.substring(7));
             if (!Objects.equals(emailFromJwt, email)) {
                 throw new RuntimeException("Bad Authentication");
             }

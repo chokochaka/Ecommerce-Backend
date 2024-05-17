@@ -1,11 +1,11 @@
 package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.search.RequestDto;
-import com.spring.ecommerce.models.Product;
+import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.repositories.ProductItemRepository;
-import com.spring.ecommerce.repositories.ProductRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
+import com.spring.ecommerce.services.impl.FilterSpecificationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,23 +16,27 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/product")
+@RequestMapping("/api/v1/productItem")
 @RequiredArgsConstructor
-public class ProductController {
+public class ProductItemController {
 
-    private final ProductRepository productRepository;
-    private final FilterSpecificationService<Product> productItemFilterSpecificationService;
+    private final ProductItemRepository productItemRepository;
+    private final FilterSpecificationService<ProductItem> productItemFilterSpecificationService;
 
     @PostMapping("/specification")
-    public List<Product> getProductsBySpecification(
+    public List<ProductItem> getProductsBySpecification(
             @RequestBody RequestDto requestDto
     ) {
-        Specification<Product> productItemSearchSpecification = productItemFilterSpecificationService
+        Specification<ProductItem> productItemSearchSpecification = productItemFilterSpecificationService
                 .getSearchSpecification(
                         requestDto.getListSearchRequestDto()
                         , requestDto.getGlobalOperator()
                 );
-        return productRepository.findAll(productItemSearchSpecification);
+        return productItemRepository.findAll(productItemSearchSpecification);
     }
 
+    @PostMapping("/create")
+    public ProductItem createProductItem(@RequestBody ProductItem productItem) {
+        return productItemRepository.save(productItem);
+    }
 }

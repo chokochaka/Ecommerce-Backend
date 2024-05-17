@@ -1,6 +1,5 @@
 package com.spring.ecommerce.services;
 
-import com.spring.ecommerce.dto.auth.ChangePasswordDto;
 import com.spring.ecommerce.dto.auth.PasswordDto;
 import com.spring.ecommerce.dto.auth.RefreshTokenDto;
 import com.spring.ecommerce.dto.auth.SignInDto;

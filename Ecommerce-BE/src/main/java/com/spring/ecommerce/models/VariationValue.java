@@ -27,7 +27,7 @@ import java.util.Set;
 public class VariationValue extends BaseEntity<Long> {
 
     private String name;
-    
+
     @ManyToOne
     @JoinColumn(name = "variation_id", nullable = false)
     private Variation variation;

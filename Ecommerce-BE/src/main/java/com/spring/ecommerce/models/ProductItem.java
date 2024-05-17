@@ -21,10 +21,10 @@ import lombok.Setter;
 @Builder
 public class ProductItem extends BaseEntity<Long> {
 
-    private String image_url;
-    private String variationCombination;
-    private int available_stock;
     private double price;
+    private String imageUrl;
+    private int availableStock;
+    private String variationCombination;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)

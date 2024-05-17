@@ -1,7 +1,6 @@
 package com.spring.ecommerce.security.filter;
 
 import com.spring.ecommerce.services.JWTService;
-import com.spring.ecommerce.services.impl.JwtServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

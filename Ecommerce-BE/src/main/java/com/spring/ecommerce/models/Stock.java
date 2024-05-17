@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class Stock extends BaseEntity<Long> {
-    private int totalStock; // life time stock
+    private int totalStock; // lifetime stock
     private int availableStock;
 
     @OneToOne(fetch = FetchType.EAGER)

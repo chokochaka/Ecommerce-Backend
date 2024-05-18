@@ -1,7 +1,5 @@
 package com.spring.ecommerce.data;
 
-import com.spring.ecommerce.models.Product;
-import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.models.Variation;
 import com.spring.ecommerce.models.VariationValue;
 import com.spring.ecommerce.repositories.ProductItemRepository;

@@ -46,5 +46,5 @@ public class Role {
 
     @Column(updatable = false, nullable = false)
     @CreatedDate
-    private Instant CreatedOn;
+    private Instant createdOn;
 }

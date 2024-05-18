@@ -34,3 +34,6 @@ spring:
 security:
   jwt:
     access-token-secret-key: ${JWT_ACCESS_SECRET}
+  api:
+    shop: ${API_SHOP_URL}
+    admin: ${API_ADMIN_URL}

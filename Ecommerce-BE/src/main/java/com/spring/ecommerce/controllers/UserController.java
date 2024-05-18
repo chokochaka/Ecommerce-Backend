@@ -1,9 +1,7 @@
 package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.search.RequestDto;
-import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.models.User;
-import com.spring.ecommerce.repositories.ProductItemRepository;
 import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
 import lombok.RequiredArgsConstructor;

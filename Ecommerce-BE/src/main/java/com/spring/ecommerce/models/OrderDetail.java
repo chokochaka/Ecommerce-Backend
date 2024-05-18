@@ -1,12 +1,10 @@
 package com.spring.ecommerce.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,24 +13,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "product_items")
+@Table(name = "order_details")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class ProductItem extends BaseEntity<Long> {
+public class OrderDetail extends BaseEntity<Long> {
 
+    private int quantity;
     private double price;
-    private String imageUrl;
-    private int availableStock;
-    private String variationCombination;
+    private String description; // variation-combinations
+    private boolean isRated;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
+    @JsonManagedReference
+    private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
-    @JsonBackReference
+    @JsonManagedReference
     private Product product;
-
-    @OneToOne(mappedBy = "productItem", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private Stock stock;
 }

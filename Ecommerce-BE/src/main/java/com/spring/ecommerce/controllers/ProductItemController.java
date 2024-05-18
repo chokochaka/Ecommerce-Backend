@@ -1,11 +1,9 @@
 package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.search.RequestDto;
-import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.repositories.ProductItemRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
-import com.spring.ecommerce.services.impl.FilterSpecificationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.PostMapping;

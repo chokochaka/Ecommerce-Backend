@@ -1,6 +1,5 @@
 package com.spring.ecommerce.repositories;
 
-import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.models.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

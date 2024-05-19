@@ -1,6 +1,7 @@
 package com.spring.ecommerce.mapper;
 
 import com.spring.ecommerce.dto.CreateProductItemDto;
+import com.spring.ecommerce.dto.ProductItemDto;
 import com.spring.ecommerce.models.ProductItem;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -13,4 +14,8 @@ public interface ProductItemMapper {
 
     @InheritInverseConfiguration
     List<ProductItem> listProductItemDtoToProductItem(List<CreateProductItemDto> source);
+
+    ProductItem productItemDtoToProductItem(ProductItemDto source);
+
+    ProductItemDto productItemToProductItemDto(ProductItem source);
 }

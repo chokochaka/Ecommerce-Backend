@@ -8,6 +8,7 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,6 +27,7 @@ public abstract class BaseEntity<T extends Serializable> implements Persistable<
 
     @Id
     @GeneratedValue
+    @Setter
     private T id;
 
     @Column(updatable = false, nullable = false)

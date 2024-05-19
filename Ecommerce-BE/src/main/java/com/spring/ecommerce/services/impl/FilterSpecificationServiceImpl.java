@@ -27,51 +27,48 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
             List<Predicate> predicates = new ArrayList<>();
 
             for (SearchRequestDto searchRequestDto : listSearchRequestDto) {
-                switch (searchRequestDto.getFieldOperation()) {
-                    case EQUAL:
-                        Predicate equal = criteriaBuilder.equal(root.get(searchRequestDto.getColumn()), searchRequestDto.getValue());
+                switch (searchRequestDto.getOperator()) {
+                    case EQ:
+                        Predicate equal = criteriaBuilder.equal(root.get(searchRequestDto.getField()), searchRequestDto.getValue());
                         predicates.add(equal);
                         break;
 
                     case LIKE:
-                        Predicate like = criteriaBuilder.like(root.get(searchRequestDto.getColumn()), "%" + searchRequestDto.getValue() + "%");
+                        Predicate like = criteriaBuilder.like(root.get(searchRequestDto.getField()), "%" + searchRequestDto.getValue() + "%");
                         predicates.add(like);
                         break;
 
                     case IN:
                         // "1,2,3"
                         String[] split = searchRequestDto.getValue().split(",");
-                        Predicate in = root.get(searchRequestDto.getColumn()).in(Arrays.asList(split));
+                        Predicate in = root.get(searchRequestDto.getField()).in(Arrays.asList(split));
                         predicates.add(in);
                         break;
 
-                    case GREATER_THAN:
-                        Predicate greaterThan = criteriaBuilder.greaterThan(root.get(searchRequestDto.getColumn()), searchRequestDto.getValue());
+                    case GT:
+                        Predicate greaterThan = criteriaBuilder.greaterThan(root.get(searchRequestDto.getField()), searchRequestDto.getValue());
                         predicates.add(greaterThan);
                         break;
 
-                    case LESS_THAN:
-                        Predicate lessThan = criteriaBuilder.lessThan(root.get(searchRequestDto.getColumn()), searchRequestDto.getValue());
+                    case LT:
+                        Predicate lessThan = criteriaBuilder.lessThan(root.get(searchRequestDto.getField()), searchRequestDto.getValue());
                         predicates.add(lessThan);
                         break;
 
                     case BETWEEN:
                         //"10, 20"
                         String[] split1 = searchRequestDto.getValue().split(",");
-                        Predicate between = criteriaBuilder.between(root.get(searchRequestDto.getColumn()), Long.parseLong(split1[0]), Long.parseLong(split1[1]));
+                        Predicate between = criteriaBuilder.between(root.get(searchRequestDto.getField()), Long.parseLong(split1[0]), Long.parseLong(split1[1]));
                         predicates.add(between);
                         break;
 
                     case JOIN:
-                        Predicate join = criteriaBuilder.equal(root.join(searchRequestDto.getJoinTable()).get(searchRequestDto.getColumn()), searchRequestDto.getValue());
+                        Predicate join = criteriaBuilder.equal(root.join(searchRequestDto.getJoinTable()).get(searchRequestDto.getField()), searchRequestDto.getValue());
                         predicates.add(join);
                         break;
 
                     default:
-//                       throw new IllegalStateException("Unexpected value: ");
-                        Predicate equalByDefault = criteriaBuilder.equal(root.get(searchRequestDto.getColumn()), searchRequestDto.getValue());
-                        predicates.add(equalByDefault);
-                        break;
+                        throw new IllegalStateException("Unexpected value: ");
                 }
             }
             if (globalOperator == RequestDto.GlobalOperator.AND) {

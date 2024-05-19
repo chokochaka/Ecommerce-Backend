@@ -6,13 +6,39 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SearchRequestDto {
-    private String column;
+    public FieldOperation operator = FieldOperation.EQ;
+    private String field;
     private String value;
-
-    public FieldOperation fieldOperation = FieldOperation.EQUAL;
     private String joinTable;
 
     public enum FieldOperation {
-        EQUAL, LIKE, IN, GREATER_THAN, LESS_THAN, BETWEEN, JOIN
+        EQ,           // equals
+        NE,           // not equals
+        LT,           // less than
+        GT,           // greater than
+        LTE,          // less than or equal to
+        GTE,          // greater than or equal to
+        IN,           // in
+        NIN,          // not in
+        LIKE,         // like
+        CONTAINS,     // contains
+        NCONTAINS,    // not contains
+        CONTAINSS,    // case-sensitive contains
+        NCONTAINSS,   // case-sensitive not contains
+        BETWEEN,      // between
+        JOIN,         // join
+        NBETWEEN,     // not between
+        NULL,         // null
+        NNULL,        // not null
+        STARTSWITH,   // starts with
+        NSTARTSWITH,  // not starts with
+        STARTSWITHS,  // case-sensitive starts with
+        NSTARTSWITHS, // case-sensitive not starts with
+        ENDSWITH,     // ends with
+        NENDSWITH,    // not ends with
+        ENDSWITHS,    // case-sensitive ends with
+        NENDSWITHS,   // case-sensitive not ends with
+        OR,           // or
+        AND           // and
     }
 }

@@ -8,8 +8,9 @@ import java.util.List;
 @Getter
 @Setter
 public class RequestDto {
-    private List<SearchRequestDto> listSearchRequestDto;
     public GlobalOperator globalOperator;
+    private List<SearchRequestDto> searchRequestDtos;
+    private PageRequestDto pageRequestDto;
 
     public enum GlobalOperator {
         AND, OR, ALL

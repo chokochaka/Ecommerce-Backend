@@ -20,13 +20,13 @@ public class UserController {
     private final UserRepository userRepository;
     private final FilterSpecificationService<User> userFilterSpecificationService;
 
-    @PostMapping("/specification")
+    @PostMapping("/search")
     public List<User> getProductsBySpecification(
             @RequestBody RequestDto requestDto
     ) {
         Specification<User> userSearchSpecification = userFilterSpecificationService
                 .getSearchSpecification(
-                        requestDto.getListSearchRequestDto()
+                        requestDto.getSearchRequestDtos()
                         , requestDto.getGlobalOperator()
                 );
         return userRepository.findAll(userSearchSpecification);

@@ -1,5 +1,7 @@
 package com.spring.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToOne;
@@ -21,7 +23,8 @@ public class Stock extends BaseEntity<Long> {
     private int totalStock; // lifetime stock
     private int availableStock;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "stock", fetch = FetchType.EAGER)
+    @JsonBackReference
     private ProductItem productItem;
 
 }

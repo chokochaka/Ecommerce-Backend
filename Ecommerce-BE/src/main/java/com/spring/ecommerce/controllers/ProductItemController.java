@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,9 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductItemController {
 
-    private final ProductItemRepository productItemRepository;
     private final ProductItemService productItemService;
-    private final FilterSpecificationService<ProductItem> productItemFilterSpecificationService;
 
     @PostMapping("/search")
     public List<ProductItem> getProductItemsBySearch(@RequestBody SearchRequestDto searchRequestDto
@@ -44,7 +43,7 @@ public class ProductItemController {
         return productItemService.getProductItemsBySearchAndPagination(searchRequestDto);
     }
 
-    @PostMapping
+    @PostMapping // add product item to product
     public void createProductItem(@RequestBody AddProductItemToProductDto addProductItemToProductDto) {
         productItemService.createProductItem(addProductItemToProductDto);
     }
@@ -55,6 +54,11 @@ public class ProductItemController {
             @RequestBody ProductItemDto productItemDto
     ) {
         productItemService.updateProductItem(id, productItemDto);
+    }
+
+    @GetMapping("/product/{productId}")
+    public List<ProductItem> getProductItemsByProductId(@PathVariable long productId) {
+        return productItemService.getProductItemsByProductId(productId);
     }
 
     @DeleteMapping("/{id}")

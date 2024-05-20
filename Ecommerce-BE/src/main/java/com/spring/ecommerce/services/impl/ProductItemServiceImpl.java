@@ -28,8 +28,6 @@ public class ProductItemServiceImpl implements ProductItemService {
     private final ProductItemRepository productItemRepository;
     private final FilterSpecificationService<ProductItem> productItemFilterSpecificationService;
 
-    private final ProductItemMapper productItemMapper;
-
     @Override
     public List<ProductItem> getProductItemsBySearch(SearchRequestDto searchRequestDto) {
         Specification<ProductItem> productItemSearchSpecification = productItemFilterSpecificationService
@@ -55,13 +53,8 @@ public class ProductItemServiceImpl implements ProductItemService {
     public void createProductItem(AddProductItemToProductDto addProductItemToProductDto) {
         Product product = productRepository.findById(addProductItemToProductDto.getProductId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-//        Stock stock = Stock.builder()
-//                .availableStock(addProductItemToProductDto.getAvailableStock())
-//                .totalStock(addProductItemToProductDto.getAvailableStock())
-//                .build();
         ProductItem productItem = ProductItem.builder()
                 .product(product)
-//                .stock(stock)
                 .availableStock(addProductItemToProductDto.getAvailableStock())
                 .imageUrl(addProductItemToProductDto.getImageUrl())
                 .price(addProductItemToProductDto.getPrice())
@@ -84,5 +77,10 @@ public class ProductItemServiceImpl implements ProductItemService {
     @Override
     public void deleteProductItem(long id) {
         productItemRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ProductItem> getProductItemsByProductId(long productId) {
+        return productItemRepository.findByProductId(productId);
     }
 }

@@ -1,6 +1,7 @@
 package com.spring.ecommerce.services;
 
 import com.spring.ecommerce.dto.AddProductItemToProductDto;
+import com.spring.ecommerce.dto.ProductDto;
 import com.spring.ecommerce.dto.ProductItemDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.ProductItem;
@@ -20,4 +21,6 @@ public interface ProductItemService {
     void updateProductItem(long id, ProductItemDto productItemDto);
 
     void deleteProductItem(long id);
+
+    List<ProductItem> getProductItemsByProductId(long productId);
 }

@@ -8,6 +8,6 @@ import java.util.List;
 @Getter
 @Setter
 public class CreateProductWithProductItemDto {
-    private CreateProductDto product;
+    private ProductDto product;
     private List<AddProductItemToProductDto> productItems;
 }

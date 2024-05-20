@@ -18,7 +18,7 @@ public interface ProductItemRepository extends JpaRepository<ProductItem, Long>,
 
     @Transactional
     @Modifying
-    @Query("update ProductItem p set p.price = :price, p.imageUrl = :imageUrl, p.availableStock = :stock, p.variationCombination = :variation where p.id = :id")
+    @Query("update ProductItem p set p.price = :price, p.imageUrl = :imageUrl, p.availableStock = :stock, p.variationCombination = :variation, p.lastUpdatedOn = CURRENT_TIMESTAMP where p.id = :id")
     void updateProductItemById(@Param("price") double price, @Param("imageUrl") String imageUrl, @Param("stock") int availableStock, @Param("variation") String variationCombination, @Param("id") @NonNull Long id);
 
     @Transactional

@@ -9,5 +9,5 @@ import java.util.List;
 @Setter
 public class CreateProductWithProductItemDto {
     private CreateProductDto product;
-    private List<CreateProductItemDto> productItems;
+    private List<AddProductItemToProductDto> productItems;
 }

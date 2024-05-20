@@ -40,11 +40,6 @@ public abstract class BaseEntity<T extends Serializable> implements Persistable<
     @LastModifiedDate
     private Instant lastUpdatedOn;
 
-    @PrePersist
-    protected void onCreate() {
-        this.lastUpdatedOn = Instant.now();
-    }
-
     @Transient
     @Override
     public boolean isNew() {

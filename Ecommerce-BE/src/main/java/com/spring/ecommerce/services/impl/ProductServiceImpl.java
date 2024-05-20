@@ -1,5 +1,6 @@
 package com.spring.ecommerce.services.impl;
 
+import com.spring.ecommerce.dto.CreateProductDto;
 import com.spring.ecommerce.dto.CreateProductWithProductItemDto;
 import com.spring.ecommerce.mapper.ProductItemMapper;
 import com.spring.ecommerce.mapper.ProductMapper;
@@ -18,6 +19,12 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ProductItemMapper productItemMapper;
+
+    @Override
+    public void createProduct(CreateProductDto createProductDto) {
+        Product product = productMapper.productDtoToProduct(createProductDto);
+        productRepository.save(product);
+    }
 
     @Override
     public void createProductWithProductItems(CreateProductWithProductItemDto createProductWithProductItemDto) {

@@ -1,6 +1,6 @@
 package com.spring.ecommerce.mapper;
 
-import com.spring.ecommerce.dto.CreateProductItemDto;
+import com.spring.ecommerce.dto.AddProductItemToProductDto;
 import com.spring.ecommerce.dto.ProductItemDto;
 import com.spring.ecommerce.models.ProductItem;
 import org.mapstruct.InheritInverseConfiguration;
@@ -10,10 +10,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ProductItemMapper {
-    List<CreateProductItemDto> listProductItemToProductItemDto(List<ProductItem> source);
+    List<AddProductItemToProductDto> listProductItemToProductItemDto(List<ProductItem> source);
 
     @InheritInverseConfiguration
-    List<ProductItem> listProductItemDtoToProductItem(List<CreateProductItemDto> source);
+    List<ProductItem> listProductItemDtoToProductItem(List<AddProductItemToProductDto> source);
 
     ProductItem productItemDtoToProductItem(ProductItemDto source);
 

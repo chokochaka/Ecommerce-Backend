@@ -25,7 +25,7 @@ public class OrderDetail extends BaseEntity<Long> {
     private double price;
     private String description; // variation-combinations
     private boolean isRated;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
     @JsonManagedReference

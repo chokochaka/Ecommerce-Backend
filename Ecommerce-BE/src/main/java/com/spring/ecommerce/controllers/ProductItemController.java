@@ -1,9 +1,9 @@
 package com.spring.ecommerce.controllers;
 
-import com.spring.ecommerce.dto.CreateProductItemDto;
+import com.spring.ecommerce.dto.AddProductItemToProductDto;
 import com.spring.ecommerce.dto.ProductItemDto;
 import com.spring.ecommerce.dto.search.PageRequestDto;
-import com.spring.ecommerce.dto.search.RequestDto;
+import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.repositories.ProductItemRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
@@ -32,33 +32,21 @@ public class ProductItemController {
     private final FilterSpecificationService<ProductItem> productItemFilterSpecificationService;
 
     @PostMapping("/search")
-    public List<ProductItem> getProductsBySearch(
-            @RequestBody RequestDto requestDto
+    public List<ProductItem> getProductItemsBySearch(@RequestBody SearchRequestDto searchRequestDto
     ) {
-        Specification<ProductItem> productItemSearchSpecification = productItemFilterSpecificationService
-                .getSearchSpecification(
-                        requestDto.getSearchRequestDtos()
-                        , requestDto.getGlobalOperator()
-                );
-        return productItemRepository.findAll(productItemSearchSpecification);
+        return productItemService.getProductItemsBySearch(searchRequestDto);
     }
 
     @PostMapping("/search/paginated")
-    public Page<ProductItem> getProductsBySearchAndPagination(
-            @RequestBody RequestDto requestDto
+    public Page<ProductItem> getProductItemsBySearchAndPagination(
+            @RequestBody SearchRequestDto searchRequestDto
     ) {
-        Specification<ProductItem> productItemSearchSpecification = productItemFilterSpecificationService
-                .getSearchSpecification(
-                        requestDto.getSearchRequestDtos()
-                        , requestDto.getGlobalOperator()
-                );
-        Pageable pageable = new PageRequestDto().getPageable(requestDto.getPageRequestDto());
-        return productItemRepository.findAll(productItemSearchSpecification, pageable);
+        return productItemService.getProductItemsBySearchAndPagination(searchRequestDto);
     }
 
     @PostMapping
-    public void createProductItem(@RequestBody CreateProductItemDto createProductItemDto) {
-        productItemService.createProductItem(createProductItemDto);
+    public void createProductItem(@RequestBody AddProductItemToProductDto addProductItemToProductDto) {
+        productItemService.createProductItem(addProductItemToProductDto);
     }
 
     @PutMapping("/{id}")

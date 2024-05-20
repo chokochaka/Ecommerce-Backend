@@ -1,6 +1,6 @@
 package com.spring.ecommerce.controllers;
 
-import com.spring.ecommerce.dto.search.RequestDto;
+import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.User;
 import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
@@ -22,12 +22,12 @@ public class UserController {
 
     @PostMapping("/search")
     public List<User> getProductsBySpecification(
-            @RequestBody RequestDto requestDto
+            @RequestBody SearchRequestDto searchRequestDto
     ) {
         Specification<User> userSearchSpecification = userFilterSpecificationService
                 .getSearchSpecification(
-                        requestDto.getSearchRequestDtos()
-                        , requestDto.getGlobalOperator()
+                        searchRequestDto.getFieldRequestDtos()
+                        , searchRequestDto.getGlobalOperator()
                 );
         return userRepository.findAll(userSearchSpecification);
     }

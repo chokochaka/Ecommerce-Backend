@@ -36,7 +36,7 @@ public class Product extends BaseEntity<Long> {
     private boolean isFeatured;
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<ProductItem> productItems;
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -64,5 +64,10 @@ public class Product extends BaseEntity<Long> {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
+
+    protected void onCreate() {
+        this.averageRating = 0;
+        this.isFeatured = false;
+    }
 
 }

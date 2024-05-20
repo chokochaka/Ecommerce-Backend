@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateProductItemDto {
+public class AddProductItemToProductDto {
     private long productId; // This is the id of the product to which this item belongs
     private int availableStock;
     private double price;

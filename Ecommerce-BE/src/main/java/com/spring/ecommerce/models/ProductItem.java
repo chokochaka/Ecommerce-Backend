@@ -8,8 +8,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.PostPersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,11 +41,21 @@ public class ProductItem extends BaseEntity<Long> {
     @JsonManagedReference
     private Stock stock;
 
-    @PrePersist
     protected void onCreate() {
         stock = Stock.builder()
                 .availableStock(this.availableStock)
                 .totalStock(this.availableStock)
                 .build();
+    }
+
+    @Transient
+    private Long productId;
+
+    @PostLoad
+    @PostPersist
+    private void setProductId() {
+        if (this.product != null) {
+            this.productId = this.product.getId();
+        }
     }
 }

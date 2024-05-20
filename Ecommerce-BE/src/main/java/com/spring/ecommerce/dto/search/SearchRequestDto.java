@@ -6,19 +6,20 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SearchRequestDto {
-    public FieldOperation operator = FieldOperation.EQ;
+    public FieldOperation operator = FieldOperation.EQM;
     private String field;
     private String value;
     private String joinTable;
 
+    // EQM, INM cause MUI value is not supported EQ, IN
     public enum FieldOperation {
-        EQ,           // equals
+        EQM,           // equals
         NE,           // not equals
         LT,           // less than
         GT,           // greater than
         LTE,          // less than or equal to
         GTE,          // greater than or equal to
-        IN,           // in
+        INM,           // in
         NIN,          // not in
         LIKE,         // like
         CONTAINS,     // contains

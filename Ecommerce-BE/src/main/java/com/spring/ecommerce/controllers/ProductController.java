@@ -32,7 +32,7 @@ public class ProductController {
 //        return productRepository.findAll(productItemSearchSpecification);
 //    }
 
-    @PostMapping("/create")
+    @PostMapping("/create-with-product-items")
     public void createProduct(@RequestBody CreateProductWithProductItemDto createProductWithProductItemDto) {
         productService.createProductWithProductItems(createProductWithProductItemDto);
     }

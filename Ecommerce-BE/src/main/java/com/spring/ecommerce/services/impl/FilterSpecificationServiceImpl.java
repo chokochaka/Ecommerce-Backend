@@ -28,18 +28,18 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
 
             for (SearchRequestDto searchRequestDto : listSearchRequestDto) {
                 switch (searchRequestDto.getOperator()) {
-                    case EQ:
+                    case EQM:
                         Predicate equal = criteriaBuilder.equal(root.get(searchRequestDto.getField()), searchRequestDto.getValue());
                         predicates.add(equal);
                         break;
 
-                    case LIKE:
+                    case CONTAINS:
                         Predicate like = criteriaBuilder.like(root.get(searchRequestDto.getField()), "%" + searchRequestDto.getValue() + "%");
                         predicates.add(like);
                         break;
 
-                    case IN:
-                        // "1,2,3"
+                    case INM:
+                        // 1,2,3
                         String[] split = searchRequestDto.getValue().split(",");
                         Predicate in = root.get(searchRequestDto.getField()).in(Arrays.asList(split));
                         predicates.add(in);
@@ -60,6 +60,16 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
                         String[] split1 = searchRequestDto.getValue().split(",");
                         Predicate between = criteriaBuilder.between(root.get(searchRequestDto.getField()), Long.parseLong(split1[0]), Long.parseLong(split1[1]));
                         predicates.add(between);
+                        break;
+
+                    case STARTSWITH:
+                        Predicate startsWith = criteriaBuilder.like(root.get(searchRequestDto.getField()), searchRequestDto.getValue() + "%");
+                        predicates.add(startsWith);
+                        break;
+
+                    case ENDSWITH:
+                        Predicate endsWith = criteriaBuilder.like(root.get(searchRequestDto.getField()), "%" + searchRequestDto.getValue());
+                        predicates.add(endsWith);
                         break;
 
                     case JOIN:

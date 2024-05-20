@@ -5,6 +5,8 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +39,11 @@ public abstract class BaseEntity<T extends Serializable> implements Persistable<
     @Column(nullable = false)
     @LastModifiedDate
     private Instant lastUpdatedOn;
+
+    @PrePersist
+    protected void onCreate() {
+        this.lastUpdatedOn = Instant.now();
+    }
 
     @Transient
     @Override

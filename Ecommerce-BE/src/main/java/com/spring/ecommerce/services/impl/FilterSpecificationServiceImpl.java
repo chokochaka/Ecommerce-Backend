@@ -23,7 +23,7 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
             if (globalOperator == GlobalOperator.ALL) {
                 return criteriaBuilder.conjunction(); // return all
             }
-            System.out.println(fieldRequestDtos);
+
             List<Predicate> predicates = new ArrayList<>();
 
             for (FieldRequestDto fieldRequestDto : fieldRequestDtos) {

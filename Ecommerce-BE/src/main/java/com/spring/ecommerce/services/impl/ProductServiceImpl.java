@@ -5,7 +5,9 @@ import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.mapper.ProductItemMapper;
 import com.spring.ecommerce.mapper.ProductMapper;
+import com.spring.ecommerce.models.Category;
 import com.spring.ecommerce.models.Product;
+import com.spring.ecommerce.repositories.CategoryRepository;
 import com.spring.ecommerce.repositories.ProductRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
 import com.spring.ecommerce.services.ProductService;
@@ -15,7 +17,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
     private final ProductItemMapper productItemMapper;
     private final FilterSpecificationService<Product> productFilterSpecificationService;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public List<Product> getProductsBySearch(SearchRequestDto searchRequestDto) {
@@ -49,6 +54,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void createProduct(ProductDto productDto) {
         Product product = productMapper.productDtoToProduct(productDto);
+        // I have list of categories ids need to add to the product, example ids: [1,2,3,4,5] mean that product will have 5 categories
+        List<Category> categoryList = categoryRepository.findAllById(productDto.getCategoryIds());
+        Set<Category> categories = new HashSet<>(categoryList);
+        product.setCategories(categories);
+
         productRepository.save(product);
     }
 

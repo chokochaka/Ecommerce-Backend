@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 public class ProductDto {
@@ -12,4 +15,6 @@ public class ProductDto {
     private double averageRating;
     @JsonProperty("isFeatured")
     private boolean isFeatured;
+
+    Set<Long> categoryIds;
 }

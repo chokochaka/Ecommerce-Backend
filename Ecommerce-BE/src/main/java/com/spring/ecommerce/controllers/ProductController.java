@@ -25,10 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductMapper productMapper;
     private final ProductService productService;
-    private final ProductRepository productRepository;
-    private final FilterSpecificationService<Product> productFilterSpecificationService;
 
     @PostMapping("/search")
     public List<Product> getProductItemsBySearch(@RequestBody SearchRequestDto searchRequestDto

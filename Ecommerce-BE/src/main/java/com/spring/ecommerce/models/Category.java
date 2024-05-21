@@ -1,6 +1,6 @@
 package com.spring.ecommerce.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -37,10 +37,11 @@ public class Category extends BaseEntity<Long> {
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @JsonBackReference
     private Set<Product> products;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_category_id")
-    @JsonManagedReference
+    @JsonBackReference
     private ParentCategory parentCategory;
 }

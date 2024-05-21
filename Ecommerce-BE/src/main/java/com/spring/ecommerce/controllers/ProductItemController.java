@@ -50,7 +50,7 @@ public class ProductItemController {
     ) {
         productItemService.updateProductItem(id, productItemDto);
     }
-    
+
     @DeleteMapping("/{id}")
     public void deleteProductItem(@PathVariable long id) {
         productItemService.deleteProductItem(id);

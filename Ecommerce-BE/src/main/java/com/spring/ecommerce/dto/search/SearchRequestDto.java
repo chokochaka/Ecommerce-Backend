@@ -12,5 +12,4 @@ public class SearchRequestDto {
     private GlobalOperator globalOperator;
     private List<FieldRequestDto> fieldRequestDtos;
     private PageRequestDto pageRequestDto;
-
 }

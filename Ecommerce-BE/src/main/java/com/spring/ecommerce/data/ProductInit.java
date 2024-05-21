@@ -26,7 +26,6 @@ public class ProductInit {
     @PostConstruct
     public void initData() {
         createProduct();
-
     }
 
     void createProduct() {

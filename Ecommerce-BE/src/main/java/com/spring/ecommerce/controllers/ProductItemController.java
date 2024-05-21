@@ -2,16 +2,11 @@ package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.AddProductItemToProductDto;
 import com.spring.ecommerce.dto.ProductItemDto;
-import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.ProductItem;
-import com.spring.ecommerce.repositories.ProductItemRepository;
-import com.spring.ecommerce.services.FilterSpecificationService;
 import com.spring.ecommerce.services.ProductItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,14 +50,14 @@ public class ProductItemController {
     ) {
         productItemService.updateProductItem(id, productItemDto);
     }
+    
+    @DeleteMapping("/{id}")
+    public void deleteProductItem(@PathVariable long id) {
+        productItemService.deleteProductItem(id);
+    }
 
     @GetMapping("/product/{productId}")
     public List<ProductItem> getProductItemsByProductId(@PathVariable long productId) {
         return productItemService.getProductItemsByProductId(productId);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteProductItem(@PathVariable long id) {
-        productItemService.deleteProductItem(id);
     }
 }

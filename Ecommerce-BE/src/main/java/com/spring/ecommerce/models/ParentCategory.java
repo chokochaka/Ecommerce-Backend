@@ -1,48 +1,44 @@
 package com.spring.ecommerce.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-@EntityListeners(value = AuditingEntityListener.class)
-@Table(name = "roles")
+@Table(name = "parent_categories",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "parent_category_name"),
+        })
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
 @Getter
 @Setter
-public class Role {
-    @Id
-    @Column(name = "role_name")
-    private String roleName;
+public class ParentCategory extends BaseEntity<Long> {
+    @Column(name = "parent_category_name")
+    private String parentCategoryName;
 
     private String description;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
+    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY)
     @JsonBackReference
-    private Set<User> users;
+    private List<Category> categories;
 
-    @Column(updatable = false, nullable = false)
-    @CreatedDate
-    private Instant createdOn;
+
 }

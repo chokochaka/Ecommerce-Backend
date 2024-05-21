@@ -37,11 +37,10 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "email"),
         })
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
-@Builder
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")

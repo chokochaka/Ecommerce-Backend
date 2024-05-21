@@ -1,7 +1,6 @@
 package com.spring.ecommerce.services;
 
 import com.spring.ecommerce.dto.ProductDto;
-import com.spring.ecommerce.dto.CreateProductWithProductItemDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.Product;
 import org.springframework.data.domain.Page;
@@ -22,6 +21,4 @@ public interface ProductService {
     void deleteProduct(long id);
 
     Product getProductById(long id);
-
-    void createProductWithProductItems(CreateProductWithProductItemDto createProductWithProductItemDto); // admin - iv - usage
 }

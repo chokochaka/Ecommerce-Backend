@@ -19,11 +19,10 @@ import java.util.Set;
 @Entity
 @Table(name = "variation_values")
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
-@Builder
 public class VariationValue extends BaseEntity<Long> {
 
     private String name;

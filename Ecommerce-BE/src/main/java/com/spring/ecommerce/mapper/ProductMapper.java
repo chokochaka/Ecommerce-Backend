@@ -12,6 +12,7 @@ public interface ProductMapper {
     ProductDto productToProductDto(Product source);
 
     @Mapping(target = "averageRating", source = "averageRating")
+    @Mapping(target = "isFeatured", source = "featured")
     @InheritInverseConfiguration
     Product productDtoToProduct(ProductDto destination);
 }

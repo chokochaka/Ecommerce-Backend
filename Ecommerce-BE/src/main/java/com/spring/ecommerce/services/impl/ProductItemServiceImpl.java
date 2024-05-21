@@ -4,7 +4,6 @@ import com.spring.ecommerce.dto.AddProductItemToProductDto;
 import com.spring.ecommerce.dto.ProductItemDto;
 import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
-import com.spring.ecommerce.mapper.ProductItemMapper;
 import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.repositories.ProductItemRepository;
@@ -65,13 +64,20 @@ public class ProductItemServiceImpl implements ProductItemService {
 
     @Override
     public void updateProductItem(long id, ProductItemDto productItemDto) {
-        productItemRepository.updateProductItemById(
-                productItemDto.getPrice(),
-                productItemDto.getImageUrl(),
-                productItemDto.getAvailableStock(),
-                productItemDto.getVariationCombination(),
-                id
-        );
+        ProductItem productItem = productItemRepository.findById(id).orElseThrow(() -> new RuntimeException("Product item not found"));
+        int prevStock = productItem.getAvailableStock();
+
+        productItem.setAvailableStock(productItemDto.getAvailableStock());
+        productItem.setImageUrl(productItemDto.getImageUrl());
+        productItem.setPrice(productItemDto.getPrice());
+        productItem.setVariationCombination(productItemDto.getVariationCombination());
+        productItem.getStock().setAvailableStock(productItemDto.getAvailableStock());
+
+        // availableStock increased if new stock is greater than previous stock
+        if (productItemDto.getAvailableStock() > prevStock) {
+            productItem.getStock().setTotalStock(productItem.getStock().getTotalStock() + (productItemDto.getAvailableStock() - prevStock));
+        }
+        productItemRepository.save(productItem);
     }
 
     @Override

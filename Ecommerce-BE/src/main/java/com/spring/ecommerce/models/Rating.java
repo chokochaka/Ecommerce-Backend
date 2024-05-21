@@ -15,10 +15,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "ratings")
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class Rating extends BaseEntity<Long> {
 
     private Long userId;

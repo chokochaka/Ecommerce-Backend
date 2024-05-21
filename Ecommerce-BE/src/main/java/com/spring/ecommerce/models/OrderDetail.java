@@ -15,10 +15,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "order_details")
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class OrderDetail extends BaseEntity<Long> {
 
     private int quantity;

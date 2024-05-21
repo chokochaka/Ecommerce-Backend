@@ -1,13 +1,11 @@
 package com.spring.ecommerce.services.impl;
 
 import com.spring.ecommerce.dto.ProductDto;
-import com.spring.ecommerce.dto.CreateProductWithProductItemDto;
 import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.mapper.ProductItemMapper;
 import com.spring.ecommerce.mapper.ProductMapper;
 import com.spring.ecommerce.models.Product;
-import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.repositories.ProductRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
 import com.spring.ecommerce.services.ProductService;
@@ -61,7 +59,6 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(productDto.getDescription());
         product.setFeatured(productDto.isFeatured());
         productRepository.save(product);
-
     }
 
     @Override
@@ -72,13 +69,5 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(long id) {
         return productRepository.findById(id).orElseThrow();
-    }
-
-    @Override
-    public void createProductWithProductItems(CreateProductWithProductItemDto createProductWithProductItemDto) {
-        Product product = productMapper.productDtoToProduct(createProductWithProductItemDto.getProduct());
-        List<ProductItem> productItems = productItemMapper.listProductItemDtoToProductItem(createProductWithProductItemDto.getProductItems());
-        product.getProductItems().addAll(productItems);
-        productRepository.save(product);
     }
 }

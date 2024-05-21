@@ -16,16 +16,16 @@ import java.util.List;
 public interface ProductItemRepository extends JpaRepository<ProductItem, Long>, JpaSpecificationExecutor<ProductItem> {
     List<ProductItem> findByVariationCombinationStartingWith(String size);
 
-    @Transactional
-    @Modifying
-    @Query("update ProductItem p set p.price = :price, p.imageUrl = :imageUrl, p.availableStock = :stock, p.variationCombination = :variation, p.lastUpdatedOn = CURRENT_TIMESTAMP where p.id = :id")
-    void updateProductItemById(@Param("price") double price, @Param("imageUrl") String imageUrl, @Param("stock") int availableStock, @Param("variation") String variationCombination, @Param("id") @NonNull Long id);
+//    @Transactional
+//    @Modifying
+//    @Query("update ProductItem p set p.price = :price, p.imageUrl = :imageUrl, p.availableStock = :stock, p.variationCombination = :variation, p.lastUpdatedOn = CURRENT_TIMESTAMP where p.id = :id")
+//    void updateProductItemById(@Param("price") double price, @Param("imageUrl") String imageUrl, @Param("stock") int availableStock, @Param("variation") String variationCombination, @Param("id") @NonNull Long id);
 
     @Query("SELECT pi FROM ProductItem pi WHERE pi.product.id = :productId")
     List<ProductItem> findByProductId(long productId);
 
-    @Transactional
-    @Modifying
-    void deleteById(long id);
+//    @Transactional
+//    @Modifying
+//    void deleteById(long id);
 
 }

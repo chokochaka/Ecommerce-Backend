@@ -15,10 +15,10 @@ import java.util.List;
 @Entity
 @Table(name = "variations")
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class Variation extends BaseEntity<Long> {
 
     private String name;

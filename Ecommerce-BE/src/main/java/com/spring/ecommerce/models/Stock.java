@@ -14,10 +14,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "stocks")
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class Stock extends BaseEntity<Long> {
     private int totalStock; // lifetime stock
     private int availableStock;

@@ -1,20 +1,14 @@
 package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.ProductDto;
-import com.spring.ecommerce.dto.CreateProductWithProductItemDto;
-import com.spring.ecommerce.dto.ProductItemDto;
-import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.mapper.ProductMapper;
 import com.spring.ecommerce.models.Product;
-import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.repositories.ProductRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
 import com.spring.ecommerce.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,11 +64,6 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable long id) {
         return productService.getProductById(id);
-    }
-
-    @PostMapping("/create-with-product-items")
-    public void createProduct(@RequestBody CreateProductWithProductItemDto createProductWithProductItemDto) {
-        productService.createProductWithProductItems(createProductWithProductItemDto);
     }
 
 }

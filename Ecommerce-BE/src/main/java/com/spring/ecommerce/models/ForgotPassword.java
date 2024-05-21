@@ -19,11 +19,10 @@ import java.time.Instant;
 @Entity
 @Table(name = "forgot_password")
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
-@Builder
 public class ForgotPassword {
     @Id
     @GeneratedValue

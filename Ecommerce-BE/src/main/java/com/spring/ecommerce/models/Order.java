@@ -24,10 +24,10 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class Order {
 
     @Id

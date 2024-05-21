@@ -19,10 +19,10 @@ import java.time.Instant;
 @Entity
 @Table(name = "refresh_token")
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class RefreshToken {
     @Id
     @GeneratedValue

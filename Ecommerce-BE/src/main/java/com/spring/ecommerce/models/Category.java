@@ -1,5 +1,6 @@
 package com.spring.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -23,11 +24,10 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "name"),
         })
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
-@Builder
 public class Category extends BaseEntity<Long> {
 
     private String name;
@@ -39,7 +39,8 @@ public class Category extends BaseEntity<Long> {
     @ToString.Exclude
     private Set<Product> products;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_category_id")
-    private Category parentCategory;
+    @JsonManagedReference
+    private ParentCategory parentCategory;
 }

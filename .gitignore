@@ -1,12 +1,5 @@
 htmlcssfinding/
 Ecommerce-BE/.env
 Ecommerce-BE/src/main/java/com/spring/ecommerce/data/
-
-# Ecommerce-SHOP/
-# Ecommerce-ADMIN/
-
-*.zip
-
 worktree/
-
-Ecommerce-SHOP/node_modules/
+*.zip

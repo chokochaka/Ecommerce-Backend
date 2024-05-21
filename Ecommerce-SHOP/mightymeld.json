@@ -1,0 +1,10 @@
+{
+  "run": "npm run dev",
+  "run_prettier": true,
+  "include": [
+    "src",
+    ".prettierrc.json"
+  ],
+  "web_server_url": "http://localhost:5173",
+  "editor": "webstorm"
+}

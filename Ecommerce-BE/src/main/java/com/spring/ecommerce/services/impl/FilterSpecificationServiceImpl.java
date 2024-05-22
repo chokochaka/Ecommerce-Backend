@@ -25,7 +25,7 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
             }
 
             List<Predicate> predicates = new ArrayList<>();
-
+            // TODO: Fix enum name
             for (FieldRequestDto fieldRequestDto : fieldRequestDtos) {
                 switch (fieldRequestDto.getOperator()) {
                     case EQM:

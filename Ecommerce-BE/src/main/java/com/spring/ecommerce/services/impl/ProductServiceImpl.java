@@ -26,7 +26,6 @@ import java.util.Set;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
-    private final ProductItemMapper productItemMapper;
     private final FilterSpecificationService<Product> productFilterSpecificationService;
     private final CategoryRepository categoryRepository;
 

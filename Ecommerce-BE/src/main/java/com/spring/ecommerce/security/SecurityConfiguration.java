@@ -1,5 +1,6 @@
 package com.spring.ecommerce.security;
 
+import com.spring.ecommerce.enums.RoleEnum;
 import com.spring.ecommerce.security.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -80,6 +81,7 @@ public class SecurityConfiguration {
 //                                .permitAll()
 //
 //                                .requestMatchers("/api/v1/auth/change-password/*").authenticated()
+                                .requestMatchers("/api/v1/product/**").hasAnyRole(RoleEnum.ROLE_ADMIN.getRoleName())
                                 .anyRequest().permitAll())
 //                                .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider)

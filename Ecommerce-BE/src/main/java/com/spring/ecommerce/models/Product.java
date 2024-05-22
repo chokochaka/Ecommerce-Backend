@@ -2,6 +2,7 @@ package com.spring.ecommerce.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -64,6 +65,7 @@ public class Product extends BaseEntity<Long> {
             name = "products_categories",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @Column(nullable = true)
     private Set<Category> categories;
 
 }

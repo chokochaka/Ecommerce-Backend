@@ -1,12 +1,17 @@
 package com.spring.ecommerce.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.PostPersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,9 +39,7 @@ public class Category extends BaseEntity<Long> {
 
     private String description;
 
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
+    @ManyToMany(mappedBy = "categories")
     @JsonBackReference
     private Set<Product> products;
 
@@ -44,4 +47,15 @@ public class Category extends BaseEntity<Long> {
     @JoinColumn(name = "parent_category_id")
     @JsonBackReference
     private ParentCategory parentCategory;
+
+    @Transient
+    private String parentCategoryName;
+
+    @PostLoad
+    @PostPersist
+    private void setProductId() {
+        if (this.parentCategory != null) {
+            this.parentCategoryName = this.parentCategory.getParentCategoryName();
+        }
+    }
 }

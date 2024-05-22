@@ -1,6 +1,7 @@
 package com.spring.ecommerce.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,7 +32,7 @@ public class ParentCategory extends BaseEntity<Long> {
 
     private String description;
 
-    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Category> categories;
 

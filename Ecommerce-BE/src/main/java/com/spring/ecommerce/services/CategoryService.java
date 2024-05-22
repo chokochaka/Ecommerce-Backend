@@ -21,8 +21,6 @@ public interface CategoryService {
 
     void createParentCategory(CategoryDto categoryDto);
 
-    void updateParentCategory(long id, CategoryDto categoryDto);
-
     void deleteParentCategory(long id);
 
     void createCategory(AddCategoryToParentDto AddCategoryToParentDto);

@@ -82,6 +82,7 @@ public class SecurityConfiguration {
 //
 //                                .requestMatchers("/api/v1/auth/change-password/*").authenticated()
                                 .requestMatchers("/api/v1/product/**").hasAnyRole(RoleEnum.ROLE_ADMIN.getRoleName())
+                                .requestMatchers("/api/v1/product/*").hasAnyRole(RoleEnum.ROLE_ADMIN.getRoleName())
                                 .anyRequest().permitAll())
 //                                .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider)

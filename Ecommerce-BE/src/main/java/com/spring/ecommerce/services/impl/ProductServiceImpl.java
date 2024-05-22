@@ -67,6 +67,12 @@ public class ProductServiceImpl implements ProductService {
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setFeatured(productDto.isFeatured());
+        // categories
+        Set<Long> categoryIds = productDto.getCategoryIds();
+        List<Category> categoryList = categoryRepository.findAllById(categoryIds);
+        Set<Category> categories = new HashSet<>(categoryList);
+        product.setCategories(categories);
+        
         productRepository.save(product);
     }
 

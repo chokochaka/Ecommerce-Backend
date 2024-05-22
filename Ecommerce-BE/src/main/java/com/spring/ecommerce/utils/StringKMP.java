@@ -5,6 +5,13 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+/* use for search product by variation
+String text = "ABABDABACDABABCABAB";
+String pattern = "AB";
+=> [0, 2, 5, 10, 12, 15, 17]
+*/
 @Service
 public class StringKMP {
 
@@ -36,6 +43,7 @@ public class StringKMP {
     }
 
     // KMP search algorithm that returns an array of starting indices
+    // O(N + M), where N is the length of the text and M is the length of the pattern.
     public int[] KMPSearch(String text, String pattern) {
         int M = pattern.length();
         int N = text.length();

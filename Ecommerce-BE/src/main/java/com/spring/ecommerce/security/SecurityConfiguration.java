@@ -81,10 +81,17 @@ public class SecurityConfiguration {
 //                                .permitAll()
 //
 //                                .requestMatchers("/api/v1/auth/change-password/*").authenticated()
+                                // swagger - open api
+                                .requestMatchers(
+                                        "/swagger-ui/**",
+                                        "/v2/api-docs/**", "/v3/api-docs/**",
+                                        "/swagger-ui.html", "/swagger-resources/**", "/webjars/**"
+                                ).permitAll()
+
                                 .requestMatchers("/api/v1/product/**").hasAnyRole(RoleEnum.ROLE_ADMIN.getRoleName())
                                 .requestMatchers("/api/v1/product/*").hasAnyRole(RoleEnum.ROLE_ADMIN.getRoleName())
+
                                 .anyRequest().permitAll())
-//                                .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

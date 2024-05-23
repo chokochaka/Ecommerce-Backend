@@ -2,11 +2,9 @@ package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.ProductDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
-import com.spring.ecommerce.mapper.ProductMapper;
 import com.spring.ecommerce.models.Product;
-import com.spring.ecommerce.repositories.ProductRepository;
-import com.spring.ecommerce.services.FilterSpecificationService;
 import com.spring.ecommerce.services.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/product")
 @RequiredArgsConstructor
+@Tag(name = "Product", description = "Product API")
 public class ProductController {
 
     private final ProductService productService;

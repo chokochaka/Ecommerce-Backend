@@ -2,7 +2,6 @@ package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.AddCategoryToParentDto;
 import com.spring.ecommerce.dto.CategoryDto;
-import com.spring.ecommerce.dto.ProductDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.Category;
 import com.spring.ecommerce.models.ParentCategory;

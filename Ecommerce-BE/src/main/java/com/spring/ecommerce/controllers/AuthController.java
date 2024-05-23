@@ -9,6 +9,7 @@ import com.spring.ecommerce.dto.auth.SignUpDto;
 import com.spring.ecommerce.dto.auth.TokenDto;
 import com.spring.ecommerce.services.AuthService;
 import com.spring.ecommerce.services.MailService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Tag(name = "Auth", description = "Auth API")
 public class AuthController {
 
     private final AuthService authService;

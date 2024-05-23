@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:19043/jwtauth2
-    username: postgres
-    password: 123
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -20,15 +20,17 @@ spring:
     host: ${MAIL_HOST}
     port: ${MAIL_PORT}
 
-#logging:
-#  level:
-#    org:
-#      postgresql: info
-#      hibernate:
-#        SQL: debug
-#        type:
-#          descriptor:
-#            sql: trace
+logging:
+  level:
+    root: error
+    com.spring.ecommerce: debug
+    org:
+      postgresql: error
+      hibernate:
+        SQL: debug
+        type:
+          descriptor:
+            sql: error
 
 
 security:

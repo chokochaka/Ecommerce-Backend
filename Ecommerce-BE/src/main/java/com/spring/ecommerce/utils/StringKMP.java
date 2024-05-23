@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 /* use for search product by variation
 String text = "ABABDABACDABABCABAB";
 String pattern = "AB";

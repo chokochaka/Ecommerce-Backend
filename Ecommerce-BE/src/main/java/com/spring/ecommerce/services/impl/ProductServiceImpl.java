@@ -3,7 +3,6 @@ package com.spring.ecommerce.services.impl;
 import com.spring.ecommerce.dto.ProductDto;
 import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
-import com.spring.ecommerce.mapper.ProductItemMapper;
 import com.spring.ecommerce.mapper.ProductMapper;
 import com.spring.ecommerce.models.Category;
 import com.spring.ecommerce.models.Product;
@@ -72,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
         List<Category> categoryList = categoryRepository.findAllById(categoryIds);
         Set<Category> categories = new HashSet<>(categoryList);
         product.setCategories(categories);
-        
+
         productRepository.save(product);
     }
 

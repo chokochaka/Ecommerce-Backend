@@ -5,3 +5,5 @@ worktree/
 *.zip
 
 .idea/
+
+Ecommerce-BE/log/

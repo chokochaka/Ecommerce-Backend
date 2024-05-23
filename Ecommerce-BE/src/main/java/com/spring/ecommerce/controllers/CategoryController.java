@@ -1,10 +1,9 @@
 package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.AddCategoryToParentDto;
-import com.spring.ecommerce.dto.CategoryDto;
+import com.spring.ecommerce.dto.category.CategoryDto;
+import com.spring.ecommerce.dto.category.ReturnCategoryDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
-import com.spring.ecommerce.models.Category;
-import com.spring.ecommerce.models.ParentCategory;
 import com.spring.ecommerce.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,26 +24,26 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/search")
-    public List<Category> getCategoriesBySearch(@RequestBody SearchRequestDto searchRequestDto
+    public List<ReturnCategoryDto> getCategoriesBySearch(@RequestBody SearchRequestDto searchRequestDto
     ) {
         return categoryService.getCategoriesBySearch(searchRequestDto);
     }
 
     @PostMapping("/search/paginated")
-    public Page<Category> getCategoriesBySearchAndPagination(
+    public Page<ReturnCategoryDto> getCategoriesBySearchAndPagination(
             @RequestBody SearchRequestDto searchRequestDto
     ) {
         return categoryService.getCategoriesBySearchAndPagination(searchRequestDto);
     }
 
     @PostMapping("/parent/search")
-    public List<ParentCategory> getParentCategoriesBySearch(@RequestBody SearchRequestDto searchRequestDto
+    public List<ReturnCategoryDto> getParentCategoriesBySearch(@RequestBody SearchRequestDto searchRequestDto
     ) {
         return categoryService.getParentCategoriesBySearch(searchRequestDto);
     }
 
     @PostMapping("/parent/search/paginated")
-    public Page<ParentCategory> getParentCategoriesBySearchAndPagination(
+    public Page<ReturnCategoryDto> getParentCategoriesBySearchAndPagination(
             @RequestBody SearchRequestDto searchRequestDto
     ) {
         return categoryService.getParentCategoriesBySearchAndPagination(searchRequestDto);
@@ -52,7 +51,7 @@ public class CategoryController {
 
     @PostMapping
     public void createCategory(@RequestBody AddCategoryToParentDto addCategoryToParentDto) {
-        categoryService.createCategory(addCategoryToParentDto);
+        categoryService.addCategoryToParentCategory(addCategoryToParentDto);
     }
 
     @PostMapping("/parent")

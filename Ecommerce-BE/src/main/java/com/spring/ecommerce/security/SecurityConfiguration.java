@@ -88,8 +88,8 @@ public class SecurityConfiguration {
                                         "/swagger-ui.html", "/swagger-resources/**", "/webjars/**"
                                 ).permitAll()
 
-                                .requestMatchers("/api/v1/product/**").hasAnyRole(RoleEnum.ROLE_ADMIN.getRoleName())
-                                .requestMatchers("/api/v1/product/*").hasAnyRole(RoleEnum.ROLE_ADMIN.getRoleName())
+//                                .requestMatchers("/api/v1/product/**").hasAnyRole(RoleEnum.ROLE_ADMIN.getRoleName())
+//                                .requestMatchers("/api/v1/product/*").hasAnyRole(RoleEnum.ROLE_ADMIN.getRoleName())
 
                                 .anyRequest().permitAll())
                 .authenticationProvider(authenticationProvider)

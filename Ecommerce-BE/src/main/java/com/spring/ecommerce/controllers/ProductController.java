@@ -1,6 +1,7 @@
 package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.ProductDto;
+import com.spring.ecommerce.dto.product.ReturnProductDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.services.ProductService;
@@ -27,13 +28,13 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/search")
-    public List<Product> getProductItemsBySearch(@RequestBody SearchRequestDto searchRequestDto
+    public List<ReturnProductDto> getProductItemsBySearch(@RequestBody SearchRequestDto searchRequestDto
     ) {
         return productService.getProductsBySearch(searchRequestDto);
     }
 
     @PostMapping("/search/paginated")
-    public Page<Product> getProductsBySearchAndPagination(
+    public Page<ReturnProductDto> getProductsBySearchAndPagination(
             @RequestBody SearchRequestDto searchRequestDto
     ) {
         return productService.getProductsBySearchAndPagination(searchRequestDto);
@@ -58,7 +59,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable long id) {
+    public ReturnProductDto getProductById(@PathVariable long id) {
         return productService.getProductById(id);
     }
 

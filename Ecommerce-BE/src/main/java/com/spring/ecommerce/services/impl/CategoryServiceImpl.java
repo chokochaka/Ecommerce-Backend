@@ -1,7 +1,8 @@
 package com.spring.ecommerce.services.impl;
 
 import com.spring.ecommerce.dto.AddCategoryToParentDto;
-import com.spring.ecommerce.dto.CategoryDto;
+import com.spring.ecommerce.dto.category.CategoryDto;
+import com.spring.ecommerce.dto.category.ReturnCategoryDto;
 import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.mapper.CategoryMapper;
@@ -18,6 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,50 +31,60 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
 
     @Override
-    public List<Category> getCategoriesBySearch(SearchRequestDto searchRequestDto) {
+    public List<ReturnCategoryDto> getCategoriesBySearch(SearchRequestDto searchRequestDto) {
         Specification<Category> categorySearchSpecification = categoryFilterSpecificationService
                 .getSearchSpecification(
                         searchRequestDto.getFieldRequestDtos()
                         , searchRequestDto.getGlobalOperator()
                 );
-        return categoryRepository.findAll(categorySearchSpecification);
+
+        return categoryRepository.findAll(categorySearchSpecification).stream()
+                .map(categoryMapper::CategoryToReturnCategoryDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Page<Category> getCategoriesBySearchAndPagination(SearchRequestDto searchRequestDto) {
+    public Page<ReturnCategoryDto> getCategoriesBySearchAndPagination(SearchRequestDto searchRequestDto) {
         Specification<Category> categorySearchSpecification = categoryFilterSpecificationService
                 .getSearchSpecification(
                         searchRequestDto.getFieldRequestDtos()
                         , searchRequestDto.getGlobalOperator()
                 );
         Pageable pageable = new PageRequestDto().getPageable(searchRequestDto.getPageRequestDto());
-        return categoryRepository.findAll(categorySearchSpecification, pageable);
+
+        Page<Category> categoryPage = categoryRepository.findAll(categorySearchSpecification, pageable);
+        return categoryPage.map(categoryMapper::CategoryToReturnCategoryDto);
     }
 
     @Override
-    public List<ParentCategory> getParentCategoriesBySearch(SearchRequestDto searchRequestDto) {
+    public List<ReturnCategoryDto> getParentCategoriesBySearch(SearchRequestDto searchRequestDto) {
         Specification<ParentCategory> parentCategorySearchSpecification = parentCategoryFilterSpecificationService
                 .getSearchSpecification(
                         searchRequestDto.getFieldRequestDtos()
                         , searchRequestDto.getGlobalOperator()
                 );
-        return parentCategoryRepository.findAll(parentCategorySearchSpecification);
+        return parentCategoryRepository.findAll(parentCategorySearchSpecification).stream()
+                .map(categoryMapper::CategoryToReturnCategoryDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Page<ParentCategory> getParentCategoriesBySearchAndPagination(SearchRequestDto searchRequestDto) {
+    public Page<ReturnCategoryDto> getParentCategoriesBySearchAndPagination(SearchRequestDto searchRequestDto) {
         Specification<ParentCategory> parentCategorySearchSpecification = parentCategoryFilterSpecificationService
                 .getSearchSpecification(
                         searchRequestDto.getFieldRequestDtos()
                         , searchRequestDto.getGlobalOperator()
                 );
         Pageable pageable = new PageRequestDto().getPageable(searchRequestDto.getPageRequestDto());
-        return parentCategoryRepository.findAll(parentCategorySearchSpecification, pageable);
+        Page<ParentCategory> parentCategoryPage = parentCategoryRepository.findAll(parentCategorySearchSpecification, pageable);
+        return parentCategoryPage.map(categoryMapper::CategoryToReturnCategoryDto);
+
     }
 
     @Override
     public void createParentCategory(CategoryDto categoryDto) {
         ParentCategory parentCategory = categoryMapper.categoryDtoToCategory(categoryDto);
+        parentCategory.setParentCategoryName(categoryDto.getName());
         parentCategoryRepository.save(parentCategory);
     }
 
@@ -82,7 +94,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void createCategory(AddCategoryToParentDto addCategoryToParentDto) {
+    public void addCategoryToParentCategory(AddCategoryToParentDto addCategoryToParentDto) {
         Category category = categoryMapper.addCategoryToParentDtoToCategory(addCategoryToParentDto);
         ParentCategory parentCategory = parentCategoryRepository.findById(addCategoryToParentDto.getParentCategoryId()).orElseThrow();
         category.setParentCategory(parentCategory);

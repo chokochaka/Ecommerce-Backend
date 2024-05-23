@@ -1,16 +1,20 @@
 package com.spring.ecommerce.services.impl;
 
 import com.spring.ecommerce.dto.ProductDto;
+import com.spring.ecommerce.dto.product.ReturnProductDto;
 import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.mapper.ProductMapper;
 import com.spring.ecommerce.models.Category;
+import com.spring.ecommerce.models.ParentCategory;
 import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.repositories.CategoryRepository;
 import com.spring.ecommerce.repositories.ProductRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
 import com.spring.ecommerce.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -19,40 +23,45 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+    private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final FilterSpecificationService<Product> productFilterSpecificationService;
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<Product> getProductsBySearch(SearchRequestDto searchRequestDto) {
+    public List<ReturnProductDto> getProductsBySearch(SearchRequestDto searchRequestDto) {
         Specification<Product> productSearchSpecification = productFilterSpecificationService
                 .getSearchSpecification(
                         searchRequestDto.getFieldRequestDtos()
                         , searchRequestDto.getGlobalOperator()
                 );
-        return productRepository.findAll(productSearchSpecification);
+        List<Product> products = productRepository.findAll(productSearchSpecification);
+        return productRepository.findAll(productSearchSpecification).stream()
+                .map(productMapper::productToReturnProductDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Page<Product> getProductsBySearchAndPagination(SearchRequestDto searchRequestDto) {
+    public Page<ReturnProductDto> getProductsBySearchAndPagination(SearchRequestDto searchRequestDto) {
         Specification<Product> productSearchSpecification = productFilterSpecificationService
                 .getSearchSpecification(
                         searchRequestDto.getFieldRequestDtos()
                         , searchRequestDto.getGlobalOperator()
                 );
         Pageable pageable = new PageRequestDto().getPageable(searchRequestDto.getPageRequestDto());
-        return productRepository.findAll(productSearchSpecification, pageable);
+        Page<Product> productPage = productRepository.findAll(productSearchSpecification, pageable);
+        return productPage.map(productMapper::productToReturnProductDto);
     }
 
     @Override
     public void createProduct(ProductDto productDto) {
         Product product = productMapper.productDtoToProduct(productDto);
-        // I have list of categories ids need to add to the product, example ids: [1,2,3,4,5] mean that product will have 5 categories
         List<Category> categoryList = categoryRepository.findAllById(productDto.getCategoryIds());
         Set<Category> categories = new HashSet<>(categoryList);
         product.setCategories(categories);
@@ -81,7 +90,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(long id) {
-        return productRepository.findById(id).orElseThrow();
+    public ReturnProductDto getProductById(long id) {
+        Product product = productRepository.findById(id).orElseThrow();
+        return productMapper.productToReturnProductDto(product);
     }
 }

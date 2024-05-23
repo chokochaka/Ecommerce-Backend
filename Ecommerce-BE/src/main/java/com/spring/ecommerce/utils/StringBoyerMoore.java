@@ -9,6 +9,8 @@ import java.util.List;
 String text = "ABABDABACDABABCABAB";
 String pattern = "AB";
 => [0, 2, 5, 10, 12, 15, 17]
+- Link Test Algo: https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/solutions/744624/boyer-moore-substring-search-using-both-bad-character-and-good-suffix-heuristics-explained/
+ + extremely large cases included, can test both BoyerMoore and KMP
 */
 @Service
 public class StringBoyerMoore {

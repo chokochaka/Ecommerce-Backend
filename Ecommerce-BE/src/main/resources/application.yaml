@@ -27,10 +27,12 @@ logging:
     org:
       postgresql: error
       hibernate:
-        SQL: debug
+        SQL: error
         type:
           descriptor:
             sql: error
+  file:
+    name: off
 
 
 security:

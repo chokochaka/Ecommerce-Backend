@@ -1,4 +1,6 @@
 spring:
+  file:
+    name: off
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
@@ -19,11 +21,13 @@ spring:
     password: ${MAIL_PASSWORD}
     host: ${MAIL_HOST}
     port: ${MAIL_PORT}
+  main:
+    banner-mode: off
 
 logging:
   level:
-    root: error
-    com.spring.ecommerce: debug
+    root: warn
+    com.spring.ecommerce: warn
     org:
       postgresql: error
       hibernate:
@@ -31,8 +35,7 @@ logging:
         type:
           descriptor:
             sql: error
-  file:
-    name: off
+
 
 
 security:

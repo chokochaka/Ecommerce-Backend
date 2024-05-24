@@ -22,9 +22,9 @@
             <MaxFileSize>10KB</MaxFileSize>
         </triggeringPolicy>
     </appender>
-    <root level="INFO">
+    <root level="WARN">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>
-    <logger name="com.spring.ecommerce" level="INFO"/>
+    <logger name="com.spring.ecommerce" level="WARN"/>
 </configuration>

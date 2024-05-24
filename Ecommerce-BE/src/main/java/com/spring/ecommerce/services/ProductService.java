@@ -1,9 +1,8 @@
 package com.spring.ecommerce.services;
 
-import com.spring.ecommerce.dto.ProductDto;
+import com.spring.ecommerce.dto.product.ProductDto;
 import com.spring.ecommerce.dto.product.ReturnProductDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
-import com.spring.ecommerce.models.Product;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

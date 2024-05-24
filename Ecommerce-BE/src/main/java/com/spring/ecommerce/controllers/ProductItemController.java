@@ -1,7 +1,7 @@
 package com.spring.ecommerce.controllers;
 
-import com.spring.ecommerce.dto.AddProductItemToProductDto;
-import com.spring.ecommerce.dto.ProductItemDto;
+import com.spring.ecommerce.dto.product.AddProductItemToProductDto;
+import com.spring.ecommerce.dto.product.ProductItemDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.services.ProductItemService;

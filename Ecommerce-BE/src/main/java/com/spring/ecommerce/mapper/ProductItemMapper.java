@@ -1,7 +1,7 @@
 package com.spring.ecommerce.mapper;
 
-import com.spring.ecommerce.dto.AddProductItemToProductDto;
-import com.spring.ecommerce.dto.ProductItemDto;
+import com.spring.ecommerce.dto.product.AddProductItemToProductDto;
+import com.spring.ecommerce.dto.product.ProductItemDto;
 import com.spring.ecommerce.models.ProductItem;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;

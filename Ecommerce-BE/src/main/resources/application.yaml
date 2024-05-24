@@ -1,6 +1,8 @@
 spring:
-  file:
+  file.:
     name: off
+  main:
+    banner-mode: off
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
@@ -21,8 +23,7 @@ spring:
     password: ${MAIL_PASSWORD}
     host: ${MAIL_HOST}
     port: ${MAIL_PORT}
-  main:
-    banner-mode: off
+
 
 logging:
   level:

@@ -1,6 +1,6 @@
 package com.spring.ecommerce.mapper;
 
-import com.spring.ecommerce.dto.ProductDto;
+import com.spring.ecommerce.dto.product.ProductDto;
 import com.spring.ecommerce.dto.product.ReturnProductDto;
 import com.spring.ecommerce.models.Product;
 import org.mapstruct.Mapper;

@@ -1,9 +1,8 @@
 package com.spring.ecommerce.controllers;
 
-import com.spring.ecommerce.dto.ProductDto;
+import com.spring.ecommerce.dto.product.ProductDto;
 import com.spring.ecommerce.dto.product.ReturnProductDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
-import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.services.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

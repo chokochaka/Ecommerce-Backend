@@ -1,4 +1,4 @@
-package com.spring.ecommerce.dto;
+package com.spring.ecommerce.dto.category;
 
 import lombok.Getter;
 import lombok.Setter;

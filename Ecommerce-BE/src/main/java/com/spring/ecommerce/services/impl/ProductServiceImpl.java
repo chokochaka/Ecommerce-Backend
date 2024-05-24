@@ -1,12 +1,11 @@
 package com.spring.ecommerce.services.impl;
 
-import com.spring.ecommerce.dto.ProductDto;
+import com.spring.ecommerce.dto.product.ProductDto;
 import com.spring.ecommerce.dto.product.ReturnProductDto;
 import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.mapper.ProductMapper;
 import com.spring.ecommerce.models.Category;
-import com.spring.ecommerce.models.ParentCategory;
 import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.repositories.CategoryRepository;
 import com.spring.ecommerce.repositories.ProductRepository;

@@ -1,4 +1,4 @@
-package com.spring.ecommerce.dto;
+package com.spring.ecommerce.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

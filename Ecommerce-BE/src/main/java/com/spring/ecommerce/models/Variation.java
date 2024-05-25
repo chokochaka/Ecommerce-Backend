@@ -1,5 +1,6 @@
 package com.spring.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -25,6 +26,7 @@ public class Variation extends BaseEntity<Long> {
 
 
     @OneToMany(mappedBy = "variation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<VariationValue> variationValues;
 
 }

@@ -1,5 +1,7 @@
 package com.spring.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -7,6 +9,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PostLoad;
 import jakarta.persistence.PostPersist;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
@@ -16,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.aspectj.lang.annotation.Before;
 
 import java.util.Set;
 
@@ -32,6 +37,7 @@ public class VariationValue extends BaseEntity<Long> {
 
     @ManyToOne
     @JoinColumn(name = "variation_id", nullable = false)
+    @JsonBackReference
     private Variation variation;
 
     @ManyToMany(mappedBy = "variationValues", fetch = FetchType.LAZY)
@@ -39,15 +45,12 @@ public class VariationValue extends BaseEntity<Long> {
     @ToString.Exclude
     Set<Product> products;
 
-    @Transient
     private String variationName;
 
-    @PostLoad
-    @PostPersist
+    @PrePersist
+    @PreUpdate
     private void setProductId() {
-        if (this.variationName != null) {
-            this.variationName = this.variation.getName();
-        }
+        this.variationName = this.variation.getName();
     }
 
 }

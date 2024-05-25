@@ -33,7 +33,7 @@ public class VariationInit {
     void createVariationAndVariationValues() {
         // Size
         Variation sizeVariations = variationRepository.save(Variation.builder().name("Size").build());
-        var sizes = List.of("XS", "S", "M", "L", "XL", "XXL");
+        var sizes = List.of("XS", "S", "M", "L", "XL");
         var sizeValues = sizes.stream().map(size -> VariationValue.builder()
                         .variation(sizeVariations).name(size).build())
                 .collect(Collectors.toList());
@@ -43,25 +43,7 @@ public class VariationInit {
         //Color
         Variation colorVariations = variationRepository.save(Variation.builder().name("Color").build());
         var colors = List.of(
-                "Red", "Blue", "Yellow", "Green", "Orange", "Purple", "Pink",
-                "Teal", "Burgundy", "Olive", "Maroon", "Light Blue",
-                "Lavender", "Coral", "Cyan", "Magenta", "Turquoise",
-                "Violet", "Amber", "Beige", "Brown", "Charcoal", "Crimson",
-                "Fuchsia", "Gold", "Gray", "Indigo", "Ivory", "Khaki",
-                "Lime", "Mint", "Navy", "Peach", "Plum", "Rose", "Ruby",
-                "Salmon", "Sapphire", "Silver", "Tan", "Topaz", "Aqua",
-                "Aquamarine", "Azure", "Blush", "Bronze", "Cerulean",
-                "Champagne", "Copper", "Emerald", "Jade", "Lilac", "Mauve",
-                "Mustard", "Periwinkle", "Sand", "Scarlet", "Sienna",
-                "Sky Blue", "Slate", "Snow", "Sunset", "Thistle", "Tomato",
-                "Tangerine", "Ultramarine", "Zaffre", "Amethyst", "Antique White",
-                "Ash", "Bittersweet", "Cadet Blue", "Carnation", "Clover",
-                "Dandelion", "Denim", "Eggplant", "Flame", "Forest Green",
-                "Garnet", "Harlequin", "Honey", "Ice", "Iris", "Jasmine",
-                "Kelp", "Lemon", "Licorice", "Mulberry", "Onyx", "Papaya",
-                "Peridot", "Prussian Blue", "Quartz", "Raspberry", "Saffron",
-                "Seashell", "Shamrock", "Smoke", "Steel", "Tawny", "Tiger's Eye",
-                "Umber", "Vanilla", "Wheat", "Wisteria", "Yale Blue", "Zinnia"
+                "Trắng", "Đen", "Hồng Nhạt", "Cam Nhạt", "Da Đậm", "Nâu", "Xanh Lá", "Tím Nhạt", "Xám", "Đỏ"
         );
 
         var colorValues = colors.stream()

@@ -1,16 +1,10 @@
 package com.spring.ecommerce.controllers;
 
-import com.spring.ecommerce.dto.search.SearchRequestDto;
-import com.spring.ecommerce.dto.user.ReturnUserDto;
-import com.spring.ecommerce.dto.user.UserRole;
 import com.spring.ecommerce.models.Role;
 import com.spring.ecommerce.services.RoleService;
-import com.spring.ecommerce.services.impl.RoleServiceImpl;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

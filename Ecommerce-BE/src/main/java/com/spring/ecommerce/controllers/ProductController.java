@@ -1,11 +1,14 @@
 package com.spring.ecommerce.controllers;
 
+import com.spring.ecommerce.dto.category.CategoryDto;
 import com.spring.ecommerce.dto.product.ProductDto;
 import com.spring.ecommerce.dto.product.ReturnProductDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.services.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +27,7 @@ import java.util.List;
 @Tag(name = "Product", description = "Product API")
 public class ProductController {
 
+    private static final Logger log = LoggerFactory.getLogger(ProductController.class);
     private final ProductService productService;
 
     @PostMapping("/search")
@@ -60,6 +64,11 @@ public class ProductController {
     @GetMapping("/{id}")
     public ReturnProductDto getProductById(@PathVariable long id) {
         return productService.getProductById(id);
+    }
+
+    @PostMapping("/category")
+    public List<ReturnProductDto> getProductsByCategoryName(@RequestBody CategoryDto categoryDto) {
+        return productService.getProductsByCategoryName(categoryDto.getName());
     }
 
 }

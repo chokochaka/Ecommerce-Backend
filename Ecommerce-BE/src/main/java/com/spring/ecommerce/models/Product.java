@@ -17,6 +17,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Set;
@@ -30,6 +32,7 @@ import java.util.Set;
 @Setter
 public class Product extends BaseEntity<Long> {
 
+    private static final Logger log = LoggerFactory.getLogger(Product.class);
     private String name;
 
     private String description;
@@ -65,7 +68,7 @@ public class Product extends BaseEntity<Long> {
             name = "products_categories",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @Column(nullable = true)
+    @Column()
     private Set<Category> categories;
 
 }

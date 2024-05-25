@@ -40,7 +40,6 @@ public class ProductServiceImpl implements ProductService {
                         searchRequestDto.getFieldRequestDtos()
                         , searchRequestDto.getGlobalOperator()
                 );
-        List<Product> products = productRepository.findAll(productSearchSpecification);
         return productRepository.findAll(productSearchSpecification).stream()
                 .map(productMapper::productToReturnProductDto)
                 .collect(Collectors.toList());
@@ -92,5 +91,14 @@ public class ProductServiceImpl implements ProductService {
     public ReturnProductDto getProductById(long id) {
         Product product = productRepository.findById(id).orElseThrow();
         return productMapper.productToReturnProductDto(product);
+    }
+
+    @Override
+    public List<ReturnProductDto> getProductsByCategoryName(String categoryName) {
+        Category category = categoryRepository.findCategoryByName(categoryName);
+        List<Product> products = productRepository.findProductsByCategories(Set.of(category));
+        return products.stream()
+                .map(productMapper::productToReturnProductDto)
+                .collect(Collectors.toList());
     }
 }

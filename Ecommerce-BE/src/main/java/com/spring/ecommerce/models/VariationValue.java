@@ -5,7 +5,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.PostPersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -35,5 +38,16 @@ public class VariationValue extends BaseEntity<Long> {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     Set<Product> products;
+
+    @Transient
+    private String variationName;
+
+    @PostLoad
+    @PostPersist
+    private void setProductId() {
+        if (this.variationName != null) {
+            this.variationName = this.variation.getName();
+        }
+    }
 
 }

@@ -2,6 +2,7 @@ package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.dto.user.ReturnUserDto;
+import com.spring.ecommerce.dto.user.UpdateUserDto;
 import com.spring.ecommerce.models.User;
 import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,9 +44,16 @@ public class UserController {
         return userService.getUsersBySearchAndPagination(searchRequestDto);
     }
 
+    @PutMapping("/{id}")
+    public void updateUser(
+            @PathVariable long id,
+            @RequestBody UpdateUserDto updateUserDto
+    ) {
+        userService.updateUser(id, updateUserDto);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable long id) {
-        userRepository.deleteById(id);
+        userService.deleteUser(id);
     }
 }

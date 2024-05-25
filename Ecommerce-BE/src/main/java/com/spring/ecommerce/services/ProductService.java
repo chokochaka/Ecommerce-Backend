@@ -21,4 +21,6 @@ public interface ProductService {
     void deleteProduct(long id);
 
     ReturnProductDto getProductById(long id);
+
+    List<ReturnProductDto> getProductsByCategoryName(String categoryName);
 }

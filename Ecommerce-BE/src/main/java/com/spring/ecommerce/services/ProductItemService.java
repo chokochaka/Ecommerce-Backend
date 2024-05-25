@@ -14,7 +14,7 @@ public interface ProductItemService {
 
     Page<ProductItem> getProductItemsBySearchAndPagination(SearchRequestDto searchRequestDto);
 
-    void createProductItem(AddProductItemToProductDto addProductItemToProductDto);
+    void addProductItemToProduct(AddProductItemToProductDto addProductItemToProductDto);
 
     void updateProductItem(long id, ProductItemDto productItemDto);
 

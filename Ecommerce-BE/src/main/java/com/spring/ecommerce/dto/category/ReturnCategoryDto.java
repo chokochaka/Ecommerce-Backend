@@ -1,11 +1,9 @@
 package com.spring.ecommerce.dto.category;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.util.Set;
 
 @Getter
 @Setter

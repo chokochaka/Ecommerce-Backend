@@ -1,6 +1,5 @@
 package com.spring.ecommerce.security;
 
-import com.spring.ecommerce.enums.RoleEnum;
 import com.spring.ecommerce.security.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

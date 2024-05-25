@@ -1,10 +1,8 @@
 package com.spring.ecommerce.mapper;
 
-import com.spring.ecommerce.dto.product.ReturnProductDto;
 import com.spring.ecommerce.dto.user.ReturnUserDto;
 import com.spring.ecommerce.dto.user.UserRefreshToken;
 import com.spring.ecommerce.dto.user.UserRole;
-import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.models.RefreshToken;
 import com.spring.ecommerce.models.Role;
 import com.spring.ecommerce.models.User;
@@ -17,6 +15,8 @@ public interface UserMapper {
 
     @Mapping(target = "refreshToken", source = "refreshToken", qualifiedByName = "mapRefreshToken")
     @Mapping(target = "roles", source = "roles", qualifiedByName = "mapRoles")
+    @Mapping(target = "createdOn", source = "createdOn")
+    @Mapping(target = "lastUpdatedOn", source = "lastUpdatedOn")
     ReturnUserDto userToReturnUserDto(User source);
 
     @Named("mapRefreshToken")

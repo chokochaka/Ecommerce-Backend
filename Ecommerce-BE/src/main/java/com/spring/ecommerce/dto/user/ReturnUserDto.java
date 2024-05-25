@@ -3,6 +3,7 @@ package com.spring.ecommerce.dto.user;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.util.Set;
 
 @Getter
@@ -15,5 +16,8 @@ public class ReturnUserDto {
     private boolean enabled;
     private Set<UserRole> roles;
     private UserRefreshToken refreshToken;
+
+    private Instant createdOn;
+    private Instant lastUpdatedOn;
 }
 

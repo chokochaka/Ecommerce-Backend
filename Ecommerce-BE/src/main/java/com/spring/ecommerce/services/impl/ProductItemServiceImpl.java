@@ -49,7 +49,7 @@ public class ProductItemServiceImpl implements ProductItemService {
     }
 
     @Override
-    public void createProductItem(AddProductItemToProductDto addProductItemToProductDto) {
+    public void addProductItemToProduct(AddProductItemToProductDto addProductItemToProductDto) {
         Product product = productRepository.findById(addProductItemToProductDto.getProductId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         ProductItem productItem = ProductItem.builder()

@@ -45,8 +45,8 @@ public class ProductItemController {
     }
 
     @PostMapping // add product item to product
-    public void createProductItem(@RequestBody AddProductItemToProductDto addProductItemToProductDto) {
-        productItemService.createProductItem(addProductItemToProductDto);
+    public void addProductItemToProduct(@RequestBody AddProductItemToProductDto addProductItemToProductDto) {
+        productItemService.addProductItemToProduct(addProductItemToProductDto);
     }
 
     @PutMapping("/{id}")

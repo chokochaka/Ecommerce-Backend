@@ -12,5 +12,5 @@ public class UpdateUserDto {
     private String firstName;
     private String lastName;
     private boolean enabled;
-    Set<Long> roleIds;
+    Set<String> roleNames;
 }

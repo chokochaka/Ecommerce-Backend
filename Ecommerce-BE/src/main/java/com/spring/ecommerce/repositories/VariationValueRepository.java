@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VariationValueRepository extends JpaRepository<VariationValue, Long>, JpaSpecificationExecutor<VariationValue> {
+    VariationValue findByName(String name);
 }

@@ -3,6 +3,7 @@ package com.spring.ecommerce.data;
 import com.spring.ecommerce.models.Category;
 import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.models.ProductItem;
+import com.spring.ecommerce.models.VariationValue;
 import com.spring.ecommerce.repositories.CategoryRepository;
 import com.spring.ecommerce.repositories.ProductItemRepository;
 import com.spring.ecommerce.repositories.ProductRepository;
@@ -57,7 +58,7 @@ public class ProductInit {
 
     void createProduct() {
 
-        String[] variationCombinations = {"XXS:yellow", "XS:green", "S:blue", "M:red", "L:black", "XL:white"};
+        String[] variationCombinations = {"XS:Trắng", "S:Hồng Nhạt", "M:Nâu", "L:Tím Nhạt", "XL:Đỏ"};
 
         for (int i = 0; i < 10; i++) {
             String variationCombination = variationCombinations[i % variationCombinations.length];
@@ -66,7 +67,11 @@ public class ProductInit {
                 Category c = categoryRepository.findById((long) numericalValue).orElseThrow();
                 categories.add(c);
             }
-            log.info("Categories: {}", categories);
+//            String[] parts = variationCombination.split(":");
+//            VariationValue size = variationValueRepository.findByName(parts[0]);
+//
+//            VariationValue color = variationValueRepository.findByName(parts[1]);
+
             Product product = productRepository.save(Product.builder()
                     .productItems(List.of())
                     .name("Product " + (i + 1))
@@ -75,6 +80,9 @@ public class ProductInit {
                     .averageRating(4.0 + i * 0.1) // Increment average rating
                     .categories(categories)
                     .build());
+//            size.setProducts((Set.of(product)));
+//            color.setProducts((Set.of(product)));
+//            product.setVariationValues(Set.of(size, color));
 
             productItemRepository.saveAll(List.of(
                     ProductItem.builder()

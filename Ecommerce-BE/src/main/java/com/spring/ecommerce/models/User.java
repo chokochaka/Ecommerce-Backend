@@ -72,9 +72,9 @@ public class User extends BaseEntity<Long> implements UserDetails {
     @JsonManagedReference
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     @JsonManagedReference
-    private List<Address> addresses;
+    private Address address;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private RefreshToken refreshToken;

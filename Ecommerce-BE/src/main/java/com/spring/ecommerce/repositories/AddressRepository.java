@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AddressRepository extends JpaRepository<Address, String>, JpaSpecificationExecutor<ProductItem> {
+public interface AddressRepository extends JpaRepository<Address, Long> {
+    Address findByUser_Id(Long id);
 }

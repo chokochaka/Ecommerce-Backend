@@ -27,8 +27,8 @@ spring:
 
 logging:
   level:
-    root: warn
-    com.spring.ecommerce: warn
+    root: info
+    com.spring.ecommerce: debug
     org:
       postgresql: error
       hibernate:

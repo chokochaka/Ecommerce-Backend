@@ -11,7 +11,6 @@ import java.util.Set;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
-    // find by query
     List<Product> findProductsByCategories(Set<Category> categories);
 }
 

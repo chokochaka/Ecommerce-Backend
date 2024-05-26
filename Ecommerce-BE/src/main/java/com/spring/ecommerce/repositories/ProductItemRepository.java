@@ -10,9 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ProductItemRepository extends JpaRepository<ProductItem, Long>, JpaSpecificationExecutor<ProductItem> {
-    List<ProductItem> findByVariationCombinationStartingWith(String size);
-
     @Query("SELECT pi FROM ProductItem pi WHERE pi.product.id = :productId")
     List<ProductItem> findByProductId(long productId);
-
 }

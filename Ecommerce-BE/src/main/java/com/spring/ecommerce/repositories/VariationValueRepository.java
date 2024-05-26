@@ -1,6 +1,5 @@
 package com.spring.ecommerce.repositories;
 
-import com.spring.ecommerce.models.Variation;
 import com.spring.ecommerce.models.VariationValue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

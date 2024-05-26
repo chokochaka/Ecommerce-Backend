@@ -4,7 +4,6 @@ import com.spring.ecommerce.dto.VariationDto;
 import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.mapper.VariationMapper;
-import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.models.Variation;
 import com.spring.ecommerce.models.VariationValue;
 import com.spring.ecommerce.repositories.VariationRepository;

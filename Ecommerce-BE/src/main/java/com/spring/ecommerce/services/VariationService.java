@@ -2,8 +2,6 @@ package com.spring.ecommerce.services;
 
 import com.spring.ecommerce.dto.VariationDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
-import com.spring.ecommerce.dto.user.ReturnUserDto;
-import com.spring.ecommerce.models.Variation;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

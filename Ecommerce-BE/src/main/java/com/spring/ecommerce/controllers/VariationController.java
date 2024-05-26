@@ -18,17 +18,33 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/variation")
+@RequestMapping("/api/v1/variationValue")
 @RequiredArgsConstructor
 @Tag(name = "Variation", description = "Variation API")
 public class VariationController {
 
     private final VariationService variationService;
 
-    @GetMapping
+    @GetMapping("/variation")
     public List<VariationDto> getAllVariations() {
         return variationService.getAllVariations();
     }
+
+    @PostMapping("/variation")
+    public void createVariation(@RequestBody String variationName) {
+        variationService.createVariation(variationName);
+    }
+
+    @PutMapping("/variation/{variationId}")
+    public void updateVariation(@PathVariable Long variationId, @RequestBody String variationName) {
+        variationService.updateVariation(variationId, variationName);
+    }
+
+    @DeleteMapping("/variation/{variationId}")
+    public void deleteVariation(@PathVariable Long variationId) {
+        variationService.deleteVariation(variationId);
+    }
+
 
     @PostMapping("/search")
     public List<VariationDto> getVariationValuesBySearch(@RequestBody SearchRequestDto searchRequestDto) {
@@ -40,27 +56,13 @@ public class VariationController {
         return variationService.getVariationValuesBySearchAndPagination(searchRequestDto);
     }
 
-    @PostMapping
-    public void createVariation(@RequestBody String variationName) {
-        variationService.createVariation(variationName);
-    }
 
-    @PutMapping("/{variationId}")
-    public void updateVariation(@PathVariable Long variationId, @RequestBody String variationName) {
-        variationService.updateVariation(variationId, variationName);
-    }
-
-    @DeleteMapping("/{variationId}")
-    public void deleteVariation(@PathVariable Long variationId) {
-        variationService.deleteVariation(variationId);
-    }
-
-    @PostMapping("/{variationId}/values")
+    @PostMapping("/{variationId}")
     public void addVariationValueToVariation(@PathVariable Long variationId, @RequestBody String variationValue) {
         variationService.addVariationValueToVariation(variationId, variationValue);
     }
 
-    @DeleteMapping("/values/{variationValueId}")
+    @DeleteMapping("/{variationValueId}")
     public void deleteVariationValue(@PathVariable Long variationValueId) {
         variationService.deleteVariationValue(variationValueId);
     }

@@ -84,8 +84,9 @@ public class VariationServiceImpl implements VariationService {
     public void addVariationValueToVariation(Long variationId, String variationValue) {
         Variation variation = variationRepository.findById(variationId).orElseThrow();
         VariationValue variationValueObj = new VariationValue();
+        variationValueObj.setName(variationValue);
         variationValueObj.setVariation(variation);
-        variationRepository.save(variation);
+        variationValueRepository.save(variationValueObj);
     }
 
     @Override

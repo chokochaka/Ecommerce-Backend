@@ -12,4 +12,5 @@ public class VariationDto {
     private String name;
     private Instant createdOn;
     private Instant lastUpdatedOn;
+    private String variationName;
 }

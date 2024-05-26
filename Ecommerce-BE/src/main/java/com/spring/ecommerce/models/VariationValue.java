@@ -1,6 +1,6 @@
 package com.spring.ecommerce.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -31,8 +31,8 @@ public class VariationValue extends BaseEntity<Long> {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "variation_id", nullable = false)
-    @JsonBackReference
+    @JoinColumn(name = "variation_id")
+    @JsonManagedReference
     private Variation variation;
 
     @ManyToMany(mappedBy = "variationValues", fetch = FetchType.LAZY)

@@ -2,6 +2,7 @@ package com.spring.ecommerce.repositories;
 
 import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.models.ProductItem;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,12 @@ public class ProductItemRepositoryTests {
                 .build();
         productItemRepository.save(productItem1);
         productItemRepository.save(productItem2);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        productItemRepository.deleteAll();
+        productRepository.deleteAll();
     }
 
     @DisplayName("JUnit test for findByProductId when product ID exists")

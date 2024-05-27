@@ -2,6 +2,7 @@ package com.spring.ecommerce.repositories;
 
 import com.spring.ecommerce.models.Address;
 import com.spring.ecommerce.models.User;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,6 +46,13 @@ public class AddressRepositoryTests {
         user.setAddress(address);
         user = userRepository.save(user);
     }
+
+    @AfterEach
+    public void tearDown() {
+        addressRepository.deleteAll();
+        userRepository.deleteAll();
+    }
+
 
     @DisplayName("JUnit test for get address by user id")
     @Test

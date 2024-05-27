@@ -2,6 +2,7 @@ package com.spring.ecommerce.repositories;
 
 import com.spring.ecommerce.models.Category;
 import com.spring.ecommerce.models.Product;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,12 @@ public class CategoryRepositoryTests {
 
         category = categoryRepository.save(category);
         product = productRepository.save(product);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        productRepository.deleteAll();
+        categoryRepository.deleteAll();
     }
 
     @DisplayName("JUnit test for finding category by name")

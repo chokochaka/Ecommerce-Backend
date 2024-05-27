@@ -2,6 +2,7 @@ package com.spring.ecommerce.repositories;
 
 import com.spring.ecommerce.models.ForgotPassword;
 import com.spring.ecommerce.models.User;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,12 @@ class ForgotPasswordRepositoryTests {
                 .expiresAt(Instant.ofEpochSecond(System.currentTimeMillis() + 300000))
                 .build();
         forgotPassword = forgotPasswordRepository.save(forgotPassword);
+    }
+
+    @AfterEach
+    void tearDown() {
+        forgotPasswordRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @DisplayName("JUnit test for findByOtpAndUser when OTP and User exist")

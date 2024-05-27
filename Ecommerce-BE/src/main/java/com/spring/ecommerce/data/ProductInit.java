@@ -3,7 +3,6 @@ package com.spring.ecommerce.data;
 import com.spring.ecommerce.models.Category;
 import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.models.ProductItem;
-import com.spring.ecommerce.models.VariationValue;
 import com.spring.ecommerce.repositories.CategoryRepository;
 import com.spring.ecommerce.repositories.ProductItemRepository;
 import com.spring.ecommerce.repositories.ProductRepository;

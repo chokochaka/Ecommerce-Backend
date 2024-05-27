@@ -6,7 +6,6 @@ import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.models.ProductItem;
-import com.spring.ecommerce.models.Variation;
 import com.spring.ecommerce.models.VariationValue;
 import com.spring.ecommerce.repositories.ProductItemRepository;
 import com.spring.ecommerce.repositories.ProductRepository;
@@ -21,7 +20,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor

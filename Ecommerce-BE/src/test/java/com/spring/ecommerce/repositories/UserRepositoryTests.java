@@ -2,6 +2,7 @@ package com.spring.ecommerce.repositories;
 
 import com.spring.ecommerce.models.User;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,11 @@ public class UserRepositoryTests {
                 .enabled(true)
                 .build();
         user = userRepository.save(user);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        userRepository.deleteAll();
     }
 
     @DisplayName("JUnit test for findByEmail")

@@ -1,5 +1,5 @@
 spring:
-  file.:
+  file:
     name: off
   main:
     banner-mode: off

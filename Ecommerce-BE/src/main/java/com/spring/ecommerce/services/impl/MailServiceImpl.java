@@ -72,7 +72,9 @@ public class MailServiceImpl implements MailService {
         userRepository.updateVerificationCode(recipientEmail, verificationCode);
 
         String emailContent = mailBodyHtml.verifyAccountContent(
+                "activeAccount",
                 verificationCode,
+                recipientEmail,
                 "Account Verification",
                 "Verify My Account"
         );

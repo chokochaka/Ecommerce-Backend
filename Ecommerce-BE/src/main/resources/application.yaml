@@ -23,6 +23,15 @@ spring:
     password: ${MAIL_PASSWORD}
     host: ${MAIL_HOST}
     port: ${MAIL_PORT}
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        debug: true
 
 
 logging:

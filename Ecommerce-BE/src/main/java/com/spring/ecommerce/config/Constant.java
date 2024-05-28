@@ -4,10 +4,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Constant {
-
-//    @PostConstruct
-//    public void init() {}
-
     public static class TIME {
         public static final int THIRTY_MINUTES = 30 * 60 * 1000; // access token, mail
         public static final int TWO_HOURS = 2 * 60 * 60 * 1000;

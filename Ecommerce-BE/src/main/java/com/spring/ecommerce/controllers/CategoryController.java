@@ -5,6 +5,7 @@ import com.spring.ecommerce.dto.category.CategoryDto;
 import com.spring.ecommerce.dto.category.ReturnCategoryDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.services.CategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/category")
 @RequiredArgsConstructor
+@Tag(name = "Category", description = "Category API")
 public class CategoryController {
     private final CategoryService categoryService;
 

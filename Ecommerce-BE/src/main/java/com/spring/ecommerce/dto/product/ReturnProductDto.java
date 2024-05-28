@@ -16,6 +16,7 @@ public class ReturnProductDto {
     private String name;
     private String description;
     private double averageRating;
+    private String imageUrl;
 
     @JsonProperty("isFeatured")
     private boolean isFeatured;

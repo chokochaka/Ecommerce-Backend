@@ -28,6 +28,12 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
             for (FieldRequestDto fieldRequestDto : fieldRequestDtos) {
                 switch (fieldRequestDto.getOperator()) {
                     case EQM: // equal string
+                        if (Objects.equals(fieldRequestDto.getField(), "id")) {
+                            Predicate equal = criteriaBuilder.equal(root.get(fieldRequestDto.getField()), fieldRequestDto.getValue());
+                            predicates.add(equal);
+                            break;
+                        }
+
                         if ("true".equalsIgnoreCase(fieldRequestDto.getValue()) || "false".equalsIgnoreCase(fieldRequestDto.getValue())) {
                             boolean booleanValue = Boolean.parseBoolean(fieldRequestDto.getValue());
                             Predicate equal = criteriaBuilder.equal(root.get(fieldRequestDto.getField()), booleanValue);

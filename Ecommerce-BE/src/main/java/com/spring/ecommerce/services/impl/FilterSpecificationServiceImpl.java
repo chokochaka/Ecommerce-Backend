@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.Objects;
 
 @Service
 public class FilterSpecificationServiceImpl<T> implements FilterSpecificationService<T> {
@@ -28,19 +28,34 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
             for (FieldRequestDto fieldRequestDto : fieldRequestDtos) {
                 switch (fieldRequestDto.getOperator()) {
                     case EQM: // equal string
-                        Predicate equal = criteriaBuilder.equal(root.get(fieldRequestDto.getField()), fieldRequestDto.getValue());
-                        predicates.add(equal);
+                        if ("true".equalsIgnoreCase(fieldRequestDto.getValue()) || "false".equalsIgnoreCase(fieldRequestDto.getValue())) {
+                            boolean booleanValue = Boolean.parseBoolean(fieldRequestDto.getValue());
+                            Predicate equal = criteriaBuilder.equal(root.get(fieldRequestDto.getField()), booleanValue);
+                            predicates.add(equal);
+                        } else {
+                            Predicate equal = criteriaBuilder.equal(
+                                    criteriaBuilder.lower(root.get(fieldRequestDto.getField())),
+                                    fieldRequestDto.getValue().toLowerCase()
+                            );
+                            predicates.add(equal);
+                        }
                         break;
 
                     case CONTAINS: // contains string
-                        Predicate like = criteriaBuilder.like(root.get(fieldRequestDto.getField()), "%" + fieldRequestDto.getValue() + "%");
+                        Predicate like = criteriaBuilder.like(
+                                criteriaBuilder.lower(root.get(fieldRequestDto.getField())),
+                                "%" + fieldRequestDto.getValue().toLowerCase() + "%"
+                        );
                         predicates.add(like);
                         break;
 
                     case INM: // in string
                         // 1,2,3
                         String[] split = fieldRequestDto.getValue().split(",");
-                        Predicate in = root.get(fieldRequestDto.getField()).in(Arrays.asList(split));
+                        List<String> lowerCaseValues = Arrays.stream(split)
+                                .map(String::toLowerCase)
+                                .toList();
+                        Predicate in = criteriaBuilder.lower(root.get(fieldRequestDto.getField())).in(lowerCaseValues);
                         predicates.add(in);
                         break;
 
@@ -57,17 +72,23 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
                     case BETWEEN: // between 2 values
                         //"10, 20"
                         String[] split1 = fieldRequestDto.getValue().split(",");
-                        Predicate between = criteriaBuilder.between(root.get(fieldRequestDto.getField()), Long.parseLong(split1[0]), Long.parseLong(split1[1]));
+                        Predicate between = criteriaBuilder.between(root.get(fieldRequestDto.getField()), Double.parseDouble(split1[0]), Double.parseDouble(split1[1]));
                         predicates.add(between);
                         break;
 
                     case STARTSWITH: // starts with string
-                        Predicate startsWith = criteriaBuilder.like(root.get(fieldRequestDto.getField()), fieldRequestDto.getValue() + "%");
+                        Predicate startsWith = criteriaBuilder.like(
+                                criteriaBuilder.lower(root.get(fieldRequestDto.getField())),
+                                fieldRequestDto.getValue().toLowerCase() + "%"
+                        );
                         predicates.add(startsWith);
                         break;
 
                     case ENDSWITH: // ends with string
-                        Predicate endsWith = criteriaBuilder.like(root.get(fieldRequestDto.getField()), "%" + fieldRequestDto.getValue());
+                        Predicate endsWith = criteriaBuilder.like(
+                                criteriaBuilder.lower(root.get(fieldRequestDto.getField())),
+                                "%" + fieldRequestDto.getValue().toLowerCase()
+                        );
                         predicates.add(endsWith);
                         break;
 
@@ -77,7 +98,10 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
                         break;
 
                     case NE: // not equals
-                        Predicate notEqual = criteriaBuilder.notEqual(root.get(fieldRequestDto.getField()), fieldRequestDto.getValue());
+                        Predicate notEqual = criteriaBuilder.notEqual(
+                                criteriaBuilder.lower(root.get(fieldRequestDto.getField())),
+                                fieldRequestDto.getValue().toLowerCase()
+                        );
                         predicates.add(notEqual);
                         break;
 
@@ -93,28 +117,42 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
 
                     case NIN: // not in
                         String[] splitNin = fieldRequestDto.getValue().split(",");
-                        Predicate notIn = root.get(fieldRequestDto.getField()).in(Arrays.asList(splitNin)).not();
+                        List<String> lowerCaseValuesNin = Arrays.stream(splitNin)
+                                .map(String::toLowerCase)
+                                .toList();
+                        Predicate notIn = criteriaBuilder.lower(root.get(fieldRequestDto.getField())).in(lowerCaseValuesNin).not();
                         predicates.add(notIn);
                         break;
 
                     case NCONTAINS: // not contains
-                        Predicate notContains = criteriaBuilder.notLike(root.get(fieldRequestDto.getField()), "%" + fieldRequestDto.getValue() + "%");
+                        Predicate notContains = criteriaBuilder.notLike(
+                                criteriaBuilder.lower(root.get(fieldRequestDto.getField())),
+                                "%" + fieldRequestDto.getValue().toLowerCase() + "%"
+                        );
                         predicates.add(notContains);
                         break;
 
                     case CONTAINSS: // case-sensitive contains
-                        Predicate caseSensitiveContains = criteriaBuilder.like(criteriaBuilder.lower(root.get(fieldRequestDto.getField())), "%" + fieldRequestDto.getValue().toLowerCase() + "%");
+                        Predicate caseSensitiveContains = criteriaBuilder.like(
+                                root.get(fieldRequestDto.getField()),
+                                "%" + fieldRequestDto.getValue() + "%"
+                        );
                         predicates.add(caseSensitiveContains);
                         break;
 
                     case NCONTAINSS: // case-sensitive not contains
-                        Predicate caseSensitiveNotContains = criteriaBuilder.notLike(criteriaBuilder.lower(root.get(fieldRequestDto.getField())), "%" + fieldRequestDto.getValue().toLowerCase() + "%");
+                        Predicate caseSensitiveNotContains = criteriaBuilder.notLike(
+                                root.get(fieldRequestDto.getField()),
+                                "%" + fieldRequestDto.getValue() + "%"
+                        );
                         predicates.add(caseSensitiveNotContains);
                         break;
 
                     case NBETWEEN: // not between
                         String[] splitNBetween = fieldRequestDto.getValue().split(",");
-                        Predicate notBetween = criteriaBuilder.not(criteriaBuilder.between(root.get(fieldRequestDto.getField()), Long.parseLong(splitNBetween[0]), Long.parseLong(splitNBetween[1])));
+                        Predicate notBetween = criteriaBuilder.not(
+                                criteriaBuilder.between(root.get(fieldRequestDto.getField()), Long.parseLong(splitNBetween[0]), Long.parseLong(splitNBetween[1]))
+                        );
                         predicates.add(notBetween);
                         break;
 
@@ -129,37 +167,55 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
                         break;
 
                     case NSTARTSWITH: // not starts with string
-                        Predicate notStartsWith = criteriaBuilder.notLike(root.get(fieldRequestDto.getField()), fieldRequestDto.getValue() + "%");
+                        Predicate notStartsWith = criteriaBuilder.notLike(
+                                criteriaBuilder.lower(root.get(fieldRequestDto.getField())),
+                                fieldRequestDto.getValue().toLowerCase() + "%"
+                        );
                         predicates.add(notStartsWith);
                         break;
 
                     case STARTSWITHS: // case-sensitive starts with string
-                        Predicate caseSensitiveStartsWith = criteriaBuilder.like(criteriaBuilder.lower(root.get(fieldRequestDto.getField())), fieldRequestDto.getValue().toLowerCase() + "%");
+                        Predicate caseSensitiveStartsWith = criteriaBuilder.like(
+                                root.get(fieldRequestDto.getField()),
+                                fieldRequestDto.getValue() + "%"
+                        );
                         predicates.add(caseSensitiveStartsWith);
                         break;
 
                     case NSTARTSWITHS: // case-sensitive not starts with string
-                        Predicate caseSensitiveNotStartsWith = criteriaBuilder.notLike(criteriaBuilder.lower(root.get(fieldRequestDto.getField())), fieldRequestDto.getValue().toLowerCase() + "%");
+                        Predicate caseSensitiveNotStartsWith = criteriaBuilder.notLike(
+                                root.get(fieldRequestDto.getField()),
+                                fieldRequestDto.getValue() + "%"
+                        );
                         predicates.add(caseSensitiveNotStartsWith);
                         break;
 
                     case NENDSWITH: // not ends with string
-                        Predicate notEndsWith = criteriaBuilder.notLike(root.get(fieldRequestDto.getField()), "%" + fieldRequestDto.getValue());
+                        Predicate notEndsWith = criteriaBuilder.notLike(
+                                criteriaBuilder.lower(root.get(fieldRequestDto.getField())),
+                                "%" + fieldRequestDto.getValue().toLowerCase()
+                        );
                         predicates.add(notEndsWith);
                         break;
 
                     case ENDSWITHS: // case-sensitive ends with string
-                        Predicate caseSensitiveEndsWith = criteriaBuilder.like(criteriaBuilder.lower(root.get(fieldRequestDto.getField())), "%" + fieldRequestDto.getValue().toLowerCase());
+                        Predicate caseSensitiveEndsWith = criteriaBuilder.like(
+                                root.get(fieldRequestDto.getField()),
+                                "%" + fieldRequestDto.getValue()
+                        );
                         predicates.add(caseSensitiveEndsWith);
                         break;
 
                     case NENDSWITHS: // case-sensitive not ends with string
-                        Predicate caseSensitiveNotEndsWith = criteriaBuilder.notLike(criteriaBuilder.lower(root.get(fieldRequestDto.getField())), "%" + fieldRequestDto.getValue().toLowerCase());
+                        Predicate caseSensitiveNotEndsWith = criteriaBuilder.notLike(
+                                root.get(fieldRequestDto.getField()),
+                                "%" + fieldRequestDto.getValue()
+                        );
                         predicates.add(caseSensitiveNotEndsWith);
                         break;
 
                     default:
-                        throw new IllegalStateException("Unexpected value: ");
+                        throw new IllegalStateException("Unexpected value: " + fieldRequestDto.getOperator());
                 }
             }
             if (globalOperator == GlobalOperator.AND) {

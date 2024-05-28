@@ -7,12 +7,15 @@ import com.spring.ecommerce.models.User;
 import com.spring.ecommerce.repositories.ForgotPasswordRepository;
 import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.MailService;
+import com.spring.ecommerce.utils.MailBodyHtml;
 import com.spring.ecommerce.utils.RandomString;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -25,20 +28,23 @@ public class MailServiceImpl implements MailService {
     @Value("${spring.mail.username}")
     private String myEmail;
 
+    private final MailBodyHtml mailBodyHtml;
+
     private final JavaMailSender javaMailSender;
     private final UserRepository userRepository;
     private final ForgotPasswordRepository forgotPasswordRepository;
 
-    public void sendMail(MailBodyDto mailBodyDto) {
-        SimpleMailMessage message = new SimpleMailMessage();
+    public void sendMail(MailBodyDto mailBodyDto) throws MessagingException {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true);
         message.setTo(mailBodyDto.recipient());
         message.setFrom(myEmail);
         message.setSubject(mailBodyDto.subject());
-        message.setText(mailBodyDto.text());
-        javaMailSender.send(message);
+        message.setText(mailBodyDto.text(), true);
+        javaMailSender.send(mimeMessage);
     }
 
-    public String sendOtpForgotPassword(String recipientEmail) {
+    public String sendOtpForgotPassword(String recipientEmail) throws MessagingException {
         User user = userRepository.findByEmail(recipientEmail).orElseThrow();
         int otpForgotPassword = otpGenerator();
 
@@ -61,15 +67,21 @@ public class MailServiceImpl implements MailService {
         return "OTP sent successfully";
     }
 
-    public String sendVerifyAccount(String recipientEmail) {
+    public String sendVerifyAccount(String recipientEmail) throws MessagingException {
         String verificationCode = RandomString.GenerateRandomString(64);
         userRepository.updateVerificationCode(recipientEmail, verificationCode);
+
+        String emailContent = mailBodyHtml.verifyAccountContent(
+                verificationCode,
+                "Account Verification",
+                "Verify My Account"
+        );
         MailBodyDto mailBodyDto = MailBodyDto.builder()
                 .recipient(recipientEmail)
                 .subject("Account Verification code")
-                .text("Your OTP is: " + verificationCode)
-                .text("Click the link to verify your account: " + Constant.VERIFY_ACCOUNT_URL + verificationCode)
+                .text(emailContent)
                 .build();
+
         sendMail(mailBodyDto);
         return "Verification Code sent successfully";
     }

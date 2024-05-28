@@ -10,6 +10,7 @@ import com.spring.ecommerce.dto.auth.TokenDto;
 import com.spring.ecommerce.services.AuthService;
 import com.spring.ecommerce.services.MailService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class AuthController {
     @PostMapping(value = {"/register", "signup"})
     public ResponseEntity<TokenDto> register(
             @RequestBody SignUpDto registerRequest
-    ) {
+    ) throws MessagingException {
         TokenDto authResponse = authService.register(registerRequest);
         mailService.sendVerifyAccount(registerRequest.getEmail());
         return ResponseEntity.ok(authResponse);

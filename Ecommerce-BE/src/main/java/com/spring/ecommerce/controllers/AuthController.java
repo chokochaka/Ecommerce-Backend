@@ -36,6 +36,7 @@ public class AuthController {
             @RequestBody SignUpDto registerRequest
     ) {
         TokenDto authResponse = authService.register(registerRequest);
+        mailService.sendVerifyAccount(registerRequest.getEmail());
         return ResponseEntity.ok(authResponse);
     }
 

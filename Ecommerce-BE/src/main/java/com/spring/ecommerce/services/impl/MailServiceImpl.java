@@ -8,6 +8,7 @@ import com.spring.ecommerce.repositories.ForgotPasswordRepository;
 import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.MailService;
 import com.spring.ecommerce.utils.RandomString;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -67,6 +68,7 @@ public class MailServiceImpl implements MailService {
                 .recipient(recipientEmail)
                 .subject("Account Verification code")
                 .text("Your OTP is: " + verificationCode)
+                .text("Click the link to verify your account: " + Constant.VERIFY_ACCOUNT_URL + verificationCode)
                 .build();
         sendMail(mailBodyDto);
         return "Verification Code sent successfully";

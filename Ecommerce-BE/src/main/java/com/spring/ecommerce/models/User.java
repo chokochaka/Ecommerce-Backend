@@ -82,18 +82,6 @@ public class User extends BaseEntity<Long> implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private ForgotPassword forgotPassword;
 
-    @PrePersist
-    // TODO: remove later
-    protected void onCreate() {
-        if (firstName == null) {
-            firstName = "Test";
-        }
-        if (lastName == null) {
-            lastName = "Test";
-        }
-        enabled = true; // dev: only for testing
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.roles != null) {

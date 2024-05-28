@@ -38,7 +38,6 @@ public class UserServiceImpl implements UserService {
                         searchRequestDto.getFieldRequestDtos()
                         , searchRequestDto.getGlobalOperator()
                 );
-        List<User> products = userRepository.findAll(userSearchSpecification);
         return userRepository.findAll(userSearchSpecification).stream()
                 .map(userMapper::userToReturnUserDto)
                 .collect(Collectors.toList());

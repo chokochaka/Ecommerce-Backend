@@ -1,6 +1,7 @@
 package com.spring.ecommerce.services.impl;
 
 import com.spring.ecommerce.config.Constant;
+import com.spring.ecommerce.models.User;
 import com.spring.ecommerce.services.JWTService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -28,10 +31,16 @@ public class JwtServiceImpl implements JWTService {
     @Value("${security.jwt.access-token-secret-key}")
     private String jwtAccessSecret;
 
-    public String generateToken(UserDetails user) {
+    public String generateToken(User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", user.getId());
+        claims.put("firstName", user.getFirstName());
+        claims.put("lastName", user.getLastName());
+        claims.put("authorities", populateAuthorities(user.getAuthorities()));
+
         return Jwts.builder()
+                .setClaims(claims)
                 .setSubject(user.getUsername())
-                .claim("authorities", populateAuthorities(user.getAuthorities()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
 //                .setExpiration(new Date(System.currentTimeMillis() + Constant.TIME.TWO_HOURS)) // Production
                 .setExpiration(new Date(System.currentTimeMillis() + Constant.TIME.FOURTEEN_DAYS)) // Development

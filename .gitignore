@@ -1,9 +1,9 @@
 htmlcssfinding/
-Ecommerce-BE/.env
-Ecommerce-BE/src/main/java/com/spring/ecommerce/data/
-worktree/
+.idea/
 *.zip
 
-.idea/
-
+Ecommerce-BE/src/main/java/com/spring/ecommerce/data/
 Ecommerce-BE/log/
+
+worktree/
+

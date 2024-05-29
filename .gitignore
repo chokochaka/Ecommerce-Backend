@@ -8,3 +8,5 @@ Ecommerce-BE/log/
 
 worktree/
 Ecommerce-BE/.env
+
+Ecommerce-BE/.env.local.main

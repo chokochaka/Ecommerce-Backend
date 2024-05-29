@@ -33,6 +33,4 @@ build/
 .vscode/
 
 ### CUSTOM ###
-.env.local
 .env
-/src/main/java/com/spring/ecommerce/data/

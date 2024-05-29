@@ -49,6 +49,8 @@ public class AuthServiceImpl implements AuthService {
         User savedUser = userRepository.save(User.builder()
                 .email(signUpDto.getEmail())
                 .password(passwordEncoder.encode(signUpDto.getPassword()))
+                .firstName(signUpDto.getFirstName())
+                .lastName(signUpDto.getLastName())
                 .verificationCode(RandomString.GenerateRandomString(64))
                 .enabled(false)
                 .roles(Set.of(userRole))

@@ -36,3 +36,4 @@ build/
 .env
 .env.*
 /src/main/java/com/spring/ecommerce/data/
+/src/main/java/com/spring/ecommerce/data/

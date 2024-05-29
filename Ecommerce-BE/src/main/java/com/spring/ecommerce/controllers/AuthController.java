@@ -37,7 +37,7 @@ public class AuthController {
             @RequestBody SignUpDto registerRequest
     ) throws MessagingException {
         TokenDto authResponse = authService.register(registerRequest);
-        mailService.sendVerifyAccount(registerRequest.getEmail());
+//        mailService.sendVerifyAccount(registerRequest.getEmail());
         return ResponseEntity.ok(authResponse);
     }
 

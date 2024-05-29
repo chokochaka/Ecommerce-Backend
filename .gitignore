@@ -4,7 +4,8 @@ htmlcssfinding/
 
 Ecommerce-BE/src/main/java/com/spring/ecommerce/data/
 Ecommerce-BE/log/
-Ecommerce-BE/.env
 
 worktree/
 
+
+Ecommerce-BE/.env.local

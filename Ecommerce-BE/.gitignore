@@ -34,5 +34,5 @@ build/
 
 ### CUSTOM ###
 .env.local
-.env
+#.env
 /src/main/java/com/spring/ecommerce/data/

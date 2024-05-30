@@ -38,6 +38,7 @@ public class Product extends BaseEntity<Long> {
     private String description;
     private double averageRating;
     private String imageUrl;
+    private double price;
     private boolean isFeatured;
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)

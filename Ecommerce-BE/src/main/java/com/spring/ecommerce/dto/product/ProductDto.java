@@ -13,6 +13,7 @@ public class ProductDto {
     private String description;
     private double averageRating;
     private String imageUrl;
+    private double price;
 
     @JsonProperty("isFeatured")
     private boolean isFeatured;

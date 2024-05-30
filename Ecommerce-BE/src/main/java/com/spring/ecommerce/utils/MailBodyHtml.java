@@ -1,7 +1,6 @@
 package com.spring.ecommerce.utils;
 
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

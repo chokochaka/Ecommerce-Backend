@@ -22,6 +22,7 @@ import lombok.Setter;
 public class Rating extends BaseEntity<Long> {
 
     private Long userId;
+    private Long orderDetailId;
 
     private String userName;
     private int ratingValue;

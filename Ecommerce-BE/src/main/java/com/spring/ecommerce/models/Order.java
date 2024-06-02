@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,8 +35,11 @@ public class Order {
     @GeneratedValue
     private Long id;
 
-    private int total_quantity;
-    private double total_price;
+    private boolean isApproved;
+    private String commodityCode;
+
+    private int totalQuantity;
+    private double totalPrice;
 
     @Column(updatable = false, nullable = false)
     @CreatedDate
@@ -45,8 +49,14 @@ public class Order {
     @JsonBackReference
     private List<OrderDetail> orderDetails;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private User user;
+
+    @PrePersist
+    public void prePersist() {
+        this.commodityCode = java.util.UUID.randomUUID().toString();
+        this.issuedAt = Instant.now();
+    }
 }

@@ -24,7 +24,6 @@ public class Variation extends BaseEntity<Long> {
 
     private String name;
 
-
     @OneToMany(mappedBy = "variation", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private List<VariationValue> variationValues;

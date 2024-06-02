@@ -24,6 +24,7 @@ public class OrderDetail extends BaseEntity<Long> {
     private int quantity;
     private double price;
     private String description; // variation-combinations
+    private Long userId;
     private boolean isRated;
 
     @ManyToOne(fetch = FetchType.LAZY)

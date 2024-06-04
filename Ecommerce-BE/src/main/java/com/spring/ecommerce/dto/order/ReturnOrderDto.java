@@ -11,8 +11,17 @@ import java.time.Instant;
 @ToString
 @Getter
 @Setter
-public class OrderDto {
-    private Long userId;
+public class ReturnOrderDto {
+    private Long id;
+
     private int totalQuantity;
     private double totalPrice;
+
+    private boolean isApproved;
+    private String commodityCode;
+
+    private long orderUserId;
+    private long orderProductId;
+
+    private Instant issuedAt;
 }

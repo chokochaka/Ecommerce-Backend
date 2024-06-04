@@ -2,19 +2,14 @@ package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.CanUserComment;
 import com.spring.ecommerce.dto.order.CreateOrderDto;
-import com.spring.ecommerce.dto.product.ProductDto;
-import com.spring.ecommerce.mapper.OrderMapper;
-import com.spring.ecommerce.models.Order;
-import com.spring.ecommerce.models.OrderDetail;
-import com.spring.ecommerce.models.Product;
-import com.spring.ecommerce.models.User;
-import com.spring.ecommerce.repositories.OrderRepository;
-import com.spring.ecommerce.repositories.ProductRepository;
-import com.spring.ecommerce.repositories.UserRepository;
+import com.spring.ecommerce.dto.order.ReturnOrderDto;
+import com.spring.ecommerce.dto.product.ReturnProductDto;
+import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.services.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +24,20 @@ import java.util.List;
 @Slf4j
 public class OrderController {
 
-    private final OrderRepository orderRepository;
     private final OrderService orderService;
+
+    @PostMapping("/search")
+    public List<ReturnOrderDto> getOrdersBySearch(@RequestBody SearchRequestDto searchRequestDto
+    ) {
+        return orderService.getOrdersBySearch(searchRequestDto);
+    }
+
+    @PostMapping("/search/paginated")
+    public Page<ReturnOrderDto> getOrdersBySearchAndPagination(
+            @RequestBody SearchRequestDto searchRequestDto
+    ) {
+        return orderService.getOrdersBySearchAndPagination(searchRequestDto);
+    }
 
     @PostMapping
     public void createOrder(@RequestBody CreateOrderDto createOrderDto) {

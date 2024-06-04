@@ -41,17 +41,18 @@ public class Order {
     private int totalQuantity;
     private double totalPrice;
 
+    private long orderUserId;
+    private long orderProductId;
+
     @Column(updatable = false, nullable = false)
     @CreatedDate
     private Instant issuedAt;
 
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonBackReference
     private List<OrderDetail> orderDetails;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
     private User user;
 
     @PrePersist

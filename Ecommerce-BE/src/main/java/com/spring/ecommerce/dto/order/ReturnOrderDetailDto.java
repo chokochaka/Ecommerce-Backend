@@ -11,13 +11,19 @@ import java.time.Instant;
 @Setter
 @Builder
 @ToString
-public class OrderDetailDto {
+public class ReturnOrderDetailDto {
+
     private Long userId;
-    private Long productId;
     private String imageUrl;
+
+    private Long productId;
     private String productName;
     private String description;
     private int quantity;
     private double price;
 
+    private long orderDetailOrderId;
+
+    private Instant createdOn;
+    private Instant lastUpdatedOn;
 }

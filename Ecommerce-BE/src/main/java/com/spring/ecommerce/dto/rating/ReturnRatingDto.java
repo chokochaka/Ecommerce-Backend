@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class RatingDto {
+public class ReturnRatingDto {
     private Long id;
     private long productId;
     private long userId;

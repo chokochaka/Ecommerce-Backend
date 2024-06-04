@@ -29,7 +29,7 @@ public class RatingController {
 
     @PutMapping("")
     public void editRating(@RequestBody RatingDto ratingDto) {
-        ratingService.editRating(ratingDto.getRatingId(), ratingDto);
+        ratingService.editRating(ratingDto.getId(), ratingDto);
     }
 
     @DeleteMapping("/{ratingId}")

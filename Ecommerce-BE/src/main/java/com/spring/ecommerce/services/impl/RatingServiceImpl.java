@@ -4,6 +4,7 @@ import com.spring.ecommerce.dto.rating.RatingDto;
 import com.spring.ecommerce.mapper.RatingMapper;
 import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.models.Rating;
+import com.spring.ecommerce.repositories.OrderRepository;
 import com.spring.ecommerce.repositories.ProductRepository;
 import com.spring.ecommerce.repositories.RatingRepository;
 import com.spring.ecommerce.repositories.UserRepository;
@@ -19,9 +20,15 @@ public class RatingServiceImpl implements RatingService {
     private final RatingMapper ratingMapper;
     private final ProductRepository productRepository;
     private final RatingRepository ratingRepository;
+    private final OrderRepository orderRepository;
 
     @Override
     public void createRating(RatingDto ratingDto) {
+//        Long orderDetailId = orderRepository.findFirstOrderDetailIdForRating(ratingDto.getUserId(), ratingDto.getProductId());
+//        if (orderDetailId == null) {
+//            throw new RuntimeException("User can not comment");
+//        }
+
         Product product = productRepository.findById(ratingDto.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
         Rating rating = ratingMapper.createRatingDtoToRating(ratingDto);
         rating.setProduct(product);

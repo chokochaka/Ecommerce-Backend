@@ -2,10 +2,13 @@ package com.spring.ecommerce.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.spring.ecommerce.dto.category.CategoryDto;
+import com.spring.ecommerce.dto.rating.RatingDto;
+import com.spring.ecommerce.dto.rating.ReturnRatingDto;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -23,6 +26,8 @@ public class ReturnProductDto {
     private boolean isFeatured;
 
     private Set<CategoryDto> categories;
+
+    private List<ReturnRatingDto> ratings;
 
     private Instant createdOn;
     private Instant lastUpdatedOn;

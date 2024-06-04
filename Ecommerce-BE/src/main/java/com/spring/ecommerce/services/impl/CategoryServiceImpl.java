@@ -114,4 +114,12 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.deleteProductCategoriesByCategoryId(id);
         categoryRepository.deleteById(id);
     }
+
+    @Override
+    public void updateParentCategory(long id, CategoryDto categoryDto) {
+        ParentCategory parentCategory = parentCategoryRepository.findById(id).orElseThrow();
+        parentCategory.setParentCategoryName(categoryDto.getName());
+        parentCategory.setDescription(categoryDto.getDescription());
+        parentCategoryRepository.save(parentCategory);
+    }
 }

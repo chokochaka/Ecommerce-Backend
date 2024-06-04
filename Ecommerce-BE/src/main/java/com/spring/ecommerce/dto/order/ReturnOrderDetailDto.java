@@ -13,16 +13,17 @@ import java.time.Instant;
 @ToString
 public class ReturnOrderDetailDto {
 
+    private Long id;
     private Long userId;
     private String imageUrl;
 
-    private Long productId;
     private String productName;
     private String description;
     private int quantity;
     private double price;
 
     private long orderDetailOrderId;
+    private long orderDetailProductId;
 
     private Instant createdOn;
     private Instant lastUpdatedOn;

@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +44,16 @@ public class OrderController {
     @PostMapping
     public void createOrder(@RequestBody CreateOrderDto createOrderDto) {
         orderService.createOrder(createOrderDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable long id) {
+        orderService.deleteOrder(id);
+    }
+
+    @PostMapping("/approve/{orderId}")
+    public void approveOrder(@PathVariable long orderId) {
+        orderService.approveOrder(orderId);
     }
 
     @PostMapping("/canUserComment")

@@ -88,4 +88,16 @@ public class OrderServiceImpl implements OrderService {
         }
         return orderDetailId;
     }
+
+    @Override
+    public void approveOrder(long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow();
+        order.setApproved(true);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void deleteOrder(long id) {
+        orderRepository.deleteById(id);
+    }
 }

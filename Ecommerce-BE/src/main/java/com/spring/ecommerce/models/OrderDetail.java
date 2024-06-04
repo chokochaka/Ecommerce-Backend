@@ -29,7 +29,7 @@ public class OrderDetail extends BaseEntity<Long> {
     private String description; // variation-combinations
 
     private Long userId;
-    private Long orderDetailProductId;
+    private long orderDetailProductId;
 
     private String imageUrl;
     private String productName;

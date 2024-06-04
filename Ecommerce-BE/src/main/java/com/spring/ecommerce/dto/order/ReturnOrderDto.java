@@ -17,7 +17,7 @@ public class ReturnOrderDto {
     private int totalQuantity;
     private double totalPrice;
 
-    private boolean isApproved;
+    private boolean approved;
     private String commodityCode;
 
     private long orderUserId;

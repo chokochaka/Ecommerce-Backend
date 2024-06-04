@@ -12,7 +12,6 @@ public interface ProductMapper {
 
     @Mapping(target = "averageRating", source = "averageRating")
     @Mapping(target = "name", source = "name")
-//    @Mapping(target = "featured", source = "featured")
     @Mapping(target = "imageUrl", source = "imageUrl")
     ReturnProductDto productToReturnProductDto(Product source);
 

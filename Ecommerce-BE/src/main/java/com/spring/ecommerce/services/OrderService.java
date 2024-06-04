@@ -17,4 +17,8 @@ public interface OrderService {
     void createOrder(CreateOrderDto createOrderDto);
 
     long canUserComment(CanUserComment canUserComment);
+
+    void approveOrder(long orderId);
+
+    void deleteOrder(long id);
 }

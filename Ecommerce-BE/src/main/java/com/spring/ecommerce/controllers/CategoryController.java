@@ -61,6 +61,14 @@ public class CategoryController {
         categoryService.createParentCategory(categoryDto);
     }
 
+    @PutMapping("/parent/{id}")
+    public void updateParentCategory(
+            @PathVariable long id,
+            @RequestBody CategoryDto categoryDto
+    ) {
+        categoryService.updateParentCategory(id, categoryDto);
+    }
+
     @PutMapping("/{id}")
     public void updateCategory(
             @PathVariable long id,

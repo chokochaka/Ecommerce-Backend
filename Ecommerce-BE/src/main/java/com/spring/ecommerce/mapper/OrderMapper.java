@@ -7,6 +7,7 @@ import com.spring.ecommerce.dto.order.ReturnOrderDto;
 import com.spring.ecommerce.models.Order;
 import com.spring.ecommerce.models.OrderDetail;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -18,5 +19,6 @@ public interface OrderMapper {
 
     List<OrderDetail> orderDetailDtosToOrderDetails(List<OrderDetailDto> orderDetailDtos);
 
+    @Mapping(target = "approved", source = "approved")
     ReturnOrderDto orderToReturnOrderDto(Order order);
 }

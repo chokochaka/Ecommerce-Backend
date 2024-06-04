@@ -76,7 +76,7 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
                         break;
 
                     case BETWEEN: // between 2 values
-                        //"10, 20"
+                        //"10,20"
                         String[] split1 = fieldRequestDto.getValue().split(",");
                         Predicate between = criteriaBuilder.between(root.get(fieldRequestDto.getField()), Double.parseDouble(split1[0]), Double.parseDouble(split1[1]));
                         predicates.add(between);

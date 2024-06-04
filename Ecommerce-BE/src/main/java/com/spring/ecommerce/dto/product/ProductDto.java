@@ -14,7 +14,7 @@ public class ProductDto {
     private double averageRating;
     private String imageUrl;
     private double price;
-
+    
     @JsonProperty("isFeatured")
     private boolean isFeatured;
 

@@ -2,8 +2,10 @@ package com.spring.ecommerce.services.impl;
 
 import com.spring.ecommerce.dto.product.AddProductItemToProductDto;
 import com.spring.ecommerce.dto.product.ProductItemDto;
+import com.spring.ecommerce.dto.product.ReturnProductItemDto;
 import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
+import com.spring.ecommerce.mapper.ProductItemMapper;
 import com.spring.ecommerce.models.Product;
 import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.models.VariationValue;
@@ -29,26 +31,31 @@ public class ProductItemServiceImpl implements ProductItemService {
     private final StockRepository stockRepository;
     private final ProductItemRepository productItemRepository;
     private final FilterSpecificationService<ProductItem> productItemFilterSpecificationService;
+    private final ProductItemMapper productItemMapper;
 
     @Override
-    public List<ProductItem> getProductItemsBySearch(SearchRequestDto searchRequestDto) {
+    public List<ReturnProductItemDto> getProductItemsBySearch(SearchRequestDto searchRequestDto) {
         Specification<ProductItem> productItemSearchSpecification = productItemFilterSpecificationService
                 .getSearchSpecification(
                         searchRequestDto.getFieldRequestDtos()
                         , searchRequestDto.getGlobalOperator()
                 );
-        return productItemRepository.findAll(productItemSearchSpecification);
+        return productItemMapper.listProductItemToReturnProductItemDto(productItemRepository.findAll(productItemSearchSpecification));
     }
 
     @Override
-    public Page<ProductItem> getProductItemsBySearchAndPagination(SearchRequestDto searchRequestDto) {
+    public Page<ReturnProductItemDto> getProductItemsBySearchAndPagination(SearchRequestDto searchRequestDto) {
         Specification<ProductItem> productItemSearchSpecification = productItemFilterSpecificationService
                 .getSearchSpecification(
                         searchRequestDto.getFieldRequestDtos()
                         , searchRequestDto.getGlobalOperator()
                 );
         Pageable pageable = new PageRequestDto().getPageable(searchRequestDto.getPageRequestDto());
-        return productItemRepository.findAll(productItemSearchSpecification, pageable);
+        // convert Page<ProductItem> to Page<ReturnProductItemDto>
+        return productItemRepository.findAll(productItemSearchSpecification, pageable)
+                .map(productItemMapper::productItemToReturnProductItemDto);
+
+//        return productItemMapper.listProductItemToReturnProductItemDto(productItemRepository.findAll(productItemSearchSpecification, pageable));
     }
 
     @Override
@@ -109,7 +116,7 @@ public class ProductItemServiceImpl implements ProductItemService {
     }
 
     @Override
-    public List<ProductItem> getProductItemsByProductId(long productId) {
-        return productItemRepository.findByProductId(productId);
+    public List<ReturnProductItemDto> getProductItemsByProductId(long productId) {
+        return productItemMapper.listProductItemToReturnProductItemDto(productItemRepository.findByProductId(productId));
     }
 }

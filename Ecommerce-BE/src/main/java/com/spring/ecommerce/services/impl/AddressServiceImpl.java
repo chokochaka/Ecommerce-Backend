@@ -42,6 +42,9 @@ AddressServiceImpl implements AddressService {
     @Override
     public AddressDto getAddressByUserId(Long id) {
         Address address = addressRepository.findByUser_Id(id);
+        if (address == null) {
+            return null;
+        }
         return AddressDto.builder()
                 .id(address.getId())
                 .country(address.getCountry())

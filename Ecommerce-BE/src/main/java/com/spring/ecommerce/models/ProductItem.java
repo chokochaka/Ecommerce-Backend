@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 @Setter
 public class ProductItem extends BaseEntity<Long> {
 
-    private static final Logger log = LoggerFactory.getLogger(ProductItem.class);
     private double price;
     private String imageUrl;
     private int availableStock;
@@ -39,7 +38,7 @@ public class ProductItem extends BaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-//    @JsonBackReference
+    @JsonBackReference
     private Product product;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)

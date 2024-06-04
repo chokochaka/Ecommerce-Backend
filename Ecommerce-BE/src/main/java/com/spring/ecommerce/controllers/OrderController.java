@@ -11,6 +11,7 @@ import com.spring.ecommerce.models.User;
 import com.spring.ecommerce.repositories.OrderRepository;
 import com.spring.ecommerce.repositories.ProductRepository;
 import com.spring.ecommerce.repositories.UserRepository;
+import com.spring.ecommerce.services.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,31 +30,15 @@ import java.util.List;
 public class OrderController {
 
     private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
-    private final ProductRepository productRepository;
-
-    private final OrderMapper orderMapper;
+    private final OrderService orderService;
 
     @PostMapping
     public void createOrder(@RequestBody CreateOrderDto createOrderDto) {
-        Order order = orderMapper.orderDtoToOrder(createOrderDto.getOrder());
-        Product product = productRepository.findById(createOrderDto.getOrderDetails().getFirst().getProductId()).orElseThrow();
-
-        List<OrderDetail> orderDetails = orderMapper.orderDetailDtosToOrderDetails(createOrderDto.getOrderDetails());
-        order.setOrderDetails(orderDetails);
-        orderDetails.forEach(orderDetail -> {
-            orderDetail.setOrder(order);
-            orderDetail.setProduct(product);
-        });
-        User user = userRepository.findById(createOrderDto.getOrder().getUserId()).orElseThrow();
-        order.setUser(user);
-        orderRepository.save(order);
+        orderService.createOrder(createOrderDto);
     }
 
     @PostMapping("/canUserComment")
-    public void canUserComment(@RequestBody CanUserComment canUserComment) {
-        Long orderDetailId = orderRepository.findFirstOrderDetailIdForRating(canUserComment.getUserId(), canUserComment.getProductId());
-        log.info("Can user comment: " + orderDetailId);
-//        orderRepository.canUserComment(canUserComment.getUserId(), canUserComment.getProductId());
+    public long canUserComment(@RequestBody CanUserComment canUserComment) {
+        return orderService.canUserComment(canUserComment);
     }
 }

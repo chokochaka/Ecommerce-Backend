@@ -42,7 +42,7 @@ public class Product extends BaseEntity<Long> {
     private boolean isFeatured;
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
-//    @JsonManagedReference
+    @JsonManagedReference
     private List<ProductItem> productItems;
 
     @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)

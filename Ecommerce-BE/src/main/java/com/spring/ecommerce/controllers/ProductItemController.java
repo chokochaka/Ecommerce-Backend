@@ -2,6 +2,7 @@ package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.product.AddProductItemToProductDto;
 import com.spring.ecommerce.dto.product.ProductItemDto;
+import com.spring.ecommerce.dto.product.ReturnProductItemDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.services.ProductItemService;
@@ -31,14 +32,13 @@ public class ProductItemController {
     private static final Logger logInfo = LoggerFactory.getLogger(ProductItemController.class);
 
     @PostMapping("/search")
-    public List<ProductItem> getProductItemsBySearch(@RequestBody SearchRequestDto searchRequestDto
+    public List<ReturnProductItemDto> getProductItemsBySearch(@RequestBody SearchRequestDto searchRequestDto
     ) {
-        logInfo.debug("searchRequestDto: {}", searchRequestDto);
         return productItemService.getProductItemsBySearch(searchRequestDto);
     }
 
     @PostMapping("/search/paginated")
-    public Page<ProductItem> getProductItemsBySearchAndPagination(
+    public Page<ReturnProductItemDto> getProductItemsBySearchAndPagination(
             @RequestBody SearchRequestDto searchRequestDto
     ) {
         return productItemService.getProductItemsBySearchAndPagination(searchRequestDto);
@@ -63,7 +63,7 @@ public class ProductItemController {
     }
 
     @GetMapping("/product/{productId}")
-    public List<ProductItem> getProductItemsByProductId(@PathVariable long productId) {
+    public List<ReturnProductItemDto> getProductItemsByProductId(@PathVariable long productId) {
         return productItemService.getProductItemsByProductId(productId);
     }
 }

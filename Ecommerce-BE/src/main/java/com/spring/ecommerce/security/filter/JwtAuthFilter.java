@@ -47,11 +47,4 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    // Verify if it is whitelisted path and if yes don't do anything
-    // In case that client sends a token to request that doesn't need it
-//    @Override
-//    protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
-//        return request.getServletPath().contains("/api/v1/auth");
-//    }
-
 }

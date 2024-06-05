@@ -44,6 +44,13 @@ public class UserController {
         return userService.getUsersBySearchAndPagination(searchRequestDto);
     }
 
+    @PostMapping
+    public void createUser(
+            @RequestBody UpdateUserDto updateUserDto
+    ) {
+        userService.createUser(updateUserDto);
+    }
+
     @PutMapping("/{id}")
     public void updateUser(
             @PathVariable long id,

@@ -44,7 +44,8 @@ public class JwtServiceImpl implements JWTService {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 // TODO
 //                .setExpiration(new Date(System.currentTimeMillis() + Constant.TIME.TWO_HOURS)) // Production
-                .setExpiration(new Date(System.currentTimeMillis() + Constant.TIME.FOURTEEN_DAYS)) // Development
+//                .setExpiration(new Date(System.currentTimeMillis() + Constant.TIME.FOURTEEN_DAYS)) // Development
+                .setExpiration(new Date(System.currentTimeMillis() + 1)) // Development
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

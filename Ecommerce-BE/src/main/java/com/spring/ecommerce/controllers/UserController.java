@@ -8,6 +8,7 @@ import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
 import com.spring.ecommerce.services.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,21 +33,21 @@ public class UserController {
 
     @PostMapping("/search")
     public List<ReturnUserDto> getUsersBySearch(
-            @RequestBody SearchRequestDto searchRequestDto
+            @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return userService.getUsersBySearch(searchRequestDto);
     }
 
     @PostMapping("/search/paginated")
     public Page<ReturnUserDto> getUsersBySearchAndPagination(
-            @RequestBody SearchRequestDto searchRequestDto
+            @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return userService.getUsersBySearchAndPagination(searchRequestDto);
     }
 
     @PostMapping
     public void createUser(
-            @RequestBody UpdateUserDto updateUserDto
+            @Valid @RequestBody UpdateUserDto updateUserDto
     ) {
         userService.createUser(updateUserDto);
     }
@@ -54,7 +55,7 @@ public class UserController {
     @PutMapping("/{id}")
     public void updateUser(
             @PathVariable long id,
-            @RequestBody UpdateUserDto updateUserDto
+            @Valid @RequestBody UpdateUserDto updateUserDto
     ) {
         userService.updateUser(id, updateUserDto);
     }

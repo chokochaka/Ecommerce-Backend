@@ -6,6 +6,7 @@ import com.spring.ecommerce.dto.category.ReturnCategoryDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.services.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,45 +27,45 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/search")
-    public List<ReturnCategoryDto> getCategoriesBySearch(@RequestBody SearchRequestDto searchRequestDto
+    public List<ReturnCategoryDto> getCategoriesBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return categoryService.getCategoriesBySearch(searchRequestDto);
     }
 
     @PostMapping("/search/paginated")
     public Page<ReturnCategoryDto> getCategoriesBySearchAndPagination(
-            @RequestBody SearchRequestDto searchRequestDto
+            @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return categoryService.getCategoriesBySearchAndPagination(searchRequestDto);
     }
 
     @PostMapping("/parent/search")
-    public List<ReturnCategoryDto> getParentCategoriesBySearch(@RequestBody SearchRequestDto searchRequestDto
+    public List<ReturnCategoryDto> getParentCategoriesBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return categoryService.getParentCategoriesBySearch(searchRequestDto);
     }
 
     @PostMapping("/parent/search/paginated")
     public Page<ReturnCategoryDto> getParentCategoriesBySearchAndPagination(
-            @RequestBody SearchRequestDto searchRequestDto
+            @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return categoryService.getParentCategoriesBySearchAndPagination(searchRequestDto);
     }
 
     @PostMapping
-    public void createCategory(@RequestBody AddCategoryToParentDto addCategoryToParentDto) {
+    public void createCategory(@Valid @RequestBody AddCategoryToParentDto addCategoryToParentDto) {
         categoryService.addCategoryToParentCategory(addCategoryToParentDto);
     }
 
     @PostMapping("/parent")
-    public void createParentCategory(@RequestBody CategoryDto categoryDto) {
+    public void createParentCategory(@Valid @RequestBody CategoryDto categoryDto) {
         categoryService.createParentCategory(categoryDto);
     }
 
     @PutMapping("/parent/{id}")
     public void updateParentCategory(
             @PathVariable long id,
-            @RequestBody CategoryDto categoryDto
+            @Valid @RequestBody CategoryDto categoryDto
     ) {
         categoryService.updateParentCategory(id, categoryDto);
     }
@@ -72,7 +73,7 @@ public class CategoryController {
     @PutMapping("/{id}")
     public void updateCategory(
             @PathVariable long id,
-            @RequestBody CategoryDto categoryDto
+            @Valid @RequestBody CategoryDto categoryDto
     ) {
         categoryService.updateCategory(id, categoryDto);
     }

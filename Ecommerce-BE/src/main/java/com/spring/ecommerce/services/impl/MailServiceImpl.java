@@ -54,7 +54,7 @@ public class MailServiceImpl implements MailService {
                 .expiresAt(now.plusMillis(Constant.TIME.THIRTY_MINUTES))
                 .user(user)
                 .build();
-        
+
         user.setForgotPassword(forgotPasswordSaved);
 
         String emailContent = mailBodyHtml.verifyAccountContent(

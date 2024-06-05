@@ -1,6 +1,7 @@
 package com.spring.ecommerce.dto.order;
 
-import com.spring.ecommerce.dto.user.ReturnUserDto;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,10 @@ import java.util.List;
 @Builder
 @ToString
 public class CreateOrderDto {
+
+    @NotNull(message = "Order should not be null")
     private OrderDto order;
+
+    @NotEmpty(message = "Order details should not be empty")
     private List<OrderDetailDto> orderDetails;
 }
-

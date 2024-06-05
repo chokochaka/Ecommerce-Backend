@@ -4,6 +4,7 @@ import com.spring.ecommerce.dto.VariationDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.services.VariationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,12 +32,12 @@ public class VariationController {
     }
 
     @PostMapping("/variation")
-    public void createVariation(@RequestBody String variationName) {
+    public void createVariation(@Valid @RequestBody String variationName) {
         variationService.createVariation(variationName);
     }
 
     @PutMapping("/variation/{variationId}")
-    public void updateVariation(@PathVariable Long variationId, @RequestBody String variationName) {
+    public void updateVariation(@PathVariable Long variationId, @Valid @RequestBody String variationName) {
         variationService.updateVariation(variationId, variationName);
     }
 
@@ -47,18 +48,18 @@ public class VariationController {
 
 
     @PostMapping("/search")
-    public List<VariationDto> getVariationValuesBySearch(@RequestBody SearchRequestDto searchRequestDto) {
+    public List<VariationDto> getVariationValuesBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto) {
         return variationService.getVariationValuesBySearch(searchRequestDto);
     }
 
     @PostMapping("/search/paginated")
-    public Page<VariationDto> getVariationValuesBySearchAndPagination(@RequestBody SearchRequestDto searchRequestDto) {
+    public Page<VariationDto> getVariationValuesBySearchAndPagination(@Valid @RequestBody SearchRequestDto searchRequestDto) {
         return variationService.getVariationValuesBySearchAndPagination(searchRequestDto);
     }
 
 
     @PostMapping("/{variationId}")
-    public void addVariationValueToVariation(@PathVariable Long variationId, @RequestBody String variationValue) {
+    public void addVariationValueToVariation(@PathVariable Long variationId, @Valid @RequestBody String variationValue) {
         variationService.addVariationValueToVariation(variationId, variationValue);
     }
 

@@ -3,6 +3,7 @@ package com.spring.ecommerce.controllers;
 import com.spring.ecommerce.dto.AddressDto;
 import com.spring.ecommerce.services.AddressService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +22,12 @@ public class AddressController {
     private final AddressService addressService;
 
     @PostMapping
-    public void addAddress(@RequestBody AddressDto addressDto) {
+    public void addAddress(@Valid @RequestBody AddressDto addressDto) {
         addressService.addAddress(addressDto);
     }
 
     @PutMapping()
-    public void updateAddress(@RequestBody AddressDto addressDto) {
+    public void updateAddress(@Valid @RequestBody AddressDto addressDto) {
         addressService.updateAddress(addressDto);
     }
 

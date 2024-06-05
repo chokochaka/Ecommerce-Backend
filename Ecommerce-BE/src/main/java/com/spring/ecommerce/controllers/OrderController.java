@@ -3,10 +3,10 @@ package com.spring.ecommerce.controllers;
 import com.spring.ecommerce.dto.CanUserComment;
 import com.spring.ecommerce.dto.order.CreateOrderDto;
 import com.spring.ecommerce.dto.order.ReturnOrderDto;
-import com.spring.ecommerce.dto.product.ReturnProductDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.services.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,20 +29,20 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/search")
-    public List<ReturnOrderDto> getOrdersBySearch(@RequestBody SearchRequestDto searchRequestDto
+    public List<ReturnOrderDto> getOrdersBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return orderService.getOrdersBySearch(searchRequestDto);
     }
 
     @PostMapping("/search/paginated")
     public Page<ReturnOrderDto> getOrdersBySearchAndPagination(
-            @RequestBody SearchRequestDto searchRequestDto
+            @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return orderService.getOrdersBySearchAndPagination(searchRequestDto);
     }
 
     @PostMapping
-    public void createOrder(@RequestBody CreateOrderDto createOrderDto) {
+    public void createOrder(@Valid @RequestBody CreateOrderDto createOrderDto) {
         orderService.createOrder(createOrderDto);
     }
 
@@ -57,7 +57,7 @@ public class OrderController {
     }
 
     @PostMapping("/canUserComment")
-    public long canUserComment(@RequestBody CanUserComment canUserComment) {
+    public long canUserComment(@Valid @RequestBody CanUserComment canUserComment) {
         return orderService.canUserComment(canUserComment);
     }
 }

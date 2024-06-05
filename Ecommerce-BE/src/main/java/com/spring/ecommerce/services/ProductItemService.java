@@ -4,7 +4,6 @@ import com.spring.ecommerce.dto.product.AddProductItemToProductDto;
 import com.spring.ecommerce.dto.product.ProductItemDto;
 import com.spring.ecommerce.dto.product.ReturnProductItemDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
-import com.spring.ecommerce.models.ProductItem;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

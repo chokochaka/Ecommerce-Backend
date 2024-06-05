@@ -10,17 +10,14 @@ import com.spring.ecommerce.services.AuthService;
 import com.spring.ecommerce.services.MailService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -33,7 +30,7 @@ public class AuthController {
 
     @PostMapping(value = {"/register", "signup"})
     public ResponseEntity<TokenDto> register(
-            @RequestBody SignUpDto registerRequest
+            @Valid @RequestBody SignUpDto registerRequest
     ) throws MessagingException {
         TokenDto authResponse = authService.register(registerRequest);
         mailService.sendVerifyAccount(registerRequest.getEmail());
@@ -42,7 +39,7 @@ public class AuthController {
 
     @PostMapping(value = {"/login", "signin"})
     public ResponseEntity<TokenDto> login(
-            @RequestBody SignInDto loginRequest
+            @Valid @RequestBody SignInDto loginRequest
     ) {
         return ResponseEntity.ok(authService.login(loginRequest));
     }
@@ -56,21 +53,21 @@ public class AuthController {
 
     @PostMapping("/active")
     public ResponseEntity<String> active(
-            @RequestBody ActiveAccountDto activeAccountDto
+            @Valid @RequestBody ActiveAccountDto activeAccountDto
     ) {
         return ResponseEntity.ok(authService.active(activeAccountDto.email(), activeAccountDto.verificationCode()));
     }
 
     @PostMapping("/refresh-token")
     public ResponseEntity<TokenDto> refreshToken(
-            @RequestBody RefreshTokenDto refreshTokenDto
+            @Valid @RequestBody RefreshTokenDto refreshTokenDto
     ) {
         return ResponseEntity.ok(authService.refreshToken(refreshTokenDto));
     }
 
     @PostMapping("/forgot-password/{email}")
     public ResponseEntity<String> forgotPassword(
-            @RequestBody ForgotPasswordDto forgotPasswordDto,
+            @Valid @RequestBody ForgotPasswordDto forgotPasswordDto,
             @PathVariable String email
     ) {
         return ResponseEntity.ok(authService.changePassword(forgotPasswordDto, email, "", true));

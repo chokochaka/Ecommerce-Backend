@@ -6,6 +6,7 @@ import com.spring.ecommerce.dto.product.ReturnProductDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.services.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,27 +32,27 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/search")
-    public List<ReturnProductDto> getProductItemsBySearch(@RequestBody SearchRequestDto searchRequestDto
+    public List<ReturnProductDto> getProductItemsBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return productService.getProductsBySearch(searchRequestDto);
     }
 
     @PostMapping("/search/paginated")
     public Page<ReturnProductDto> getProductsBySearchAndPagination(
-            @RequestBody SearchRequestDto searchRequestDto
+            @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return productService.getProductsBySearchAndPagination(searchRequestDto);
     }
 
     @PostMapping
-    public void createProduct(@RequestBody ProductDto productDto) {
+    public void createProduct(@Valid @RequestBody ProductDto productDto) {
         productService.createProduct(productDto);
     }
 
     @PutMapping("/{id}")
     public void updateProduct(
             @PathVariable long id,
-            @RequestBody ProductDto productDto
+            @Valid @RequestBody ProductDto productDto
     ) {
         productService.updateProduct(id, productDto);
     }
@@ -67,7 +68,7 @@ public class ProductController {
     }
 
     @PostMapping("/category")
-    public List<ReturnProductDto> getProductsByCategoryName(@RequestBody CategoryDto categoryDto) {
+    public List<ReturnProductDto> getProductsByCategoryName(@Valid @RequestBody CategoryDto categoryDto) {
         return productService.getProductsByCategoryName(categoryDto.getName());
     }
 

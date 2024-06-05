@@ -1,11 +1,10 @@
 package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.order.ReturnOrderDetailDto;
-import com.spring.ecommerce.dto.order.ReturnOrderDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.services.OrderDetailService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,14 +28,14 @@ public class OrderDetailController {
     private final OrderDetailService orderDetailService;
 
     @PostMapping("/search")
-    public List<ReturnOrderDetailDto> getOrdersBySearch(@RequestBody SearchRequestDto searchRequestDto
+    public List<ReturnOrderDetailDto> getOrdersBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return orderDetailService.getOrderDetailsBySearch(searchRequestDto);
     }
 
     @PostMapping("/search/paginated")
     public Page<ReturnOrderDetailDto> getOrdersBySearchAndPagination(
-            @RequestBody SearchRequestDto searchRequestDto
+            @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return orderDetailService.getOrderDetailsBySearchAndPagination(searchRequestDto);
     }

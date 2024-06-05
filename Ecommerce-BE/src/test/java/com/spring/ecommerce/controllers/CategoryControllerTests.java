@@ -156,7 +156,7 @@ public class CategoryControllerTests {
 
         // then
         response.andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().is4xxClientError());
     }
 
     @Test

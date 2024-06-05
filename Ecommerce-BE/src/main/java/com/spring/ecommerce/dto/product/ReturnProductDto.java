@@ -2,7 +2,6 @@ package com.spring.ecommerce.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.spring.ecommerce.dto.category.CategoryDto;
-import com.spring.ecommerce.dto.rating.RatingDto;
 import com.spring.ecommerce.dto.rating.ReturnRatingDto;
 import lombok.Getter;
 import lombok.Setter;

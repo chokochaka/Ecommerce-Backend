@@ -12,8 +12,6 @@ import com.spring.ecommerce.repositories.ProductRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
 import com.spring.ecommerce.services.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

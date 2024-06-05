@@ -4,9 +4,9 @@ import com.spring.ecommerce.dto.product.AddProductItemToProductDto;
 import com.spring.ecommerce.dto.product.ProductItemDto;
 import com.spring.ecommerce.dto.product.ReturnProductItemDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
-import com.spring.ecommerce.models.ProductItem;
 import com.spring.ecommerce.services.ProductItemService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,27 +32,27 @@ public class ProductItemController {
     private static final Logger logInfo = LoggerFactory.getLogger(ProductItemController.class);
 
     @PostMapping("/search")
-    public List<ReturnProductItemDto> getProductItemsBySearch(@RequestBody SearchRequestDto searchRequestDto
+    public List<ReturnProductItemDto> getProductItemsBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return productItemService.getProductItemsBySearch(searchRequestDto);
     }
 
     @PostMapping("/search/paginated")
     public Page<ReturnProductItemDto> getProductItemsBySearchAndPagination(
-            @RequestBody SearchRequestDto searchRequestDto
+            @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
         return productItemService.getProductItemsBySearchAndPagination(searchRequestDto);
     }
 
     @PostMapping // add product item to product
-    public void addProductItemToProduct(@RequestBody AddProductItemToProductDto addProductItemToProductDto) {
+    public void addProductItemToProduct(@Valid @RequestBody AddProductItemToProductDto addProductItemToProductDto) {
         productItemService.addProductItemToProduct(addProductItemToProductDto);
     }
 
     @PutMapping("/{id}")
     public void updateProductItem(
             @PathVariable long id,
-            @RequestBody ProductItemDto productItemDto
+            @Valid @RequestBody ProductItemDto productItemDto
     ) {
         productItemService.updateProductItem(id, productItemDto);
     }

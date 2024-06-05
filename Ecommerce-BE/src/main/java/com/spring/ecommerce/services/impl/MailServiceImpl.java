@@ -47,12 +47,6 @@ public class MailServiceImpl implements MailService {
         User user = userRepository.findByEmail(recipientEmail).orElseThrow();
         int otpForgotPassword = otpGenerator();
 
-        MailBodyDto mailBodyDto = MailBodyDto.builder()
-                .recipient(recipientEmail)
-                .subject("Forgot Password Verification OTP")
-                .text("Your OTP is: " + otpForgotPassword)
-                .build();
-
         Instant now = Instant.now();
         ForgotPassword forgotPasswordSaved = ForgotPassword.builder()
                 .otp(otpForgotPassword)
@@ -60,8 +54,26 @@ public class MailServiceImpl implements MailService {
                 .expiresAt(now.plusMillis(Constant.TIME.THIRTY_MINUTES))
                 .user(user)
                 .build();
+        
+        user.setForgotPassword(forgotPasswordSaved);
+
+        String emailContent = mailBodyHtml.verifyAccountContent(
+                "forgotPassword",
+                Integer.toString(otpForgotPassword),
+                recipientEmail,
+                "Forgot Password",
+                "Reset My Password"
+        );
+
+        MailBodyDto mailBodyDto = MailBodyDto.builder()
+                .recipient(recipientEmail)
+                .subject("Forgot Password")
+                .text(emailContent)
+                .build();
+
         sendMail(mailBodyDto);
         forgotPasswordRepository.save(forgotPasswordSaved);
+        userRepository.save(user);
 
         return "OTP sent successfully";
     }

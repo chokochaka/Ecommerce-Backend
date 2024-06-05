@@ -24,27 +24,31 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public void createRating(RatingDto ratingDto) {
-//        Long orderDetailId = orderRepository.findFirstOrderDetailIdForRating(ratingDto.getUserId(), ratingDto.getProductId());
-//        if (orderDetailId == null) {
-//            throw new RuntimeException("User can not comment");
-//        }
-
         Product product = productRepository.findById(ratingDto.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
         Rating rating = ratingMapper.createRatingDtoToRating(ratingDto);
         rating.setProduct(product);
         ratingRepository.save(rating);
+        product.updateAverageRating();
+        productRepository.save(product);
     }
 
     @Override
     public void editRating(long ratingId, RatingDto ratingDto) {
         Rating rating = ratingRepository.findById(ratingId).orElseThrow(() -> new RuntimeException("Rating not found"));
+        Product product = productRepository.findById(rating.getProduct().getId()).orElseThrow(() -> new RuntimeException("Product not found"));
         rating.setRatingValue(ratingDto.getRatingValue());
         rating.setReviewValue(ratingDto.getReviewValue());
         ratingRepository.save(rating);
+        product.updateAverageRating();
+        productRepository.save(product);
     }
 
     @Override
     public void deleteRating(long ratingId) {
+        Rating rating = ratingRepository.findById(ratingId).orElseThrow(() -> new RuntimeException("Rating not found"));
+        Product product = productRepository.findById(rating.getProduct().getId()).orElseThrow(() -> new RuntimeException("Product not found"));
         ratingRepository.deleteById(ratingId);
+        product.updateAverageRating();
+        productRepository.save(product);
     }
 }

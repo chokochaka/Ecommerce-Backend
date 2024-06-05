@@ -11,5 +11,7 @@ import java.util.List;
 
 @Repository
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long>, JpaSpecificationExecutor<OrderDetail> {
+    // find by user id
+    List<OrderDetail> findByUserId(long userId);
 }
 

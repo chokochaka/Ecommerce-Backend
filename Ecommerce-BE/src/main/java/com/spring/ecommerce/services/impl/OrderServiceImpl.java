@@ -82,11 +82,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public long canUserComment(CanUserComment canUserComment) {
-        Long orderDetailId = orderRepository.findFirstOrderDetailIdForRating(canUserComment.getUserId(), canUserComment.getProductId());
-        if (orderDetailId == null) {
+        List<Long> orderDetailId = orderRepository.findFirstOrderDetailIdForRating(canUserComment.getUserId(), canUserComment.getProductId());
+        if (orderDetailId.isEmpty()) {
             return -1;
         }
-        return orderDetailId;
+        return orderDetailId.getFirst();
     }
 
     @Override

@@ -7,8 +7,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PostLoad;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +37,9 @@ public class Product extends BaseEntity<Long> {
     private static final Logger log = LoggerFactory.getLogger(Product.class);
     private String name;
 
+    @Column(columnDefinition = "text")
     private String description;
+
     private double averageRating;
     private String imageUrl;
     private double price;
@@ -73,4 +77,15 @@ public class Product extends BaseEntity<Long> {
     @Column()
     private Set<Category> categories;
 
+    public void updateAverageRating() {
+        if (ratings != null && !ratings.isEmpty()) {
+            double sum = 0;
+            for (Rating rating : ratings) {
+                sum += rating.getRatingValue();
+            }
+            this.averageRating = sum / ratings.size();
+        } else {
+            this.averageRating = 0;
+        }
+    }
 }

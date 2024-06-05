@@ -5,10 +5,12 @@ import com.spring.ecommerce.dto.order.ReturnOrderDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.services.OrderDetailService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +44,11 @@ public class OrderDetailController {
     @DeleteMapping("/{id}")
     public void deleteOrderDetail(@PathVariable long id) {
         orderDetailService.deleteOrderDetail(id);
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<ReturnOrderDetailDto> getOrdersByUserId(@PathVariable long userId) {
+        return orderDetailService.getOrderDetailsByUserId(userId);
     }
 
 }

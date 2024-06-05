@@ -57,4 +57,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public void deleteOrderDetail(long id) {
         orderDetailRepository.deleteById(id);
     }
+
+    @Override
+    public List<ReturnOrderDetailDto> getOrderDetailsByUserId(long userId) {
+        List<OrderDetail> orderDetails = orderDetailRepository.findByUserId(userId);
+        return orderDetails.stream()
+                .map(orderDetailMapper::orderDetailToReturnOrderDto)
+                .collect(Collectors.toList());
+    }
 }

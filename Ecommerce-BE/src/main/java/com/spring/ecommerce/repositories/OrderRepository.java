@@ -23,6 +23,6 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
     @Query("SELECT od.id FROM OrderDetail od " +
             "LEFT JOIN Rating r ON od.id = r.orderDetailId AND od.userId = r.userId " +
             "WHERE od.userId = :userId AND od.product.id = :productId AND r.id IS NULL")
-    Long findFirstOrderDetailIdForRating(Long userId, Long productId);
+    List<Long> findFirstOrderDetailIdForRating(Long userId, Long productId);
 }
 

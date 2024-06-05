@@ -1,7 +1,6 @@
 package com.spring.ecommerce.controllers;
 
 import com.spring.ecommerce.dto.auth.ActiveAccountDto;
-import com.spring.ecommerce.dto.auth.ChangePasswordDto;
 import com.spring.ecommerce.dto.auth.ForgotPasswordDto;
 import com.spring.ecommerce.dto.auth.RefreshTokenDto;
 import com.spring.ecommerce.dto.auth.SignInDto;
@@ -69,29 +68,11 @@ public class AuthController {
         return ResponseEntity.ok(authService.refreshToken(refreshTokenDto));
     }
 
-    @PostMapping("/change-password/{email}")
-    public ResponseEntity<String> changePassword(
-            @RequestHeader("Authorization") String authHeader,
-            @RequestBody ChangePasswordDto changePasswordDto,
-            @PathVariable String email
-    ) {
-        if (!Objects.equals(changePasswordDto.password(), changePasswordDto.repeatPassword())) {
-            return new ResponseEntity<>("Password and Repeat Password must be same", HttpStatus.EXPECTATION_FAILED);
-        }
-        return ResponseEntity.ok(authService.changePassword(changePasswordDto, email, authHeader, false));
-    }
-
     @PostMapping("/forgot-password/{email}")
     public ResponseEntity<String> forgotPassword(
             @RequestBody ForgotPasswordDto forgotPasswordDto,
             @PathVariable String email
     ) {
-        if (!Objects.equals(forgotPasswordDto.password(), forgotPasswordDto.repeatPassword())) {
-            return new ResponseEntity<>("Password and Repeat Password must be same", HttpStatus.EXPECTATION_FAILED);
-        }
-        if (mailService.verifyForgotPasswordOtp(forgotPasswordDto.otp(), email)) {
-            return ResponseEntity.badRequest().body("Invalid OTP");
-        }
         return ResponseEntity.ok(authService.changePassword(forgotPasswordDto, email, "", true));
     }
 

@@ -15,4 +15,6 @@ public interface OrderDetailService {
     Page<ReturnOrderDetailDto> getOrderDetailsBySearchAndPagination(SearchRequestDto searchRequestDto);
 
     void deleteOrderDetail(long id);
+
+    List<ReturnOrderDetailDto> getOrderDetailsByUserId(long userId);
 }

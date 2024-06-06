@@ -26,10 +26,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "User", description = "User API")
 public class UserController {
-    private final UserRepository userRepository;
     private final UserService userService;
 
-    private final FilterSpecificationService<User> userFilterSpecificationService;
 
     @PostMapping("/search")
     public List<ReturnUserDto> getUsersBySearch(

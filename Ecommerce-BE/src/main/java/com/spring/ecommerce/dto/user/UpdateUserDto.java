@@ -3,7 +3,6 @@ package com.spring.ecommerce.dto.user;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.annotation.Bean;
 
 import java.util.Set;
 

@@ -4,7 +4,6 @@ import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.dto.user.ReturnUserDto;
 import com.spring.ecommerce.dto.user.UpdateUserDto;
-import com.spring.ecommerce.exceptions.ResourceNotFoundException;
 import com.spring.ecommerce.mapper.UserMapper;
 import com.spring.ecommerce.models.Role;
 import com.spring.ecommerce.models.User;
@@ -20,22 +19,20 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {

@@ -1,12 +1,10 @@
 package com.spring.ecommerce.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.ecommerce.dto.category.AddCategoryToParentDto;
 import com.spring.ecommerce.dto.category.CategoryDto;
 import com.spring.ecommerce.dto.category.ReturnCategoryDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.enums.GlobalOperator;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +12,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;

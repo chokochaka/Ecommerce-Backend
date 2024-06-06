@@ -1,10 +1,12 @@
 package com.spring.ecommerce.security;
 
+import com.spring.ecommerce.enums.RoleEnum;
 import com.spring.ecommerce.security.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -52,44 +54,66 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-//        requestHandler.setCsrfRequestAttributeName("_csrf");
+
+        String ADMIN = RoleEnum.ROLE_ADMIN.getRoleName();
+        String INVENTORY_MANAGER = RoleEnum.ROLE_INVENTORY_MANAGER.getRoleName();
+        String USER = RoleEnum.ROLE_USER.getRoleName();
+
         return http
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(corsConfigurationSource()))
-//                .csrf(
-//                        (csrf) -> csrf.csrfTokenRequestHandler(requestHandler)
-//                                .ignoringRequestMatchers("/contact", "/register")
-//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                        )
-//                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
-//                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
-//                .addFilterAt(new AuthoritiesLoggingAtFilter(),BasicAuthenticationFilter.class)
-//                .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authorizeHttpRequests(req ->
                         req
-                                // for testing only
-//                                .requestMatchers("/api/v1/admin/user")
-//                                .hasRole(RoleEnum.ROLE_USER.getRoleName())
-//                                .requestMatchers("/api/v1/admin/iv")
-//                                .hasRole(RoleEnum.ROLE_INVENTORY_MANAGER.getRoleName())
-//                                .requestMatchers("/api/v1/admin/admin")
-//                                .hasRole(RoleEnum.ROLE_ADMIN.getRoleName())
-//                                .requestMatchers("/api/v1/admin/all")
-//                                .permitAll()
-//
-//                                .requestMatchers("/api/v1/auth/change-password/*").authenticated()
                                 // swagger - open api
                                 .requestMatchers(
                                         "/swagger-ui/**",
                                         "/v2/api-docs/**", "/v3/api-docs/**",
                                         "/swagger-ui.html", "/swagger-resources/**", "/webjars/**"
                                 ).permitAll()
-
-//                                .requestMatchers("/api/v1/product/**").hasAnyRole(RoleEnum.ROLE_ADMIN.getRoleName())
-//                                .requestMatchers("/api/v1/product/*").hasAnyRole(RoleEnum.ROLE_ADMIN.getRoleName())
-
+                                // product item
+                                .requestMatchers(HttpMethod.POST, "/api/v1/productItem").hasAnyRole(ADMIN, INVENTORY_MANAGER)
+                                .requestMatchers(HttpMethod.PUT, "/api/v1/productItem/*").hasAnyRole(ADMIN, INVENTORY_MANAGER)
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/productItem/*").hasAnyRole(ADMIN, INVENTORY_MANAGER)
+                                // address
+                                .requestMatchers(HttpMethod.POST, "/api/v1/address").hasAnyRole(ADMIN, USER)
+                                .requestMatchers(HttpMethod.PUT, "/api/v1/address").hasAnyRole(ADMIN, USER)
+                                // category
+                                .requestMatchers("/api/v1/category/search").permitAll()
+                                .requestMatchers("/api/v1/category/search/paginated").permitAll()
+                                .requestMatchers("/api/v1/category/parent/search").permitAll()
+                                .requestMatchers("/api/v1/category/parent/search/paginated").permitAll()
+                                .requestMatchers("/api/v1/category").hasAnyRole(ADMIN, INVENTORY_MANAGER)
+                                .requestMatchers("/api/v1/category/**").hasAnyRole(ADMIN, INVENTORY_MANAGER)
+                                // order
+                                .requestMatchers("/api/v1/order/search").permitAll()
+                                .requestMatchers("/api/v1/order/search/paginated").permitAll()
+                                .requestMatchers("/api/v1/order/canUserComment").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/order").permitAll()
+                                .requestMatchers("/api/v1/order/**").hasAnyRole(ADMIN)
+                                // auth
+                                .requestMatchers("/api/v1/auth/**").permitAll()
+                                // order detail
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/orderDetail/**").hasAnyRole(ADMIN)
+                                // user
+                                .requestMatchers("/api/v1/user/search").permitAll()
+                                .requestMatchers("/api/v1/user/search/paginated").permitAll()
+                                .requestMatchers("/api/v1/user/**").hasAnyRole(ADMIN)
+                                // variation
+                                .requestMatchers("/api/v1/variationValue/variation").hasAnyRole(ADMIN, INVENTORY_MANAGER)
+                                // mail
+                                .requestMatchers("/api/v1/mail/**").permitAll()
+                                // role
+                                .requestMatchers("/api/v1/role/**").hasAnyRole(ADMIN)
+                                // rating
+                                .requestMatchers("/api/v1/rating/**").permitAll()
+                                // product
+                                .requestMatchers("/api/v1/product/category").permitAll()
+                                .requestMatchers("/api/v1/product/search").permitAll()
+                                .requestMatchers("/api/v1/product/search/paginated").permitAll()
+                                .requestMatchers("/api/v1/product").hasAnyRole(ADMIN, INVENTORY_MANAGER)
+                                .requestMatchers("/api/v1/product/**").hasAnyRole(ADMIN, INVENTORY_MANAGER)
+                                // all
                                 .anyRequest().permitAll())
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

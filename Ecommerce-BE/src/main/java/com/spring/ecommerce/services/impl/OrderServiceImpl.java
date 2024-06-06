@@ -2,6 +2,7 @@ package com.spring.ecommerce.services.impl;
 
 import com.spring.ecommerce.dto.CanUserComment;
 import com.spring.ecommerce.dto.order.CreateOrderDto;
+import com.spring.ecommerce.dto.order.OrderDetailDto;
 import com.spring.ecommerce.dto.order.ReturnOrderDto;
 import com.spring.ecommerce.dto.search.PageRequestDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
@@ -64,21 +65,32 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void createOrder(CreateOrderDto createOrderDto) {
         Order order = orderMapper.orderDtoToOrder(createOrderDto.getOrder());
-        Product product = productRepository.findById(createOrderDto.getOrderDetails().getFirst().getProductId()).orElseThrow();
 
+        // Map order details from DTO to entity
         List<OrderDetail> orderDetails = orderMapper.orderDetailDtosToOrderDetails(createOrderDto.getOrderDetails());
         order.setOrderDetails(orderDetails);
         order.setOrderUserId(createOrderDto.getOrder().getUserId());
-        order.setOrderProductId(createOrderDto.getOrderDetails().getFirst().getProductId());
-        orderDetails.forEach(orderDetail -> {
+
+        // Map each OrderDetailDto to its corresponding OrderDetail and set product ID
+        for (int i = 0; i < orderDetails.size(); i++) {
+            OrderDetail orderDetail = orderDetails.get(i);
+            OrderDetailDto orderDetailDto = createOrderDto.getOrderDetails().get(i);
+
+            Product product = productRepository.findById(orderDetailDto.getProductId()).orElseThrow();
             orderDetail.setOrder(order);
             orderDetail.setProduct(product);
-            orderDetail.setOrderDetailProductId(createOrderDto.getOrderDetails().getFirst().getProductId());
-        });
+            orderDetail.setOrderDetailProductId(orderDetailDto.getProductId());
+            // You might need to set additional fields for OrderDetail here if required
+        }
+
+        // Retrieve the user and associate it with the order
         User user = userRepository.findById(createOrderDto.getOrder().getUserId()).orElseThrow();
         order.setUser(user);
+
+        // Save the order with its details
         orderRepository.save(order);
     }
+
 
     @Override
     public long canUserComment(CanUserComment canUserComment) {

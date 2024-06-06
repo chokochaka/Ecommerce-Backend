@@ -162,9 +162,10 @@ public class CategoryControllerTests {
     @Test
     public void createParentCategory_ShouldSaveParentCategory() throws Exception {
         // given
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setName("Home Appliances");
-        categoryDto.setDescription("Home Appliances description");
+        CategoryDto categoryDto = CategoryDto.builder()
+                .name("Electronics")
+                .description("Electronic items")
+                .build();
         doNothing().when(categoryService).createParentCategory(any(CategoryDto.class));
 
         // when
@@ -181,9 +182,10 @@ public class CategoryControllerTests {
     public void updateCategory_ShouldUpdateExistingCategory() throws Exception {
         // given
         long categoryId = 1L;
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setName("Electronics");
-        categoryDto.setDescription("Updated description");
+        CategoryDto categoryDto = CategoryDto.builder()
+                .name("Electronics")
+                .description("Electronic items")
+                .build();
         doNothing().when(categoryService).updateCategory(anyLong(), any(CategoryDto.class));
 
         // when

@@ -93,9 +93,10 @@ public class CategoryServiceTests {
         returnParentCategoryDto.setId(1L);
         returnParentCategoryDto.setParentCategoryName("Home Appliances");
 
-        categoryDto = new CategoryDto();
-        categoryDto.setName("Electronics");
-        categoryDto.setDescription("Electronic items");
+        categoryDto = CategoryDto.builder()
+                .name("Electronics")
+                .description("Electronic items")
+                .build();
 
         addCategoryToParentDto = new AddCategoryToParentDto();
         addCategoryToParentDto.setName("Electronics");

@@ -40,17 +40,19 @@ public class CategoryIntegrationTests extends AbstractContainer {
 
     @Test
     void createParentCategoryWithoutPermission_ShouldThrowAccessDenied1() {
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setName("Electronics");
-        categoryDto.setDescription("Electronic items");
+        CategoryDto categoryDto = CategoryDto.builder()
+                .name("Electronics")
+                .description("Electronic items")
+                .build();
         testRestTemplate.postForEntity(API_CATEGORIES_PATH + "/parent", new HttpEntity<>(categoryDto), Void.class);
     }
 
     @Test
     void createParentCategoryWithoutPermission_ShouldThrowAccessDenied() {
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setName("Electronics");
-        categoryDto.setDescription("Electronic items");
+        CategoryDto categoryDto = CategoryDto.builder()
+                .name("Electronics")
+                .description("Electronic items")
+                .build();
 
         HttpEntity<CategoryDto> request = new HttpEntity<>(categoryDto, headers);
 

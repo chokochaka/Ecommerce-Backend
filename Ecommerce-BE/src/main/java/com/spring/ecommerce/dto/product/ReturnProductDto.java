@@ -3,6 +3,7 @@ package com.spring.ecommerce.dto.product;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.spring.ecommerce.dto.category.CategoryDto;
 import com.spring.ecommerce.dto.rating.ReturnRatingDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Builder
 public class ReturnProductDto {
     private Long id;
 

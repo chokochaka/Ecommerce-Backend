@@ -53,9 +53,10 @@ public class VariationControllerTests {
     @Test
     public void getAllVariations_ShouldReturnListOfVariations() throws Exception {
         // given
-        VariationDto variationDto = new VariationDto();
-        variationDto.setId(1L);
-        variationDto.setName("Size");
+        VariationDto variationDto = VariationDto.builder()
+                .id(1L)
+                .name("Size")
+                .build();
         List<VariationDto> variationDtoList = Collections.singletonList(variationDto);
         when(variationService.getAllVariations()).thenReturn(variationDtoList);
 
@@ -121,9 +122,10 @@ public class VariationControllerTests {
     public void getVariationValuesBySearch_ShouldReturnListOfVariationValues() throws Exception {
         // given
         SearchRequestDto searchRequestDto = new SearchRequestDto();
-        VariationDto variationDto = new VariationDto();
-        variationDto.setId(1L);
-        variationDto.setName("Size");
+        VariationDto variationDto = VariationDto.builder()
+                .id(1L)
+                .name("Size")
+                .build();
         List<VariationDto> variationDtoList = Collections.singletonList(variationDto);
         when(variationService.getVariationValuesBySearch(any(SearchRequestDto.class))).thenReturn(variationDtoList);
 
@@ -143,9 +145,10 @@ public class VariationControllerTests {
     public void getVariationValuesBySearchAndPagination_ShouldReturnPagedVariationValues() throws Exception {
         // given
         SearchRequestDto searchRequestDto = new SearchRequestDto();
-        VariationDto variationDto = new VariationDto();
-        variationDto.setId(1L);
-        variationDto.setName("Size");
+        VariationDto variationDto = VariationDto.builder()
+                .id(1L)
+                .name("Size")
+                .build();
         Page<VariationDto> variationDtoPage = new PageImpl<>(Collections.singletonList(variationDto));
         when(variationService.getVariationValuesBySearchAndPagination(any(SearchRequestDto.class))).thenReturn(variationDtoPage);
 

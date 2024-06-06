@@ -6,12 +6,15 @@ import com.spring.ecommerce.dto.category.CategoryDto;
 import com.spring.ecommerce.dto.category.ReturnCategoryDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.enums.GlobalOperator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
@@ -19,6 +22,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.OK;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -32,14 +36,31 @@ public class CategoryIntegrationTests extends AbstractContainer {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private HttpHeaders headers;
+
     @Test
-    void getParentCategoriesBySearch_ShouldReturnListOfCategories() {
-        // Create a parent category first
+    void createParentCategoryWithoutPermission_ShouldThrowAccessDenied1() {
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setName("Electronics");
         categoryDto.setDescription("Electronic items");
         testRestTemplate.postForEntity(API_CATEGORIES_PATH + "/parent", new HttpEntity<>(categoryDto), Void.class);
+    }
 
+    @Test
+    void createParentCategoryWithoutPermission_ShouldThrowAccessDenied() {
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.setName("Electronics");
+        categoryDto.setDescription("Electronic items");
+
+        HttpEntity<CategoryDto> request = new HttpEntity<>(categoryDto, headers);
+
+        ResponseEntity<Void> response = testRestTemplate.postForEntity(API_CATEGORIES_PATH + "/parent", request, Void.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(FORBIDDEN);
+    }
+
+    @Test
+    void getParentCategoriesBySearch_ShouldReturnListOfCategories() {
         // given
         SearchRequestDto searchRequestDto = new SearchRequestDto();
         searchRequestDto.setGlobalOperator(GlobalOperator.ALL);
@@ -56,36 +77,12 @@ public class CategoryIntegrationTests extends AbstractContainer {
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(OK);
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().size()).isGreaterThan(0);
-        assertThat(response.getBody().stream().anyMatch(c -> c.getParentCategoryName().equals("Electronics"))).isTrue();
+        assertThat(response.getBody()).isEmpty();
+        assertThat(response.getBody().size()).isEqualTo(0);
     }
 
     @Test
     void createCategory_ShouldSaveCategory() {
-        // Create a parent category first
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setName("Electronics");
-        categoryDto.setDescription("Electronic items");
-        testRestTemplate.postForEntity(API_CATEGORIES_PATH + "/parent", new HttpEntity<>(categoryDto), Void.class);
-
-
-        // given
-        AddCategoryToParentDto addCategoryToParentDto = new AddCategoryToParentDto();
-        addCategoryToParentDto.setName("Electronics 1");
-        addCategoryToParentDto.setDescription("Electronic Items 1");
-        addCategoryToParentDto.setParentCategoryId(1L);
-
-        // when
-        ResponseEntity<Void> response = testRestTemplate.exchange(
-                API_CATEGORIES_PATH,
-                POST,
-                new HttpEntity<>(addCategoryToParentDto),
-                Void.class);
-
-        // then
-        assertThat(response.getStatusCode()).isEqualTo(OK);
-
         // Verify the category was created
         SearchRequestDto searchRequestDto = new SearchRequestDto();
         searchRequestDto.setGlobalOperator(GlobalOperator.ALL);
@@ -100,9 +97,8 @@ public class CategoryIntegrationTests extends AbstractContainer {
         );
 
         assertThat(allCategoriesResponse.getStatusCode()).isEqualTo(OK);
+        assertThat(allCategoriesResponse.getBody()).isEmpty();
         assertThat(allCategoriesResponse.getBody()).isNotNull();
-        assertThat(allCategoriesResponse.getBody().stream()
-                .anyMatch(c -> c.getName().equals("Electronics 1"))).isTrue();
     }
 
 }

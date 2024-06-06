@@ -1,5 +1,6 @@
 package com.spring.ecommerce.dto.user;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Builder
 public class ReturnUserDto {
     private Long id;
     private String email;

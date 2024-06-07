@@ -13,10 +13,11 @@ public interface ProductMapper {
     @Mapping(target = "averageRating", source = "averageRating")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "imageUrl", source = "imageUrl")
+    @Mapping(target = "isFeatured", source = "featured")
     ReturnProductDto productToReturnProductDto(Product source);
 
 
     @Mapping(target = "averageRating", source = "averageRating")
-    @Mapping(target = "isFeatured", source = "featured")
+//    @Mapping(target = "isFeatured", source = "isFeatured")
     Product productDtoToProduct(ProductDto destination);
 }

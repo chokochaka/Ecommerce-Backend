@@ -4,6 +4,7 @@ import com.spring.ecommerce.dto.CanUserComment;
 import com.spring.ecommerce.dto.order.CreateOrderDto;
 import com.spring.ecommerce.dto.order.ReturnOrderDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
+import jakarta.mail.MessagingException;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface OrderService {
 
     long canUserComment(CanUserComment canUserComment);
 
-    void approveOrder(long orderId);
+    void approveOrder(long orderId) throws MessagingException;
 
     void deleteOrder(long id);
 }

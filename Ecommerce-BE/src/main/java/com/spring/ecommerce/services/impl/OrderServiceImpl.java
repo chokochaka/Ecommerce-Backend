@@ -15,7 +15,9 @@ import com.spring.ecommerce.repositories.OrderRepository;
 import com.spring.ecommerce.repositories.ProductRepository;
 import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.FilterSpecificationService;
+import com.spring.ecommerce.services.MailService;
 import com.spring.ecommerce.services.OrderService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -35,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
 
     private final FilterSpecificationService<Order> orderFilterSpecificationService;
+    private final MailService mailService;
 
     private final OrderMapper orderMapper;
 
@@ -102,8 +105,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void approveOrder(long orderId) {
+    public void approveOrder(long orderId) throws MessagingException {
         Order order = orderRepository.findById(orderId).orElseThrow();
+        mailService.sendNotificationOrderApproved(order.getUser().getEmail(), order.getCommodityCode());
         order.setApproved(true);
         orderRepository.save(order);
     }

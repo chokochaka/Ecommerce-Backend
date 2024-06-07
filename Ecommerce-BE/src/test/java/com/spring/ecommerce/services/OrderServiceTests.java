@@ -15,6 +15,7 @@ import com.spring.ecommerce.repositories.OrderRepository;
 import com.spring.ecommerce.repositories.ProductRepository;
 import com.spring.ecommerce.repositories.UserRepository;
 import com.spring.ecommerce.services.impl.OrderServiceImpl;
+import jakarta.mail.MessagingException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -49,6 +50,9 @@ public class OrderServiceTests {
     private ProductRepository productRepository;
 
     @Mock
+    private MailService mailService;
+
+    @Mock
     private FilterSpecificationService<Order> orderFilterSpecificationService;
 
     @Mock
@@ -81,6 +85,10 @@ public class OrderServiceTests {
 
         user = new User();
         user.setId(1L);
+        user.setEmail("testUser@gmail.com");
+
+        order.setUser(user);
+        order.setCommodityCode("COM123");
 
         product = new Product();
         product.setId(1L);
@@ -142,7 +150,7 @@ public class OrderServiceTests {
 
     @DisplayName("JUnit test for approveOrder method")
     @Test
-    public void approveOrder_ShouldSetOrderApproved() {
+    public void approveOrder_ShouldSetOrderApproved() throws MessagingException {
         // Given
         long orderId = 1L;
         when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));

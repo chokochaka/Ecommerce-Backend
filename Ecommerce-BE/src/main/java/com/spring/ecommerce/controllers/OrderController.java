@@ -6,6 +6,7 @@ import com.spring.ecommerce.dto.order.ReturnOrderDto;
 import com.spring.ecommerce.dto.search.SearchRequestDto;
 import com.spring.ecommerce.services.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +56,7 @@ public class OrderController {
     }
 
     @PostMapping("/approve/{orderId}")
-    public ResponseEntity<Void> approveOrder(@PathVariable long orderId) {
+    public ResponseEntity<Void> approveOrder(@PathVariable long orderId) throws MessagingException {
         orderService.approveOrder(orderId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

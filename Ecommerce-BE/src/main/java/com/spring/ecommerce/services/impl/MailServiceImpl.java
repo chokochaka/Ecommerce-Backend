@@ -107,6 +107,26 @@ public class MailServiceImpl implements MailService {
         return forgotPassword.getExpiresAt().isBefore(Instant.now());
     }
 
+    @Override
+    public String sendNotificationOrderApproved(String recipientEmail, String commodityCode) throws MessagingException {
+
+        String emailContent = mailBodyHtml.verifyAccountContent(
+                "orderApproved",
+                commodityCode,
+                recipientEmail,
+                "Order Confirmation",
+                "Go To Shop"
+        );
+        MailBodyDto mailBodyDto = MailBodyDto.builder()
+                .recipient(recipientEmail)
+                .subject("Order Confirmation")
+                .text(emailContent)
+                .build();
+
+        sendMail(mailBodyDto);
+        return "Order Confirmation mail sent successfully";
+    }
+
     private Integer otpGenerator() {
         Random random = new Random();
         return random.nextInt(100_000, 999_999);

@@ -34,7 +34,7 @@ public class FilterSpecificationServiceImpl<T> implements FilterSpecificationSer
                             break;
                         }
 
-                        if ("true" .equalsIgnoreCase(fieldRequestDto.getValue()) || "false" .equalsIgnoreCase(fieldRequestDto.getValue())) {
+                        if ("true".equalsIgnoreCase(fieldRequestDto.getValue()) || "false".equalsIgnoreCase(fieldRequestDto.getValue())) {
                             boolean booleanValue = Boolean.parseBoolean(fieldRequestDto.getValue());
                             Predicate equal = criteriaBuilder.equal(root.get(fieldRequestDto.getField()), booleanValue);
                             predicates.add(equal);

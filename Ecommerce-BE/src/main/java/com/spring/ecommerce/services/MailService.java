@@ -11,4 +11,7 @@ public interface MailService {
     String sendVerifyAccount(String recipientEmail) throws MessagingException;
 
     boolean verifyForgotPasswordOtp(Integer otp, String recipientEmail);
+
+    String sendNotificationOrderApproved(String recipientEmail, String commodityCode) throws MessagingException;
+
 }

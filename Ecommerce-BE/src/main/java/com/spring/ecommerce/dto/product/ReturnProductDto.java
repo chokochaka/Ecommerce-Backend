@@ -23,7 +23,7 @@ public class ReturnProductDto {
     private String imageUrl;
     private double price;
 
-    @JsonProperty("isFeatured")
+    @JsonProperty("featured")
     private boolean isFeatured;
 
     private Set<CategoryDto> categories;

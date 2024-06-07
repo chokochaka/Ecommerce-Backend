@@ -117,7 +117,7 @@ public class UserControllerTests {
 
         // Then
         response.andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
@@ -153,6 +153,6 @@ public class UserControllerTests {
 
         // Then
         response.andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().is2xxSuccessful());
     }
 }

@@ -7,11 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 @EnableJpaAuditing
 public class EcommerceBeApplication {
-
-
     public static void main(String[] args) {
         SpringApplication.run(EcommerceBeApplication.class, args);
     }
-
-
 }

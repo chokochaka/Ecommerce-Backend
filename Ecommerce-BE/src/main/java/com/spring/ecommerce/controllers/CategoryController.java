@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,65 +29,80 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/search")
-    public List<ReturnCategoryDto> getCategoriesBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
+    public ResponseEntity<List<ReturnCategoryDto>> getCategoriesBySearch(
+            @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
-        return categoryService.getCategoriesBySearch(searchRequestDto);
+        List<ReturnCategoryDto> categories = categoryService.getCategoriesBySearch(searchRequestDto);
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @PostMapping("/search/paginated")
-    public Page<ReturnCategoryDto> getCategoriesBySearchAndPagination(
+    public ResponseEntity<Page<ReturnCategoryDto>> getCategoriesBySearchAndPagination(
             @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
-        return categoryService.getCategoriesBySearchAndPagination(searchRequestDto);
+        Page<ReturnCategoryDto> categories = categoryService.getCategoriesBySearchAndPagination(searchRequestDto);
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @PostMapping("/parent/search")
-    public List<ReturnCategoryDto> getParentCategoriesBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
+    public ResponseEntity<List<ReturnCategoryDto>> getParentCategoriesBySearch(
+            @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
-        return categoryService.getParentCategoriesBySearch(searchRequestDto);
+        List<ReturnCategoryDto> categories = categoryService.getParentCategoriesBySearch(searchRequestDto);
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @PostMapping("/parent/search/paginated")
-    public Page<ReturnCategoryDto> getParentCategoriesBySearchAndPagination(
+    public ResponseEntity<Page<ReturnCategoryDto>> getParentCategoriesBySearchAndPagination(
             @Valid @RequestBody SearchRequestDto searchRequestDto
     ) {
-        return categoryService.getParentCategoriesBySearchAndPagination(searchRequestDto);
+        Page<ReturnCategoryDto> categories = categoryService.getParentCategoriesBySearchAndPagination(searchRequestDto);
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @PostMapping
-    public void createCategory(@Valid @RequestBody AddCategoryToParentDto addCategoryToParentDto) {
+    public ResponseEntity<Void> createCategory(
+            @Valid @RequestBody AddCategoryToParentDto addCategoryToParentDto
+    ) {
         categoryService.addCategoryToParentCategory(addCategoryToParentDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/parent")
-    public void createParentCategory(@Valid @RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<Void> createParentCategory(
+            @Valid @RequestBody CategoryDto categoryDto
+    ) {
         categoryService.createParentCategory(categoryDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/parent/{id}")
-    public void updateParentCategory(
+    public ResponseEntity<Void> updateParentCategory(
             @PathVariable long id,
             @Valid @RequestBody CategoryDto categoryDto
     ) {
         categoryService.updateParentCategory(id, categoryDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public void updateCategory(
+    public ResponseEntity<Void> updateCategory(
             @PathVariable long id,
             @Valid @RequestBody CategoryDto categoryDto
     ) {
         categoryService.updateCategory(id, categoryDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable long id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable long id) {
         categoryService.deleteCategory(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/parent/{id}")
-    public void deleteParentCategory(@PathVariable long id) {
+    public ResponseEntity<Void> deleteParentCategory(@PathVariable long id) {
         categoryService.deleteParentCategory(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }

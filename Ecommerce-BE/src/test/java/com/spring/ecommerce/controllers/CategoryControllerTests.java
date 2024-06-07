@@ -175,7 +175,7 @@ public class CategoryControllerTests {
 
         // then
         response.andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
@@ -209,7 +209,7 @@ public class CategoryControllerTests {
 
         // then
         response.andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
@@ -223,6 +223,6 @@ public class CategoryControllerTests {
 
         // then
         response.andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().is2xxSuccessful());
     }
 }

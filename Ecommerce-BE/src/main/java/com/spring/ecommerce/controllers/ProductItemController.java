@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,38 +34,38 @@ public class ProductItemController {
     private static final Logger logInfo = LoggerFactory.getLogger(ProductItemController.class);
 
     @PostMapping("/search")
-    public List<ReturnProductItemDto> getProductItemsBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
-    ) {
-        return productItemService.getProductItemsBySearch(searchRequestDto);
+    public ResponseEntity<List<ReturnProductItemDto>> getProductItemsBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto) {
+        List<ReturnProductItemDto> productItems = productItemService.getProductItemsBySearch(searchRequestDto);
+        return new ResponseEntity<>(productItems, HttpStatus.OK);
     }
 
     @PostMapping("/search/paginated")
-    public Page<ReturnProductItemDto> getProductItemsBySearchAndPagination(
-            @Valid @RequestBody SearchRequestDto searchRequestDto
-    ) {
-        return productItemService.getProductItemsBySearchAndPagination(searchRequestDto);
+    public ResponseEntity<Page<ReturnProductItemDto>> getProductItemsBySearchAndPagination(@Valid @RequestBody SearchRequestDto searchRequestDto) {
+        Page<ReturnProductItemDto> productItems = productItemService.getProductItemsBySearchAndPagination(searchRequestDto);
+        return new ResponseEntity<>(productItems, HttpStatus.OK);
     }
 
     @PostMapping // add product item to product
-    public void addProductItemToProduct(@Valid @RequestBody AddProductItemToProductDto addProductItemToProductDto) {
+    public ResponseEntity<Void> addProductItemToProduct(@Valid @RequestBody AddProductItemToProductDto addProductItemToProductDto) {
         productItemService.addProductItemToProduct(addProductItemToProductDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public void updateProductItem(
-            @PathVariable long id,
-            @Valid @RequestBody ProductItemDto productItemDto
-    ) {
+    public ResponseEntity<Void> updateProductItem(@PathVariable long id, @Valid @RequestBody ProductItemDto productItemDto) {
         productItemService.updateProductItem(id, productItemDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProductItem(@PathVariable long id) {
+    public ResponseEntity<Void> deleteProductItem(@PathVariable long id) {
         productItemService.deleteProductItem(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/product/{productId}")
-    public List<ReturnProductItemDto> getProductItemsByProductId(@PathVariable long productId) {
-        return productItemService.getProductItemsByProductId(productId);
+    public ResponseEntity<List<ReturnProductItemDto>> getProductItemsByProductId(@PathVariable long productId) {
+        List<ReturnProductItemDto> productItems = productItemService.getProductItemsByProductId(productId);
+        return new ResponseEntity<>(productItems, HttpStatus.OK);
     }
 }

@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,18 +26,20 @@ public class RatingController {
     private final RatingService ratingService;
 
     @PostMapping
-    public void createRating(@Valid @RequestBody RatingDto ratingDto) {
+    public ResponseEntity<Void> createRating(@Valid @RequestBody RatingDto ratingDto) {
         ratingService.createRating(ratingDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("")
-    public void editRating(@Valid @RequestBody RatingDto ratingDto) {
+    @PutMapping
+    public ResponseEntity<Void> editRating(@Valid @RequestBody RatingDto ratingDto) {
         ratingService.editRating(ratingDto.getId(), ratingDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{ratingId}")
-    public void deleteRating(@PathVariable long ratingId) {
+    public ResponseEntity<Void> deleteRating(@PathVariable long ratingId) {
         ratingService.deleteRating(ratingId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }

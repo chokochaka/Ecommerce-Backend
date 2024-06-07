@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,35 +31,38 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/search")
-    public List<ReturnOrderDto> getOrdersBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
-    ) {
-        return orderService.getOrdersBySearch(searchRequestDto);
+    public ResponseEntity<List<ReturnOrderDto>> getOrdersBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto) {
+        List<ReturnOrderDto> orders = orderService.getOrdersBySearch(searchRequestDto);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @PostMapping("/search/paginated")
-    public Page<ReturnOrderDto> getOrdersBySearchAndPagination(
-            @Valid @RequestBody SearchRequestDto searchRequestDto
-    ) {
-        return orderService.getOrdersBySearchAndPagination(searchRequestDto);
+    public ResponseEntity<Page<ReturnOrderDto>> getOrdersBySearchAndPagination(@Valid @RequestBody SearchRequestDto searchRequestDto) {
+        Page<ReturnOrderDto> orders = orderService.getOrdersBySearchAndPagination(searchRequestDto);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @PostMapping
-    public void createOrder(@Valid @RequestBody CreateOrderDto createOrderDto) {
+    public ResponseEntity<Void> createOrder(@Valid @RequestBody CreateOrderDto createOrderDto) {
         orderService.createOrder(createOrderDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable long id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable long id) {
         orderService.deleteOrder(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/approve/{orderId}")
-    public void approveOrder(@PathVariable long orderId) {
+    public ResponseEntity<Void> approveOrder(@PathVariable long orderId) {
         orderService.approveOrder(orderId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/canUserComment")
-    public long canUserComment(@Valid @RequestBody CanUserComment canUserComment) {
-        return orderService.canUserComment(canUserComment);
+    public ResponseEntity<Long> canUserComment(@Valid @RequestBody CanUserComment canUserComment) {
+        long result = orderService.canUserComment(canUserComment);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

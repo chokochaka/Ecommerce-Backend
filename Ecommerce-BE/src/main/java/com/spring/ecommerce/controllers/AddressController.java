@@ -5,6 +5,8 @@ import com.spring.ecommerce.services.AddressService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,17 +24,20 @@ public class AddressController {
     private final AddressService addressService;
 
     @PostMapping
-    public void addAddress(@Valid @RequestBody AddressDto addressDto) {
+    public ResponseEntity<Void> addAddress(@Valid @RequestBody AddressDto addressDto) {
         addressService.addAddress(addressDto);
+        return new ResponseEntity<>(HttpStatus.CREATED); // Return 201 Created status
     }
 
-    @PutMapping()
-    public void updateAddress(@Valid @RequestBody AddressDto addressDto) {
+    @PutMapping
+    public ResponseEntity<Void> updateAddress(@Valid @RequestBody AddressDto addressDto) {
         addressService.updateAddress(addressDto);
+        return new ResponseEntity<>(HttpStatus.OK); // Return 200 OK status
     }
 
     @GetMapping("/user/{userId}")
-    public AddressDto getAddressByUserId(@PathVariable Long userId) {
-        return addressService.getAddressByUserId(userId);
+    public ResponseEntity<AddressDto> getAddressByUserId(@PathVariable Long userId) {
+        AddressDto addressDto = addressService.getAddressByUserId(userId);
+        return new ResponseEntity<>(addressDto, HttpStatus.OK); // Return 200 OK status with body
     }
 }

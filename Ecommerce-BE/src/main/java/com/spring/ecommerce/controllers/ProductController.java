@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,44 +34,44 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/search")
-    public List<ReturnProductDto> getProductItemsBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
-    ) {
-        return productService.getProductsBySearch(searchRequestDto);
+    public ResponseEntity<List<ReturnProductDto>> getProductItemsBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto) {
+        List<ReturnProductDto> products = productService.getProductsBySearch(searchRequestDto);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @PostMapping("/search/paginated")
-    public Page<ReturnProductDto> getProductsBySearchAndPagination(
-            @Valid @RequestBody SearchRequestDto searchRequestDto
-    ) {
-        return productService.getProductsBySearchAndPagination(searchRequestDto);
+    public ResponseEntity<Page<ReturnProductDto>> getProductsBySearchAndPagination(@Valid @RequestBody SearchRequestDto searchRequestDto) {
+        Page<ReturnProductDto> products = productService.getProductsBySearchAndPagination(searchRequestDto);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @PostMapping
-    public void createProduct(@Valid @RequestBody ProductDto productDto) {
+    public ResponseEntity<Void> createProduct(@Valid @RequestBody ProductDto productDto) {
         productService.createProduct(productDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public void updateProduct(
-            @PathVariable long id,
-            @Valid @RequestBody ProductDto productDto
-    ) {
+    public ResponseEntity<Void> updateProduct(@PathVariable long id, @Valid @RequestBody ProductDto productDto) {
         productService.updateProduct(id, productDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable long id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
-    public ReturnProductDto getProductById(@PathVariable long id) {
-        return productService.getProductById(id);
+    public ResponseEntity<ReturnProductDto> getProductById(@PathVariable long id) {
+        ReturnProductDto product = productService.getProductById(id);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @PostMapping("/category")
-    public List<ReturnProductDto> getProductsByCategoryName(@Valid @RequestBody CategoryDto categoryDto) {
-        return productService.getProductsByCategoryName(categoryDto.getName());
+    public ResponseEntity<List<ReturnProductDto>> getProductsByCategoryName(@Valid @RequestBody CategoryDto categoryDto) {
+        List<ReturnProductDto> products = productService.getProductsByCategoryName(categoryDto.getName());
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
-
 }

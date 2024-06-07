@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,26 +30,26 @@ public class OrderDetailController {
     private final OrderDetailService orderDetailService;
 
     @PostMapping("/search")
-    public List<ReturnOrderDetailDto> getOrdersBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto
-    ) {
-        return orderDetailService.getOrderDetailsBySearch(searchRequestDto);
+    public ResponseEntity<List<ReturnOrderDetailDto>> getOrdersBySearch(@Valid @RequestBody SearchRequestDto searchRequestDto) {
+        List<ReturnOrderDetailDto> orders = orderDetailService.getOrderDetailsBySearch(searchRequestDto);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @PostMapping("/search/paginated")
-    public Page<ReturnOrderDetailDto> getOrdersBySearchAndPagination(
-            @Valid @RequestBody SearchRequestDto searchRequestDto
-    ) {
-        return orderDetailService.getOrderDetailsBySearchAndPagination(searchRequestDto);
+    public ResponseEntity<Page<ReturnOrderDetailDto>> getOrdersBySearchAndPagination(@Valid @RequestBody SearchRequestDto searchRequestDto) {
+        Page<ReturnOrderDetailDto> orders = orderDetailService.getOrderDetailsBySearchAndPagination(searchRequestDto);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrderDetail(@PathVariable long id) {
+    public ResponseEntity<Void> deleteOrderDetail(@PathVariable long id) {
         orderDetailService.deleteOrderDetail(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/user/{userId}")
-    public List<ReturnOrderDetailDto> getOrdersByUserId(@PathVariable long userId) {
-        return orderDetailService.getOrderDetailsByUserId(userId);
+    public ResponseEntity<List<ReturnOrderDetailDto>> getOrdersByUserId(@PathVariable long userId) {
+        List<ReturnOrderDetailDto> orders = orderDetailService.getOrderDetailsByUserId(userId);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
-
 }

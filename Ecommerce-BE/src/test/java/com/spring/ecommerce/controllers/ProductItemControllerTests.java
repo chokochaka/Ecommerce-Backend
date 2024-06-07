@@ -107,7 +107,7 @@ public class ProductItemControllerTests {
 
         // Then
         response.andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test

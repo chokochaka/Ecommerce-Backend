@@ -21,12 +21,13 @@ public class MailBodyHtml {
                 + "<p style=\"font-size: 16px;\">Thank you for being here with us. To complete your process, please click the link below:</p>"
                 + "<p style=\"text-align: center;\"><a href=\"" + verificationUrl + "\" style=\"color: #ffffff; background-color: #4CAF50; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;\">" + buttonString + "</a></p>"
                 + "<p style=\"font-size: 16px;\">If the button above doesn't work, copy and paste the above URL into your browser.</p>"
-                + "<p style=\"font-size: 16px;\">Best regards,<br>Nashtech Shop</p>"
+                + "<p style=\"font-size: 16px;\">Best regards,<br>My Shop</p>"
                 + "<div style=\"text-align: center; padding-top: 20px;\">"
                 + "<hr style=\"border-top: 1px solid #ddd;\"/>"
-                + "<p style=\"font-size: 12px; color: #777;\">&copy; 2024 Nashtech Shop. All rights reserved.<br>"
-                + "<a href=\"https://www.nashtechglobal.com/\" style=\"color: #4CAF50; text-decoration: none;\">Privacy Policy</a> | "
-                + "<a href=\"https://www.nashtechglobal.com/\" style=\"color: #4CAF50; text-decoration: none;\">Terms of Service</a></p>"
+                + "<p style=\"font-size: 12px; color: #777;\">&copy; 2024 My Shop. All rights reserved.<br>"
+                + "<a href=\"https://www.mytechglobal.com/\" style=\"color: #4CAF50; text-decoration: none;\">Privacy Policy</a> | "
+                + "<a href=\"https://www.mytechglobal.com/\" style=\"color: #4CAF50; text-decoration: none;\">Terms of"
+            + " Service</a></p>"
                 + "</div>"
                 + "</div>";
     }

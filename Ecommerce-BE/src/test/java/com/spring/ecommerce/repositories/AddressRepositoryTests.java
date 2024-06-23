@@ -27,9 +27,9 @@ public class AddressRepositoryTests {
     public void setup() {
         // setup user
         user = User.builder()
-                .firstName("Nash")
-                .lastName("Tech")
-                .email("nash@gmail.com")
+                .firstName("dfdsf1")
+                .lastName("dfdsf2")
+                .email("dfdsf3@gmail.com")
                 .enabled(true)
                 .build();
 

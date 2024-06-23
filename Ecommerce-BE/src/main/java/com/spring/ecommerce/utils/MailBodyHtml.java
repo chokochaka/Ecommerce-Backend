@@ -25,8 +25,9 @@ public class MailBodyHtml {
                 + "<div style=\"text-align: center; padding-top: 20px;\">"
                 + "<hr style=\"border-top: 1px solid #ddd;\"/>"
                 + "<p style=\"font-size: 12px; color: #777;\">&copy; 2024 My Shop. All rights reserved.<br>"
-                + "<a href=\"https://www.mytechglobal.com/\" style=\"color: #4CAF50; text-decoration: none;\">Privacy Policy</a> | "
-                + "<a href=\"https://www.mytechglobal.com/\" style=\"color: #4CAF50; text-decoration: none;\">Terms of"
+                + "<a href=\"https://www.mytechglobal1.com/\" style=\"color: #4CAF50; text-decoration: none;"
+            + "\">Privacy Policy</a> | "
+                + "<a href=\"https://www.mytechglobal1.com/\" style=\"color: #4CAF50; text-decoration: none;\">Terms of"
             + " Service</a></p>"
                 + "</div>"
                 + "</div>";
